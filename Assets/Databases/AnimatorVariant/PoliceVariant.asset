@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09ba198baba433e45b850cd91d616863, type: 3}
+  m_Name: PoliceVariant
+  m_EditorClassIdentifier: 
+  name: Police
+  animatorLists:
+  - name: Officer Abu
+    code: P01
+    iconHead: {fileID: 21300000, guid: 356e68625d06045d3ba1655b65d061de, type: 3}
+    idlePose: {fileID: 21300000, guid: c5815856c29484857b98323e08a4df7a, type: 3}
+    runTimeAnimController: {fileID: 22100000, guid: a9041b9c84641764e9d95c1d9152213c, type: 2}
+    temporaryDisable: 0
+  - name: Officer Liz
+    code: P02
+    iconHead: {fileID: 21300000, guid: 9d8cb905b30bd4868a7db87b5fd6673b, type: 3}
+    idlePose: {fileID: 21300000, guid: 02651bdea90034d629f733caf41155da, type: 3}
+    runTimeAnimController: {fileID: 22100000, guid: 240110edd3698084e85378ecd4463ec1, type: 2}
+    temporaryDisable: 0
+  - name: Detective Ali
+    code: P03
+    iconHead: {fileID: 21300000, guid: b6abbba0449a52a4d911d82d7b946e22, type: 3}
+    idlePose: {fileID: 21300000, guid: ade67405f1d5b2d469b8431ae07919bc, type: 3}
+    runTimeAnimController: {fileID: 22100000, guid: c4fcfdf796110bd49b10644fb9f39a89, type: 2}
+    temporaryDisable: 0
+  - name: Detective Mona
+    code: P04
+    iconHead: {fileID: 21300000, guid: 67161add0393cfe45bb0f5d3878e71ae, type: 3}
+    idlePose: {fileID: 21300000, guid: 7895305adb2aa3746a0c74445bcb6832, type: 3}
+    runTimeAnimController: {fileID: 22100000, guid: 724b9b9d6e0f8a449a26fdf112996c98, type: 2}
+    temporaryDisable: 0
+  - name: Helmet Cop
+    code: P07
+    iconHead: {fileID: 21300000, guid: 61291ba0c6a87324ca0f4625f797fa6d, type: 3}
+    idlePose: {fileID: 21300000, guid: b5f27850214d308459155a1eeb64e1fb, type: 3}
+    runTimeAnimController: {fileID: 22100000, guid: 6fd25f296b3d928449a28009b21ec13e, type: 2}
+    temporaryDisable: 0
+  - name: Kuasa Ranger
+    code: P08
+    iconHead: {fileID: 21300000, guid: fec4575c951c7bf42bdcf737a3cac766, type: 3}
+    idlePose: {fileID: 21300000, guid: 9b4f3107597f6ae4f9e9803f198c452f, type: 3}
+    runTimeAnimController: {fileID: 22100000, guid: 2424d7186c7b8f74ab04f749f374aca2, type: 2}
+    temporaryDisable: 0
+  - name: Super Lady
+    code: P09
+    iconHead: {fileID: 21300000, guid: e4afe7170b8d19e46a2303ac80b70b07, type: 3}
+    idlePose: {fileID: 21300000, guid: fa455a3de7b48b842926244768813e6f, type: 3}
+    runTimeAnimController: {fileID: 22100000, guid: 9e3081c73c3fc2b4eaf1f68d5aac29ee, type: 2}
+    temporaryDisable: 0
+  - name: Mentadak Man
+    code: P11
+    iconHead: {fileID: 21300000, guid: 60897f27ca2d3b1498d7fcaf41451b63, type: 3}
+    idlePose: {fileID: 21300000, guid: 5ff2d19687c0fa748b07ada3c5fa7552, type: 3}
+    runTimeAnimController: {fileID: 22100000, guid: b8ccbdc937a756b4b884955a9ee84b52, type: 2}
+    temporaryDisable: 0
+  - name: Musang Cop
+    code: P12
+    iconHead: {fileID: 21300000, guid: 9e52c9c5df4967348bbc2ecf843bcfcd, type: 3}
+    idlePose: {fileID: 21300000, guid: b784b34559ea1a74dad5449521868848, type: 3}
+    runTimeAnimController: {fileID: 22100000, guid: d28ab5aac40af3e4a89a450545e0af17, type: 2}
+    temporaryDisable: 0
+  - name: Grace
+    code: P16
+    iconHead: {fileID: 21300000, guid: c41907ffc50975e41bffae9f2b567594, type: 3}
+    idlePose: {fileID: 21300000, guid: 662af060ee066a44caff3f5b3f46aa91, type: 3}
+    runTimeAnimController: {fileID: 22100000, guid: 61d6b5bc428ac0846930e90985d13ccc, type: 2}
+    temporaryDisable: 0
