@@ -58,3 +58,11 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+Assets/Plugins/Quick_Object_Replacer_Tool/Editor.meta
+Assets/Plugins/Quick_Object_Replacer_Tool/Editor/ReplaceGameObject.cs
+Assets/Plugins/Quick_Object_Replacer_Tool/Editor/ReplaceGameObject.cs.meta
+Assets/Plugins/Quick_Object_Replacer_Tool/ToolDocumentation.pdf
+Assets/Plugins/Quick_Object_Replacer_Tool/ToolDocumentation.pdf.meta
+UserSettings/Layouts/default-2021.dwlt
+UserSettings/EditorUserSettings.asset
+ProjectSettings/PackageManagerSettings.asset
