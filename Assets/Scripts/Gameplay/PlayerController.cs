@@ -32,11 +32,11 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [SerializeField] float dashSpeedMultiplier = 2f;
     [SerializeField] public float dashDuration = .2f;
     [SerializeField] public float dashCooldown = 3f;
-    bool isDashing, isDashCooldown;
+    [HideInInspector] public bool isDashing, isDashCooldown;
     GameObject btnDash;
 
     [Header("Fall")]
-    bool isFalling;
+    [HideInInspector] public bool isFalling;
     
     [Header("Camera Related")]
     [HideInInspector] public CinemachineVirtualCamera cam2D;
@@ -45,6 +45,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [Header("Animation Related")]
     public PlayerAnimator playerAnim;
     public string characterCode;
+    public System.Guid myGUID = System.Guid.NewGuid();
 
     void Awake(){
         rb = GetComponent<Rigidbody2D>();
@@ -59,6 +60,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     }
 
     void Start(){
+        print(myGUID.ToString());
         if(!photonView.IsMine){
             return;
         }
@@ -169,7 +171,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         }
     } // end HandleMovement
 
-    void FlipRight(bool flipRight){
+    public void FlipRight(bool flipRight){
         if(!isFalling){ // only do this when !Falling
             if(flipRight){
                 isFacingRight = true;
@@ -265,6 +267,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
                                 teamRole.Add("CharacterCode", characterCode);
                                 teamRole.Add("PlayerCaught", false);
                                 teamRole.Add("PlayerHoldMoneybag", false);
+                                teamRole.Add("PlayerViewID", photonView.ViewID);
                                 PhotonNetwork.LocalPlayer.SetCustomProperties(teamRole);
                             }
                         }
@@ -285,6 +288,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
                                 teamRole.Add("CharacterCode", characterCode);
                                 teamRole.Add("PlayerCaught", false);
                                 teamRole.Add("PlayerHoldMoneybag", false);
+                                teamRole.Add("PlayerViewID", photonView.ViewID);
                                 PhotonNetwork.LocalPlayer.SetCustomProperties(teamRole);
                             }
                         }
@@ -303,11 +307,17 @@ public class PlayerController : MonoBehaviourPunCallbacks
 #region UI RELATED
     [PunRPC]
     public void CreateAvatar(){
-        
         switch(playerTeam){
             case E_Team.POLICE:
                 var policeAvatar = Instantiate(UIManager.instance.gameUI.avatarBtnPrefab);
-                policeAvatar.GetComponent<Btn_Avatar>().SetupButton("Police", GetComponent<PhotonView>().Owner.NickName, characterCode, GetComponent<PhotonView>().Owner.ActorNumber);
+                if(GetComponent<BotController>() != null){ // if we are bot
+                    var randomSkin = Random.Range(0, SOManager.instance.animVariantPolice.animatorLists.Count);
+
+                    policeAvatar.GetComponent<Btn_Avatar>().SetupButton("Police", GetComponent<PhotonView>().Owner.NickName, SOManager.instance.animVariantPolice.animatorLists[randomSkin].code, myGUID.ToString());
+                }else{
+                    policeAvatar.GetComponent<Btn_Avatar>().SetupButton("Police", GetComponent<PhotonView>().Owner.NickName, characterCode, myGUID.ToString());
+                }
+                
                 policeAvatar.transform.SetParent(UIManager.instance.gameUI.avatarPoliceContent,false);
                 UIManager.instance.gameUI.avatarBtnList.Add(policeAvatar.GetComponent<Btn_Avatar>());
 
@@ -320,7 +330,14 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
             case E_Team.ROBBER:
                 var robberAvatar = Instantiate(UIManager.instance.gameUI.avatarBtnPrefab);
-                robberAvatar.GetComponent<Btn_Avatar>().SetupButton("Robber", GetComponent<PhotonView>().Owner.NickName, characterCode, GetComponent<PhotonView>().Owner.ActorNumber);
+                if(GetComponent<BotController>() != null){ // if we are bot
+                    var randomSkin = Random.Range(0, SOManager.instance.animVariantRobber.animatorLists.Count);
+
+                    robberAvatar.GetComponent<Btn_Avatar>().SetupButton("Robber", GetComponent<PhotonView>().Owner.NickName, SOManager.instance.animVariantRobber.animatorLists[randomSkin].code, myGUID.ToString());
+                }else{
+                    robberAvatar.GetComponent<Btn_Avatar>().SetupButton("Robber", GetComponent<PhotonView>().Owner.NickName, characterCode, myGUID.ToString());
+                }
+                
                 robberAvatar.transform.SetParent(UIManager.instance.gameUI.avatarRobberContent,false);
                 UIManager.instance.gameUI.avatarBtnList.Add(robberAvatar.GetComponent<Btn_Avatar>());
 

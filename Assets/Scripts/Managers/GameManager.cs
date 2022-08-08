@@ -8,6 +8,7 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
+    public bool fillWithBots;
     public static GameManager instance;
 
     [Header("Spawnpoints")]
@@ -16,6 +17,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     public List<Transform> policeSpawnpoints = new List<Transform>();
     public List<Transform> robberSpawnpoints = new List<Transform>();
     public List<Transform> moneybagSpawnpoints = new List<Transform>();
+    public GameObject botEscapeGO;
+    public List<Transform> botEscapeSpawnpoints = new List<Transform>();
 
     [Header("Moneybag Related")]
     [SerializeField] int timerStart; // <-- Will link to Game Mode settings (Clock Start)
@@ -55,6 +58,15 @@ public class GameManager : MonoBehaviourPunCallbacks
     } // end Awake
 
     void Start(){
+        // Bot add escape points
+        if(botEscapeGO != null){
+            foreach(var child in botEscapeGO.GetComponentsInChildren<Transform>()){
+                if(child.CompareTag("BotEscape")){
+                    botEscapeSpawnpoints.Add(child);
+                }
+            }
+        }
+
         UIManager.instance.RefreshMainCanvas(); // Make sure we have main canvas
         UIManager.instance.RefreshControllerGroup(); // Make sure we have reference the CanvasGroup
 
@@ -89,6 +101,36 @@ public class GameManager : MonoBehaviourPunCallbacks
         SpawnAllMoneybag(); // Spawn moneybag
         
     } // end Start
+
+    public IEnumerator SpawnBots(){
+        yield return new WaitForSeconds(3);
+        // Fill in police 1st
+        if(GameManager.GetAllPlayersPolice().Count < (int)PhotonNetwork.CurrentRoom.CustomProperties["RoomPolicePerGame"]){
+            int polDif = (int)PhotonNetwork.CurrentRoom.CustomProperties["RoomPolicePerGame"] - GameManager.GetAllPlayersPolice().Count;
+            for(int i = 0; i < polDif; i++){
+                yield return new WaitForSeconds(Random.Range(0f, 1f));
+                GameObject player = PhotonNetwork.InstantiateRoomObject(NetworkManager.GetPhotonPrefab("Characters", "BotPolice"), GameManager.instance.waitingSpawnpoint.position + new Vector3(Random.Range(0,3f), Random.Range(0,3f), 0f), Quaternion.identity);
+                player.GetPhotonView().Owner.NickName = "BOT POLICE";
+                player.GetComponent<BotController>().enabled = true;
+                player.GetComponent<PlayerController>().CreateAvatar();
+            }
+            
+        }
+
+        // Fill in robber 1st
+        if(GameManager.GetAllPlayersRobber().Count < (int)PhotonNetwork.CurrentRoom.CustomProperties["RoomRobberPerGame"]){
+            int robDif = (int)PhotonNetwork.CurrentRoom.CustomProperties["RoomRobberPerGame"] - GameManager.GetAllPlayersRobber().Count;
+            for(int i = 0; i < robDif; i++){
+                yield return new WaitForSeconds(Random.Range(0f, 1f));
+                GameObject player = PhotonNetwork.InstantiateRoomObject(NetworkManager.GetPhotonPrefab("Characters", "BotRobber"), GameManager.instance.waitingSpawnpoint.position + new Vector3(Random.Range(0,3f), Random.Range(0,3f), 0f), Quaternion.identity);
+                player.GetPhotonView().Owner.NickName = "BOT ROBBER";
+                player.GetComponent<BotController>().enabled = true;
+                player.GetComponent<PlayerController>().CreateAvatar();
+            }
+            
+        }
+        
+    }
 
     void Update(){
         // Moneybag Timer Related
@@ -145,6 +187,12 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         UIManager.instance.cacheCharacterSelect.SetActive(true); // Active Character Select Screen
         UIManager.instance.p_CharacterSelect.InitializeAllCharacters(team); // Initialize all available characters
+
+        if(fillWithBots && PhotonNetwork.OfflineMode){
+            if(PhotonNetwork.IsMasterClient){
+                StartCoroutine(SpawnBots());
+            }
+        }
     } // end SpawnSelectedCharacter
 
     public void ChooseRandom(){ // Choose Random Between Robber & Police
@@ -284,9 +332,15 @@ public class GameManager : MonoBehaviourPunCallbacks
 #region MID GAME RELATED
     public void UpdateAvatarsUI(){
         foreach(var btn in UIManager.instance.gameUI.avatarBtnList){
-            foreach(Player player in GameManager.GetAllNetworkPlayers()){
-                if(btn.actorNumber == player.ActorNumber){
-                    btn.UpdateButton(player.CustomProperties["NetworkTeam"].ToString(), player.CustomProperties["CharacterCode"].ToString(), (bool)player.CustomProperties["PlayerCaught"], (bool)player.CustomProperties["PlayerHoldMoneybag"]);
+            //foreach(Player player in GameManager.GetAllNetworkPlayers()){
+            //    if(btn.actorViewID == (int)player.CustomProperties["PlayerViewID"]){
+            //        btn.UpdateButton(player.CustomProperties["NetworkTeam"].ToString(), player.CustomProperties["CharacterCode"].ToString(), (bool)player.CustomProperties["PlayerCaught"], (bool)player.CustomProperties["PlayerHoldMoneybag"]);
+            //    }
+            //}
+            foreach(GameObject player in GameManager.GetAllPlayers()){
+                if(player.GetComponent<PlayerController>().myGUID.ToString() == btn.goID && player.GetComponent<Robber>() != null){
+                    print("Matched");
+                    btn.UpdateButton(player.tag.ToString(), player.GetComponent<PlayerController>().characterCode, player.GetComponent<Robber>().isCaught, player.GetComponent<Robber>().isHoldMoneybag);
                 }
             }
         }
@@ -400,6 +454,12 @@ public class GameManager : MonoBehaviourPunCallbacks
         return polices;
     } // end GetAllPlayersRobber
 
+    public static List<GameObject> GetAllMoneybag(){ // Return list of all moneybag
+        List<GameObject> moneybag = new List<GameObject>(GameObject.FindGameObjectsWithTag("MoneyBag"));
+
+        return moneybag;
+    } // end GetAllPlayersRobber
+
     public static List<Player> GetAllNetworkPlayers(){ // Return list of NETWORK players
         List<Player> allPlayers = new List<Player>();
         List<Player> polices = new List<Player>();
@@ -437,11 +497,12 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         return robbers;
     } // end GetAllNetworkRobbers
+    
 
     public int NumberOfCaughtRobber(){
         int caughtCount = 0;
-        foreach(Player p in GetAllNetworkRobbers()){
-            if((bool)p.CustomProperties["PlayerCaught"]){
+        foreach(GameObject p in GetAllPlayersRobber()){
+            if(p.GetComponent<Robber>().isCaught){
                 caughtCount += 1;
             }
         } // end foreach

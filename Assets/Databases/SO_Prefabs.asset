@@ -27,6 +27,10 @@ MonoBehaviour:
     prefabs: {fileID: 7955344202334445017, guid: cbca99faf148d9244a49c4f9f37ec9d3, type: 3}
   - name: CharacterRobber
     prefabs: {fileID: 4873863652774326898, guid: 5c2c67658c5059a469e3703d271a5f28, type: 3}
+  - name: BotPolice
+    prefabs: {fileID: 7955344202334445017, guid: 77a25672f7342684da8623feb22dc623, type: 3}
+  - name: BotRobber
+    prefabs: {fileID: 4873863652774326898, guid: 414e52dbcdafb694ca9d447e50ea585f, type: 3}
   propsPrefabs:
   - name: prop_ball_01
     prefabs: {fileID: 1054325341757747008, guid: fcbd95726c868f44eacbb810b15c8da6, type: 3}

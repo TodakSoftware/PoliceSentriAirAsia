@@ -20,7 +20,7 @@ public class ManualRoleSelect : MonoBehaviour
    }
 
    IEnumerator ChooseRandomCountdown(){
-      int duration = 10;
+      int duration = 5;
 
       while(duration > 0){
          chooseRandomText.text = "Choose For Me("+ duration+")";

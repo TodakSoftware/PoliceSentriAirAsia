@@ -8,7 +8,8 @@ using System.Collections.Generic;
 [AddComponentMenu("Navigation/PolyNavAgent")]
 ///Place this on a game object to find it's path
 public class PolyNavAgent : MonoBehaviour{
-
+	public bool botFacingRight;
+	public bool botDestinationReach;
 	///The target PolyNav2D map this agent is assigned to.
 	[SerializeField]
 	private PolyNav2D _map			 = null;
@@ -169,6 +170,20 @@ public class PolyNavAgent : MonoBehaviour{
 			OnArrived();
 			return true;
 		}
+
+		// GABAN EDIT START ------------------------------------------------
+		if((goal.x - position.x) > 0){
+			if(!botFacingRight){
+				botFacingRight = true;
+			}
+		}else if((goal.x - position.x) < 0){
+			if(botFacingRight){
+				botFacingRight = false;
+			}
+		}else{
+			print("Idle");
+		}
+		// GABAN EDIT END ------------------------------------------------
 
 		//check if goal is valid
 		if (!map.PointIsValid(goal)){
@@ -337,7 +352,7 @@ public class PolyNavAgent : MonoBehaviour{
 
 	//stop the agent and callback + message
 	void OnArrived(){
-
+		botDestinationReach = true; // GABAN EDIT
 		Stop();
 
 		if (reachedCallback != null){
@@ -347,6 +362,7 @@ public class PolyNavAgent : MonoBehaviour{
 		if (OnDestinationReached != null){
 			OnDestinationReached();
 		}
+		
 	}
 
 	//stop the agent and callback + message

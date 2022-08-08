@@ -15,14 +15,14 @@ public class Btn_Avatar : MonoBehaviourPunCallbacks
     [Header("Team Related")]
     public Sprite policeSlotBG;
     public Sprite robberSlotBG;
-    public int actorNumber;
+    public string goID;
 
-    public void SetupButton(string team, string playerNickname, string characterCode, int actorNmbr){ // Called by GameUI (CreateAvatar) 
+    public void SetupButton(string team, string playerNickname, string characterCode, string actorNmbr){ // Called by GameUI (CreateAvatar) 
         switch(team){
             case "Police":
                 slotBG.sprite = policeSlotBG;
                 playerName.text = playerNickname;
-                actorNumber = actorNmbr;
+                goID = actorNmbr;
                 foreach(var c in SOManager.instance.animVariantPolice.animatorLists){
                     if(c.code == characterCode){
                         playerIcon.sprite = c.iconHead;
@@ -33,17 +33,22 @@ public class Btn_Avatar : MonoBehaviourPunCallbacks
             case "Robber":
                 slotBG.sprite = robberSlotBG;
                 playerName.text = playerNickname;
-                actorNumber = actorNmbr;
+                goID = actorNmbr;
                 foreach(var c in SOManager.instance.animVariantRobber.animatorLists){
                     if(c.code == characterCode){
                         playerIcon.sprite = c.iconHead;
                     }
                 }
             break;
+
+            default:
+                print("unknown");
+            break;
         } // end switch
     }
 
     public void UpdateButton(string team, string CharCode, bool isCaught, bool holdMoneybag){ // Called everytime by GameManager(UpdateAvatarsUI) when player custom properties changed
+        print("Update Button: isCaught:" + isCaught + " | isHoldMoney:" + holdMoneybag);
         switch(team){
             case "Police":
                 foreach(var c in SOManager.instance.animVariantPolice.animatorLists){
@@ -87,6 +92,10 @@ public class Btn_Avatar : MonoBehaviourPunCallbacks
                         }
                     }
                 }
+            break;
+
+            default:
+                print("unknown");
             break;
         } // end switch
     }

@@ -13,7 +13,7 @@ public class Police : MonoBehaviourPunCallbacks
     void OnTriggerEnter2D(Collider2D other){
         if(other.CompareTag("Robber") && GameManager.instance.gameStarted && !GameManager.instance.gameEnded && photonView.IsMine){
             if(other.gameObject.GetComponent<Robber>().isCaught == false){ // if that robber is !caught, set him to HasBeenCaught
-                other.gameObject.GetComponent<Robber>().photonView.RPC("HasBeenCaught", other.gameObject.GetPhotonView().Owner, PhotonNetwork.NickName);
+                other.gameObject.GetComponent<Robber>().photonView.RPC("HasBeenCaught", other.gameObject.GetPhotonView().Owner, GetComponent<PlayerController>().playerNameText.text.ToString());
                 
                 photonView.RPC("PopupGotchaBustedUI", RpcTarget.All, true);
             }

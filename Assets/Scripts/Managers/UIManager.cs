@@ -226,18 +226,24 @@ public class UIManager : MonoBehaviour
         var noti = Instantiate(SOManager.instance.prefabs.ui_GameplayFeeds);
         noti.GetComponent<UI_GameplayFeeds>().SetTextPoliceCapture(policeName, robberName);
         noti.transform.SetParent(UIManager.instance.gameUI.feedsGroupContent.transform, false);
+
+        GameManager.instance.UpdateAvatarsUI();
     }
 
     public void NotificationPickupMoneybag(string robberName){
         var noti = Instantiate(SOManager.instance.prefabs.ui_GameplayFeeds);
         noti.GetComponent<UI_GameplayFeeds>().SetTextPickupMoneybag(robberName);
         noti.transform.SetParent(UIManager.instance.gameUI.feedsGroupContent.transform, false);
+
+        GameManager.instance.UpdateAvatarsUI();
     }
 
     public void NotificationReleasedBy(string robberName, string teammateName){
         var noti = Instantiate(SOManager.instance.prefabs.ui_GameplayFeeds);
         noti.GetComponent<UI_GameplayFeeds>().SetTextReleasedBy(robberName, teammateName);
         noti.transform.SetParent(UIManager.instance.gameUI.feedsGroupContent.transform, false);
+
+        GameManager.instance.UpdateAvatarsUI();
     }
 /* ------------------------------------------------  INGAME RELATED END ----------------------------------------------- */
 }

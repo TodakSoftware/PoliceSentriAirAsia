@@ -18,7 +18,7 @@ MonoBehaviour:
     displayName: Police & Robber
     descriptions: This is just a description
     maxPolicePerGame: 1
-    maxRobberPerGame: 1
+    maxRobberPerGame: 0
     findGameTimeoutDuration: 60
     clockStartTime: 90
     clockEndTime: 0

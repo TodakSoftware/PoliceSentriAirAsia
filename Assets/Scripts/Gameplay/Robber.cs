@@ -89,7 +89,7 @@ public class Robber : MonoBehaviourPunCallbacks
             }
 
             GameManager.instance.photonView.RPC("SetMoneybagOccupied", RpcTarget.All, true);
-            UIManager.instance.NotificationPickupMoneybag(photonView.Owner.NickName);
+            UIManager.instance.NotificationPickupMoneybag(GetComponent<PlayerController>().playerNameText.text);
             
         }else{
             moneybagDisplay.SetActive(false);
@@ -124,12 +124,12 @@ public class Robber : MonoBehaviourPunCallbacks
             GetComponent<PlayerController>().playerNameText.color = Color.red;
             StartCoroutine(PopupGotchaBustedUI(false)); // popup busted UI
 
-            UIManager.instance.NotificationPoliceCapture(policeName, photonView.Owner.NickName); // Popup Notification that police caught ourself
+            UIManager.instance.NotificationPoliceCapture(policeName, GetComponent<PlayerController>().playerNameText.text.ToString()); // Popup Notification that police caught ourself
         }else{
             isCaught = false;
             GetComponent<PlayerController>().playerNameText.color = Color.white;
 
-            UIManager.instance.NotificationReleasedBy(photonView.Owner.NickName, teammateName); // Popup Notification that police caught ourself
+            UIManager.instance.NotificationReleasedBy(GetComponent<PlayerController>().playerNameText.text.ToString(), teammateName); // Popup Notification that police caught ourself
         }
     }
 

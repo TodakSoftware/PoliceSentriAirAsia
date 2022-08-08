@@ -12599,6 +12599,9 @@ MonoBehaviour:
   dashSpeedMultiplier: 3
   dashDuration: 0.2
   dashCooldown: 3
+  isDashing: 0
+  isDashCooldown: 0
+  isFalling: 0
   cam2D: {fileID: 0}
   playerAnim: {fileID: 407786497}
   characterCode: P01

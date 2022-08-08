@@ -6755,6 +6755,9 @@ MonoBehaviour:
   dashSpeedMultiplier: 3
   dashDuration: 0.2
   dashCooldown: 3
+  isDashing: 0
+  isDashCooldown: 0
+  isFalling: 0
   cam2D: {fileID: 0}
   playerAnim: {fileID: 3297899693586578346}
   characterCode: R01

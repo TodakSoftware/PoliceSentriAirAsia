@@ -9,6 +9,9 @@ TagManager:
   - Police
   - Robber
   - GameUI
+  - MoneyBag
+  - SafeAreaUI
+  - BotEscape
   layers:
   - Default
   - TransparentFX
