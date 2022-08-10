@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Photon.Pun;
 
 public class P_MainMenu : MonoBehaviour
 {
@@ -13,8 +14,10 @@ public class P_MainMenu : MonoBehaviour
     public Coroutine coroutinefindRoomTimeout;
     public GameObject findGameGO;
     public Button cancelFindGameBtn;
-    public Button playButton;
+    public Button playButton, playWithBotButton;
     public TextMeshProUGUI playText;
+    public TextMeshProUGUI statusText;
+
 
     void Start()
     {
@@ -30,6 +33,7 @@ public class P_MainMenu : MonoBehaviour
             modalUsernameGO.SetActive(true);
         }
 
-        playButton.onClick.AddListener(delegate{ NetworkManager.instance.JoinTheGame(0); }); // Link playBtn with network manager join game
+        playButton.onClick.AddListener(delegate{ NetworkManager.instance.PlayOnlineGame(); }); // JoinTheGame(0)   Link playBtn with network manager join game
+        playWithBotButton.onClick.AddListener(delegate{ NetworkManager.instance.SetOffline(); }); // Link playWithBotBtn with network manager join game
     }
 }

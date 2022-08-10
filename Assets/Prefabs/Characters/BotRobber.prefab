@@ -6563,7 +6563,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c2ca8494d24cd94391365d8eceebe18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
+  animator: {fileID: 4873863652185589861}
   animatorController: {fileID: 0}
   originalAnimatorController: {fileID: 0}
 --- !u!114 &995072590878122508
@@ -6633,12 +6633,12 @@ GameObject:
   - component: {fileID: 4873863652774326897}
   - component: {fileID: 3297899692395224143}
   - component: {fileID: 5574523862193461057}
-  - component: {fileID: 6236526815953773368}
   - component: {fileID: 6557749845414040283}
   - component: {fileID: 47573947206781100}
   - component: {fileID: 317128564149766855}
   - component: {fileID: 4147937179886122447}
   - component: {fileID: 137068063876831814}
+  - component: {fileID: -700204878920868531}
   m_Layer: 0
   m_Name: BotRobber
   m_TagString: Robber
@@ -6777,41 +6777,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isHoldMoneybag: 0
   isCaught: 0
+  isInPrison: 0
   moneybagDisplay: {fileID: 4873863653376484252}
   jailCollider: {fileID: 3996950268745697785}
   isReleasing: 0
   releasedTimer: 0
-  releasedDuration: 2
+  releasedDuration: 1
   teammateGO: {fileID: 0}
   releaseBarCanvas: {fileID: 8870146493894900148}
   releaseBarSlider: {fileID: 1773977997113553568}
   gotchaUI: {fileID: 545568405973904666}
   bustedUI: {fileID: 5379399102363120631}
---- !u!114 &6236526815953773368
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4873863652774326898}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents:
-  - {fileID: 6557749845414040283}
-  - {fileID: 47573947206781100}
-  - {fileID: 317128564149766855}
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!114 &6557749845414040283
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6912,12 +6888,12 @@ MonoBehaviour:
   _map: {fileID: 0}
   maxSpeed: 8
   mass: 20
-  stoppingDistance: 0.4
+  stoppingDistance: 0.1
   slowingDistance: 1
   accelerationRate: 10
   decelerationRate: 10
   lookAheadDistance: 1
-  avoidRadius: 0
+  avoidRadius: 0.5
   centerOffset: {x: 0, y: 0}
   rotateTransform: 0
   rotateSpeed: 350
@@ -6964,7 +6940,28 @@ MonoBehaviour:
   isRoaming: 0
   inRange: 0
   idleTimer: 0
-  desireTarget: {fileID: 0}
+--- !u!114 &-700204878920868531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4873863652774326898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &4873863652798532647
 GameObject:
   m_ObjectHideFlags: 0

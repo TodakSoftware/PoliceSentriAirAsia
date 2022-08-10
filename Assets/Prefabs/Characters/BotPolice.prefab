@@ -12477,13 +12477,13 @@ GameObject:
   - component: {fileID: 7955344202334445020}
   - component: {fileID: 7955344202334445018}
   - component: {fileID: 1396765668}
-  - component: {fileID: 8147201350595214312}
   - component: {fileID: 1090073656761589282}
   - component: {fileID: 281718576190557907}
   - component: {fileID: 7289153599975524437}
   - component: {fileID: 6630326361857483945}
   - component: {fileID: 6986744180735014056}
   - component: {fileID: 8901212630340065726}
+  - component: {fileID: 2398935656547781103}
   m_Layer: 0
   m_Name: BotPolice
   m_TagString: Police
@@ -12607,31 +12607,6 @@ MonoBehaviour:
   cam2D: {fileID: 0}
   playerAnim: {fileID: 407786497}
   characterCode: P01
---- !u!114 &8147201350595214312
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7955344202334445017}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents:
-  - {fileID: 1090073656761589282}
-  - {fileID: 281718576190557907}
-  - {fileID: 6630326361857483945}
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!114 &1090073656761589282
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12744,7 +12719,7 @@ MonoBehaviour:
   botFacingRight: 0
   botDestinationReach: 0
   _map: {fileID: 0}
-  maxSpeed: 8
+  maxSpeed: 7
   mass: 20
   stoppingDistance: 0.3
   slowingDistance: 1
@@ -12788,7 +12763,7 @@ MonoBehaviour:
   isFalling: 0
   cam2D: {fileID: 0}
   playerAnim: {fileID: 407786497}
-  characterCode: 
+  characterCode: P04
   botAgent: {fileID: 6986744180735014056}
   currentTarget: {fileID: 0}
   isGoingToTarget: 0
@@ -12798,7 +12773,31 @@ MonoBehaviour:
   isRoaming: 0
   inRange: 0
   idleTimer: 0
-  desireTarget: {fileID: 0}
+--- !u!114 &2398935656547781103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7955344202334445017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 1090073656761589282}
+  - {fileID: 281718576190557907}
+  - {fileID: 6630326361857483945}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &7955344202809199671
 GameObject:
   m_ObjectHideFlags: 0
@@ -13073,7 +13072,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c2ca8494d24cd94391365d8eceebe18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
+  animator: {fileID: 7955344203932985294}
   animatorController: {fileID: 0}
   originalAnimatorController: {fileID: 0}
 --- !u!114 &1944702109894327942

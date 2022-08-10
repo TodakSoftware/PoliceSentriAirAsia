@@ -102,35 +102,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         
     } // end Start
 
-    public IEnumerator SpawnBots(){
-        yield return new WaitForSeconds(3);
-        // Fill in police 1st
-        if(GameManager.GetAllPlayersPolice().Count < (int)PhotonNetwork.CurrentRoom.CustomProperties["RoomPolicePerGame"]){
-            int polDif = (int)PhotonNetwork.CurrentRoom.CustomProperties["RoomPolicePerGame"] - GameManager.GetAllPlayersPolice().Count;
-            for(int i = 0; i < polDif; i++){
-                yield return new WaitForSeconds(Random.Range(0f, 1f));
-                GameObject player = PhotonNetwork.InstantiateRoomObject(NetworkManager.GetPhotonPrefab("Characters", "BotPolice"), GameManager.instance.waitingSpawnpoint.position + new Vector3(Random.Range(0,3f), Random.Range(0,3f), 0f), Quaternion.identity);
-                player.GetPhotonView().Owner.NickName = "BOT POLICE";
-                player.GetComponent<BotController>().enabled = true;
-                player.GetComponent<PlayerController>().CreateAvatar();
-            }
-            
-        }
-
-        // Fill in robber 1st
-        if(GameManager.GetAllPlayersRobber().Count < (int)PhotonNetwork.CurrentRoom.CustomProperties["RoomRobberPerGame"]){
-            int robDif = (int)PhotonNetwork.CurrentRoom.CustomProperties["RoomRobberPerGame"] - GameManager.GetAllPlayersRobber().Count;
-            for(int i = 0; i < robDif; i++){
-                yield return new WaitForSeconds(Random.Range(0f, 1f));
-                GameObject player = PhotonNetwork.InstantiateRoomObject(NetworkManager.GetPhotonPrefab("Characters", "BotRobber"), GameManager.instance.waitingSpawnpoint.position + new Vector3(Random.Range(0,3f), Random.Range(0,3f), 0f), Quaternion.identity);
-                player.GetPhotonView().Owner.NickName = "BOT ROBBER";
-                player.GetComponent<BotController>().enabled = true;
-                player.GetComponent<PlayerController>().CreateAvatar();
-            }
-            
-        }
-        
-    }
+    
 
     void Update(){
         // Moneybag Timer Related
@@ -188,12 +160,52 @@ public class GameManager : MonoBehaviourPunCallbacks
         UIManager.instance.cacheCharacterSelect.SetActive(true); // Active Character Select Screen
         UIManager.instance.p_CharacterSelect.InitializeAllCharacters(team); // Initialize all available characters
 
-        if(fillWithBots && PhotonNetwork.OfflineMode){
+        if(fillWithBots && PhotonNetwork.OfflineMode && PhotonNetwork.InRoom){
             if(PhotonNetwork.IsMasterClient){
                 StartCoroutine(SpawnBots());
             }
         }
     } // end SpawnSelectedCharacter
+
+    public IEnumerator SpawnBots(){
+        yield return new WaitForSeconds(2);
+        // Fill in police 1st
+        if(GameManager.GetAllPlayersPolice().Count < (int)PhotonNetwork.CurrentRoom.CustomProperties["RoomPolicePerGame"]){
+            int polDif = (int)PhotonNetwork.CurrentRoom.CustomProperties["RoomPolicePerGame"] - GameManager.GetAllPlayersPolice().Count;
+            for(int i = 0; i < polDif; i++){
+                yield return new WaitForSeconds(Random.Range(0f, 1f));
+                GameObject player = PhotonNetwork.InstantiateRoomObject(NetworkManager.GetPhotonPrefab("Characters", "BotPolice"), GameManager.instance.waitingSpawnpoint.position + new Vector3(Random.Range(0,3f), Random.Range(0,3f), 0f), Quaternion.identity);
+                player.GetPhotonView().Owner.NickName = "BOT POLICE";
+                player.GetComponent<BotController>().enabled = true;
+
+                var randomPoliceSkin = Random.Range(0, SOManager.instance.animVariantPolice.animatorLists.Count);
+                player.GetComponent<PlayerController>().characterCode = SOManager.instance.animVariantPolice.animatorLists[randomPoliceSkin].code;
+
+                //player.GetComponent<PlayerController>().CreateAvatar();
+                player.GetComponent<PlayerController>().SetupPlayerAnimator();
+            }
+            
+        }
+
+        // Fill in robber 1st
+        if(GameManager.GetAllPlayersRobber().Count < (int)PhotonNetwork.CurrentRoom.CustomProperties["RoomRobberPerGame"]){
+            int robDif = (int)PhotonNetwork.CurrentRoom.CustomProperties["RoomRobberPerGame"] - GameManager.GetAllPlayersRobber().Count;
+            for(int i = 0; i < robDif; i++){
+                yield return new WaitForSeconds(Random.Range(0f, 1f));
+                GameObject player = PhotonNetwork.InstantiateRoomObject(NetworkManager.GetPhotonPrefab("Characters", "BotRobber"), GameManager.instance.waitingSpawnpoint.position + new Vector3(Random.Range(0,3f), Random.Range(0,3f), 0f), Quaternion.identity);
+                player.GetPhotonView().Owner.NickName = "BOT ROBBER";
+                player.GetComponent<BotController>().enabled = true;
+                
+                var randomRobberSkin = Random.Range(0, SOManager.instance.animVariantRobber.animatorLists.Count);
+                player.GetComponent<PlayerController>().characterCode = SOManager.instance.animVariantRobber.animatorLists[randomRobberSkin].code;
+
+                //player.GetComponent<PlayerController>().CreateAvatar();
+                player.GetComponent<PlayerController>().SetupPlayerAnimator();
+            }
+            
+        }
+        
+    } // end SPawnBots
 
     public void ChooseRandom(){ // Choose Random Between Robber & Police
       // Ask GameManager to randomly choose
@@ -332,17 +344,21 @@ public class GameManager : MonoBehaviourPunCallbacks
 #region MID GAME RELATED
     public void UpdateAvatarsUI(){
         foreach(var btn in UIManager.instance.gameUI.avatarBtnList){
-            //foreach(Player player in GameManager.GetAllNetworkPlayers()){
-            //    if(btn.actorViewID == (int)player.CustomProperties["PlayerViewID"]){
-            //        btn.UpdateButton(player.CustomProperties["NetworkTeam"].ToString(), player.CustomProperties["CharacterCode"].ToString(), (bool)player.CustomProperties["PlayerCaught"], (bool)player.CustomProperties["PlayerHoldMoneybag"]);
-            //    }
-            //}
-            foreach(GameObject player in GameManager.GetAllPlayers()){
-                if(player.GetComponent<PlayerController>().myGUID.ToString() == btn.goID && player.GetComponent<Robber>() != null){
-                    print("Matched");
-                    btn.UpdateButton(player.tag.ToString(), player.GetComponent<PlayerController>().characterCode, player.GetComponent<Robber>().isCaught, player.GetComponent<Robber>().isHoldMoneybag);
+            
+            if(PhotonNetwork.OfflineMode){
+                foreach(GameObject player in GameManager.GetAllPlayers()){
+                    if(player.GetComponent<PlayerController>().myGUID.ToString() == btn.goID && player.GetComponent<Robber>() != null){
+                        btn.UpdateButton(player.tag.ToString(), player.GetComponent<PlayerController>().characterCode, player.GetComponent<Robber>().isCaught, player.GetComponent<Robber>().isHoldMoneybag);
+                    }
                 }
-            }
+            }else{
+                foreach(Player player in GameManager.GetAllNetworkPlayers()){
+                    if(btn.goID == player.CustomProperties["PlayerViewID"].ToString()){
+                        btn.UpdateButton(player.CustomProperties["NetworkTeam"].ToString(), player.CustomProperties["CharacterCode"].ToString(), (bool)player.CustomProperties["PlayerCaught"], (bool)player.CustomProperties["PlayerHoldMoneybag"]);
+                    }
+                }
+            } // end if offlinemode
+            
         }
     } // end UpdateAvatarsUI()
 

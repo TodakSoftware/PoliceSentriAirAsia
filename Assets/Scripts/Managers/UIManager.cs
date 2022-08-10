@@ -98,7 +98,7 @@ public class UIManager : MonoBehaviour
     }
 
     public IEnumerator UpdateUI_FindgameTimeout(float duration){ // Called by NetworkManager. For timeout countdown display when find game
-        while(timeoutTimer <= duration)
+        while(timeoutTimer <= duration && !NetworkManager.instance.isInGame)
         {
             timeoutTimer += Time.deltaTime;
 
@@ -112,7 +112,7 @@ public class UIManager : MonoBehaviour
             yield return null;
         }
 
-        if(timeoutTimer >= duration){
+        if(timeoutTimer >= duration && !NetworkManager.instance.isInGame){
             if(p_MainMenu != null){
                 p_MainMenu.timeoutDurationText.text = "TIMEOUT!";
             }

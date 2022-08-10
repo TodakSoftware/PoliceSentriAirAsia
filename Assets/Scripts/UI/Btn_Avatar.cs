@@ -15,9 +15,10 @@ public class Btn_Avatar : MonoBehaviourPunCallbacks
     [Header("Team Related")]
     public Sprite policeSlotBG;
     public Sprite robberSlotBG;
-    public string goID;
+    public string goID, charGO;
 
     public void SetupButton(string team, string playerNickname, string characterCode, string actorNmbr){ // Called by GameUI (CreateAvatar) 
+        charGO = characterCode;
         switch(team){
             case "Police":
                 slotBG.sprite = policeSlotBG;
@@ -48,7 +49,7 @@ public class Btn_Avatar : MonoBehaviourPunCallbacks
     }
 
     public void UpdateButton(string team, string CharCode, bool isCaught, bool holdMoneybag){ // Called everytime by GameManager(UpdateAvatarsUI) when player custom properties changed
-        print("Update Button: isCaught:" + isCaught + " | isHoldMoney:" + holdMoneybag);
+        charGO = CharCode;
         switch(team){
             case "Police":
                 foreach(var c in SOManager.instance.animVariantPolice.animatorLists){

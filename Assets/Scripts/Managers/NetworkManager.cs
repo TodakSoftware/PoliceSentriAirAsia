@@ -34,7 +34,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     [Header("Ingame Related")]
     [Tooltip("0 : Police & Robber (Normal Mode)")]
     int gameModeIndex = 0; // default = 0
-    public bool isInGame, isInTheRoom, isCreatingRoom;
+    public bool isInGame, isInTheRoom, isCreatingRoom,dontConnectInternet, joinedLobby;
+    
 
     void Awake(){
         if(instance == null){
@@ -43,10 +44,13 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             Destroy(this.gameObject);
         }
         DontDestroyOnLoad(gameObject);
+        
     }
 
     void Start(){
-        CheckForInternet(); // Check for internet
+        if(!dontConnectInternet){
+            CheckForInternet(); // Check for internet
+        }
         
         pool = PhotonNetwork.PrefabPool as DefaultPool;
         InitPrefabPooling(); // Start object pooling for photon gameobjects
@@ -59,30 +63,51 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
 
     void Update(){
-        CheckForInternet();
-        // Reason putting in Update() & not Start() because to make sure we keep checking if we are not connected
-        if(connectInUpdate && autoConnect && !PhotonNetwork.IsConnected && hasInternet){
-            connectInUpdate = false; // run only once
-            if(UIManager.instance.p_MainMenu != null){
-                UIManager.instance.p_MainMenu.playButton.interactable = false;
-                UIManager.instance.p_MainMenu.playText.text = "CONNECTING...";
-            }
+        if(!dontConnectInternet){
+            CheckForInternet();
+            // Reason putting in Update() & not Start() because to make sure we keep checking if we are not connected
+            Connectz();
+        }
 
-            PhotonNetwork.ConnectUsingSettings(); // Connect to master server using settings | Noted: ConnectUsingSettings("v0.0.1") <-- Also can
+        if(PhotonNetwork.IsConnectedAndReady && hasInternet && joinedLobby && !dontConnectInternet && UIManager.instance.p_MainMenu != null){
+            
+                if(!UIManager.instance.p_MainMenu.playButton.interactable)
+                UIManager.instance.p_MainMenu.playButton.interactable = true;
+        }
+        
+
+        if(Input.GetKeyDown(KeyCode.H)){ // Temporary, just for debugging
             
         }
 
-        if(Input.GetKeyDown(KeyCode.H)){ // Temporary, just for debugging
-            //UIManager.instance.PopupReconnectGame();
+        if(Input.GetKeyDown(KeyCode.J)){ // Temporary, just for debugging
+           
+        }
+
+        if(Input.GetKeyDown(KeyCode.Space)){ // Temporary, just for debugging
+            
         }
 
         if(isQueing && queingTimer < queingCooldown && !isInTheRoom && !doneQueing){
             StartCoroutine(QueingFindRoom());
             doneQueing = true;
         }
-
         
     } // end Update
+
+    public void Connectz(){
+        if(connectInUpdate && autoConnect && !PhotonNetwork.IsConnected && hasInternet){
+            connectInUpdate = false; // run only once
+            if(UIManager.instance.p_MainMenu != null){
+                UIManager.instance.p_MainMenu.playButton.interactable = false;
+                UIManager.instance.p_MainMenu.playText.text = "CONNECTING...";
+            }
+            PhotonNetwork.OfflineMode = false;
+            
+            PhotonNetwork.ConnectUsingSettings(); // Connect to master server using settings | Noted: ConnectUsingSettings("v0.0.1") <-- Also can
+            
+        }
+    }
 
     IEnumerator QueingFindRoom(){
         var timer = 0;
@@ -157,20 +182,34 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     // ----------------------- CONNECTION RELATED START -------------------
     public override void OnConnectedToMaster(){
-        if(UIManager.instance.p_MainMenu != null){
-            UIManager.instance.p_MainMenu.playButton.interactable = true;
-            UIManager.instance.p_MainMenu.playText.text = "PLAY";
+        
+        if(PhotonNetwork.IsConnected){
+            if(UIManager.instance.p_MainMenu.statusText != null)
+                UIManager.instance.p_MainMenu.statusText.text = "Network: <color=yellow>Initializing...</color>";
+
+            PhotonNetwork.JoinLobby(TypedLobby.Default);
+        }else{
+            print("not yet lobby");
         }
-        PhotonNetwork.JoinLobby(TypedLobby.Default);
+        
+
         connectInUpdate = true;
     } // end OnConnectedToMaster
 
     public override void OnJoinedLobby(){
         PhotonNetwork.AutomaticallySyncScene = true; // Enable AutoSyncScene
+        joinedLobby = true;
+
+        if(UIManager.instance.p_MainMenu.statusText != null)
+                UIManager.instance.p_MainMenu.statusText.text = "Network: <color=green>Connected</color>";
+
+        if(UIManager.instance.p_MainMenu != null){
+            UIManager.instance.p_MainMenu.playButton.interactable = true;
+            UIManager.instance.p_MainMenu.playText.text = "PLAY";
+        }
     } // end OnJoinedLobby
     
     public override void OnJoinedRoom(){ // Only host affected by this
-        print("Successfully join a room. Waiting for others to fill in");
         isInTheRoom = true;
 
         UpdateTotalFindGame(); // Update total players in room
@@ -258,8 +297,18 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnLeftRoom(){ // When player successfully left the room
         print("Player Has Left The Room Completely");
+        dontConnectInternet = false;
+        if(PhotonNetwork.IsConnected){
+            PhotonNetwork.NetworkingClient.State = ClientState.JoinedLobby;
+            PhotonNetwork.OfflineMode = false;
+            
+        }
+        
+        
         if(!isInGame){ // if we are in main menu
+            if(UIManager.instance.p_MainMenu.coroutinefindRoomTimeout != null)
             StopCoroutine(UIManager.instance.p_MainMenu.coroutinefindRoomTimeout); // Stop running courotine
+
             isInTheRoom = false;
         }else{
             // Redirect to main menu
@@ -295,16 +344,45 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public void CheckForInternet(){
         if(Application.internetReachability == NetworkReachability.NotReachable){
             hasInternet = false;
-            PhotonNetwork.OfflineMode = true;
+            //PhotonNetwork.OfflineMode = true;
 
             if(UIManager.instance.p_MainMenu != null){
-                UIManager.instance.p_MainMenu.playButton.interactable = true;
-                UIManager.instance.p_MainMenu.playText.text = "PLAY OFFLINE";
+                UIManager.instance.p_MainMenu.playButton.interactable = false;
+                UIManager.instance.p_MainMenu.playText.text = "No Network";
             }
         }else{
             hasInternet = true;
-            PhotonNetwork.OfflineMode = false;
+            //PhotonNetwork.OfflineMode = false;
+            if(UIManager.instance.p_MainMenu != null && joinedLobby){
+                UIManager.instance.p_MainMenu.playButton.interactable = true;
+                UIManager.instance.p_MainMenu.playText.text = "Play";
+            }
         }
+    }
+
+    public void SetOffline(){
+        //Application.internetReachability = NetworkReachability.NotReachable;
+        //PhotonNetwork.Disconnect();
+        PhotonNetwork.NetworkingClient.State = ClientState.PeerCreated;
+        dontConnectInternet = true;
+        //PhotonNetwork.NetworkingClient.Disconnect();
+        
+        StartCoroutine(CanJoinGame());
+    }
+
+    IEnumerator CanJoinGame(){
+        while(PhotonNetwork.IsConnected){
+            yield return new WaitForSeconds(1f);
+            print("retry canjoingame");
+            PhotonNetwork.Disconnect();
+        }
+        
+        if(!PhotonNetwork.IsConnected){
+            hasInternet = false;
+            PhotonNetwork.OfflineMode = true;
+            JoinTheGame(0);
+        }
+        
     }
 
     // ----------------------- CONNECTION RELATED END -------------------
@@ -360,6 +438,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         } // end PhotonNetwork.InRoom
 
     } // end UpdateTotalFindGame
+
+    public void PlayOnlineGame(){
+        PhotonNetwork.OfflineMode = false;
+        JoinTheGame(0);
+    }
     
     public void JoinTheGame(int modeIndex){ // Used by buttons in ChooseRole Screen
         isInGame = false;
@@ -388,6 +471,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
                 queingTimer = 0;
             }
             UIManager.instance.activeFindgameCancel(false);
+            print("HAS INTERNET");
         }else{
             if(!hasInternet){
                 print("No Internet, so we add bot, load offline level");

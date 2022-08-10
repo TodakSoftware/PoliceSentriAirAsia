@@ -24,11 +24,16 @@ public class BotController : PlayerController
 
     public bool inRange;
     public float idleTimer;
-    public Transform desireTarget;
+    bool doneStayAtEscapePoint;
     
     void Start()
     {
-        reactDelay = Random.Range(0.3f, .7f);
+        if(gameObject.tag == "Police"){
+            reactDelay = Random.Range(0.6f, .8f);
+        }else{
+            reactDelay = 0.3f;
+        }
+        
         if(GameManager.instance.gameStarted && !doneCachePlayers){
             cacheRobbers = GameManager.GetAllPlayersRobber();
             cachePolices = GameManager.GetAllPlayersPolice();
@@ -47,7 +52,7 @@ public class BotController : PlayerController
     }
 
     IEnumerator DelaySearchAllowed(){
-        yield return new WaitForSeconds(Random.Range(1, 5));
+        yield return new WaitForSeconds(Random.Range(1, 3));
         canSearch = true;
         StartCoroutine(HandleTargeting());
     }
@@ -87,19 +92,17 @@ public class BotController : PlayerController
                     isGoingToTarget = false;
                 }
                 
-                if(currentTarget == null && !isGoingToTarget && idleTimer > 0f){
-                    if(idleTimer <= 0){
-                        //Reset
-                        idleTimer = 0;
-                        isGoingToTarget = false;
-                        BotFindRandomGoToPoint();
-                    }else{
-                        idleTimer -= Time.deltaTime;
-                    }
-                }
+                /*if(currentTarget == null && isGoingToTarget && idleTimer <= 0){
+                    //Reset
+                    idleTimer = 0;
+                    isGoingToTarget = false;
+                    BotFindRandomGoToPoint();
+                }else{
+                    idleTimer -= Time.deltaTime;
+                }*/
 
-                if(currentTarget != null && currentTarget.GetComponent<Robber>() != null && currentTarget.GetComponent<Robber>().isCaught){
-                    print("Target Captured already");
+                if(gameObject.tag == "Robber" && GetComponent<Robber>().isCaught && !GetComponent<Robber>().isInPrison){
+                    botAgent.Stop();
                 }
             } // end canSearch
         } // end gameStarted && gameEnd
@@ -110,13 +113,16 @@ public class BotController : PlayerController
     public IEnumerator HandleTargeting(){
         switch(gameObject.tag){
             case "Robber":  // if we are robber, find moneybag, run from police, save teammates
-                if(!GameManager.instance.moneyBagOccupied){
+                if(!GameManager.instance.moneyBagOccupied && !GetComponent<Robber>().isCaught){
                     BotRobberFindMoneybag();
+                }else{
+                    BotFindRandomGoToPoint();
                 }
 
-                if(GetComponent<Robber>() != null && GetComponent<Robber>().isCaught){
+                if(GetComponent<Robber>() != null && GetComponent<Robber>().isCaught && !doneStayAtEscapePoint && GetComponent<Robber>().isInPrison){
                     BotRobberGotoEscapePoint();
                 }
+                
             break;
 
             case "Police":  // if we are police, find robber that !caught
@@ -159,10 +165,10 @@ public class BotController : PlayerController
             if(isRoaming){
                 isRoaming = false;
             }
-        }else if(currentTarget != null && currentTarget.GetComponent<Robber>().isCaught){
+        }else if(currentTarget != null && currentTarget.GetComponent<Robber>() != null && currentTarget.GetComponent<BotController>() != null && currentTarget.GetComponent<Robber>().isCaught){
+            currentTarget.GetComponent<BotController>().botAgent.Stop();
             currentTarget = null;
             previousTarget = currentTarget;
-            botAgent.Stop();
 
             doneSearchingNewTarget = false;
             inRange = false;
@@ -180,17 +186,31 @@ public class BotController : PlayerController
         }
     }
 
+    //public void BotRobberFindMoneybag(){
+    //    if(GetClosestMoneybag() != null && !GameManager.instance.moneyBagOccupied){ // Check robber is !caught
+    //        var targetMoneybag = GetClosestMoneybag().gameObject;
+    //        GoToTarget(targetMoneybag.transform);
+    //    }
+    //}
+
     public void BotRobberGotoEscapePoint(){
         var randomIndex = Random.Range(0, GameManager.instance.botEscapeSpawnpoints.Count);
         if(GetComponent<Robber>() != null && GetComponent<Robber>().isCaught){ // Check robber is !caught
             GoToTarget(GameManager.instance.botEscapeSpawnpoints[randomIndex]);
+            isRoaming = false;
+            doneStayAtEscapePoint = true;
         }
     }
 
     public void BotFindRandomGoToPoint(){
-        idleTimer = 5f;
+        
         switch(gameObject.tag){
             case "Robber":
+                // If currentTarget is Null, find random go to point, and set go to
+                if(currentTarget == null && !isRoaming && !GetComponent<Robber>().isCaught){ //  && !isGoingToTarget
+                    isRoaming = true;
+                    GoToTarget(GetRandomPositionTransform());
+                }
             break;
 
             case "Police":
@@ -287,7 +307,7 @@ public class BotController : PlayerController
     } // end GetClosestEnemy
 
     public void GoToTarget(Transform target){
-        desireTarget = target;
+        idleTimer = 15f;
         botAgent.SetDestination(target.position);
         isGoingToTarget = true;
         botAgent.botDestinationReach = false;

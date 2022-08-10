@@ -7,7 +7,7 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class Robber : MonoBehaviourPunCallbacks
 {
-    public bool isHoldMoneybag, isCaught;
+    public bool isHoldMoneybag, isCaught, isInPrison;
     public GameObject moneybagDisplay;
     public GameObject jailCollider;
 
@@ -149,6 +149,8 @@ public class Robber : MonoBehaviourPunCallbacks
             photonView.RPC("DisplayMoneybag", RpcTarget.All, false); // Hide moneybag
             photonView.RPC("DisableCollider", RpcTarget.All, false); // Enable Collider
             photonView.RPC("EnableJailCollider", RpcTarget.All, true); // Enable Jail COllider for released
+
+            isInPrison = true;
         }
     } // end RedirectToJailed()
 #endregion // end region CAUGHT RELATED
@@ -199,6 +201,7 @@ public class Robber : MonoBehaviourPunCallbacks
             isReleasing = true; // set is currentl rescued by teammates
             releasedTimer = releasedDuration; // set current releasedTimer = releaseDuration
             ShowReleaseBar(true);
+            isInPrison = false;
         }else{
             isReleasing = false; // set is currentl rescued by teammates
             ShowReleaseBar(false);

@@ -57,10 +57,28 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
         // Link Dash
         btnDash.GetComponent<Button>().onClick.AddListener(delegate{StartCoroutine(PlayerDash(dashDuration));});
+
+        // Bot Setup
+        /*if(GetComponent<BotController>() != null){
+            switch(gameObject.tag){
+                case "Police":
+                    var randomPoliceSkin = Random.Range(0, SOManager.instance.animVariantPolice.animatorLists.Count);
+                    characterCode = SOManager.instance.animVariantPolice.animatorLists[randomPoliceSkin].code;
+
+                break;
+
+                case "Robber":
+                    var randomRobberSkin = Random.Range(0, SOManager.instance.animVariantRobber.animatorLists.Count);
+                    characterCode = SOManager.instance.animVariantRobber.animatorLists[randomRobberSkin].code;
+
+                    
+                break;
+            }
+        }*/
     }
 
     void Start(){
-        print(myGUID.ToString());
+        
         if(!photonView.IsMine){
             return;
         }
@@ -258,8 +276,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 if(SOManager.instance.animVariantPolice.animatorLists.Count > 0){
                     foreach(var animator in SOManager.instance.animVariantPolice.animatorLists){
                         if(animator.code == characterCode){
-                            playerAnim.photonView.RPC("SwitchAnimController", RpcTarget.AllBuffered, "Police", animator.code);
+                            playerAnim.photonView.RPC("SwitchAnimController", RpcTarget.AllBuffered, "Police", characterCode);
                             playerAnim.originalAnimatorController = animator.runTimeAnimController;
+                            playerAnim.animator.runtimeAnimatorController = animator.runTimeAnimController;
 
                             if(photonView.IsMine){
                                 Hashtable teamRole = new Hashtable();
@@ -267,7 +286,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
                                 teamRole.Add("CharacterCode", characterCode);
                                 teamRole.Add("PlayerCaught", false);
                                 teamRole.Add("PlayerHoldMoneybag", false);
-                                teamRole.Add("PlayerViewID", photonView.ViewID);
+                                //teamRole.Add("PlayerViewID", photonView.ViewID);
+                                teamRole.Add("PlayerViewID", myGUID.ToString());
                                 PhotonNetwork.LocalPlayer.SetCustomProperties(teamRole);
                             }
                         }
@@ -279,8 +299,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 if(SOManager.instance.animVariantRobber.animatorLists.Count > 0){
                     foreach(var animator in SOManager.instance.animVariantRobber.animatorLists){
                         if(animator.code == characterCode){
-                            playerAnim.photonView.RPC("SwitchAnimController", RpcTarget.AllBuffered, "Robber", animator.code);
+                            playerAnim.photonView.RPC("SwitchAnimController", RpcTarget.AllBuffered, "Robber", characterCode);
                             playerAnim.originalAnimatorController = animator.runTimeAnimController;
+                            playerAnim.animator.runtimeAnimatorController = animator.runTimeAnimController;
 
                             if(photonView.IsMine){
                                 Hashtable teamRole = new Hashtable();
@@ -288,7 +309,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
                                 teamRole.Add("CharacterCode", characterCode);
                                 teamRole.Add("PlayerCaught", false);
                                 teamRole.Add("PlayerHoldMoneybag", false);
-                                teamRole.Add("PlayerViewID", photonView.ViewID);
+                                //teamRole.Add("PlayerViewID", photonView.ViewID);
+                                teamRole.Add("PlayerViewID", myGUID.ToString());
                                 PhotonNetwork.LocalPlayer.SetCustomProperties(teamRole);
                             }
                         }
@@ -310,13 +332,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         switch(playerTeam){
             case E_Team.POLICE:
                 var policeAvatar = Instantiate(UIManager.instance.gameUI.avatarBtnPrefab);
-                if(GetComponent<BotController>() != null){ // if we are bot
-                    var randomSkin = Random.Range(0, SOManager.instance.animVariantPolice.animatorLists.Count);
-
-                    policeAvatar.GetComponent<Btn_Avatar>().SetupButton("Police", GetComponent<PhotonView>().Owner.NickName, SOManager.instance.animVariantPolice.animatorLists[randomSkin].code, myGUID.ToString());
-                }else{
-                    policeAvatar.GetComponent<Btn_Avatar>().SetupButton("Police", GetComponent<PhotonView>().Owner.NickName, characterCode, myGUID.ToString());
-                }
+                policeAvatar.GetComponent<Btn_Avatar>().SetupButton("Police", GetComponent<PhotonView>().Owner.NickName, characterCode, myGUID.ToString());
                 
                 policeAvatar.transform.SetParent(UIManager.instance.gameUI.avatarPoliceContent,false);
                 UIManager.instance.gameUI.avatarBtnList.Add(policeAvatar.GetComponent<Btn_Avatar>());
@@ -330,13 +346,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
             case E_Team.ROBBER:
                 var robberAvatar = Instantiate(UIManager.instance.gameUI.avatarBtnPrefab);
-                if(GetComponent<BotController>() != null){ // if we are bot
-                    var randomSkin = Random.Range(0, SOManager.instance.animVariantRobber.animatorLists.Count);
-
-                    robberAvatar.GetComponent<Btn_Avatar>().SetupButton("Robber", GetComponent<PhotonView>().Owner.NickName, SOManager.instance.animVariantRobber.animatorLists[randomSkin].code, myGUID.ToString());
-                }else{
-                    robberAvatar.GetComponent<Btn_Avatar>().SetupButton("Robber", GetComponent<PhotonView>().Owner.NickName, characterCode, myGUID.ToString());
-                }
+                robberAvatar.GetComponent<Btn_Avatar>().SetupButton("Robber", GetComponent<PhotonView>().Owner.NickName, characterCode, myGUID.ToString());
                 
                 robberAvatar.transform.SetParent(UIManager.instance.gameUI.avatarRobberContent,false);
                 UIManager.instance.gameUI.avatarBtnList.Add(robberAvatar.GetComponent<Btn_Avatar>());
