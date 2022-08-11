@@ -181,7 +181,7 @@ public class GameManager : MonoBehaviourPunCallbacks
                 var randomPoliceSkin = Random.Range(0, SOManager.instance.animVariantPolice.animatorLists.Count);
                 player.GetComponent<PlayerController>().characterCode = SOManager.instance.animVariantPolice.animatorLists[randomPoliceSkin].code;
 
-                //player.GetComponent<PlayerController>().CreateAvatar();
+                player.GetComponent<PlayerController>().CreateAvatar();
                 player.GetComponent<PlayerController>().SetupPlayerAnimator();
             }
             
@@ -199,7 +199,7 @@ public class GameManager : MonoBehaviourPunCallbacks
                 var randomRobberSkin = Random.Range(0, SOManager.instance.animVariantRobber.animatorLists.Count);
                 player.GetComponent<PlayerController>().characterCode = SOManager.instance.animVariantRobber.animatorLists[randomRobberSkin].code;
 
-                //player.GetComponent<PlayerController>().CreateAvatar();
+                player.GetComponent<PlayerController>().CreateAvatar();
                 player.GetComponent<PlayerController>().SetupPlayerAnimator();
             }
             

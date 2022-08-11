@@ -6886,15 +6886,15 @@ MonoBehaviour:
   botFacingRight: 0
   botDestinationReach: 0
   _map: {fileID: 0}
-  maxSpeed: 8
+  maxSpeed: 7
   mass: 20
-  stoppingDistance: 0.1
+  stoppingDistance: 0.3
   slowingDistance: 1
-  accelerationRate: 10
-  decelerationRate: 10
+  accelerationRate: 7
+  decelerationRate: 7
   lookAheadDistance: 1
-  avoidRadius: 0.5
-  centerOffset: {x: 0, y: 0}
+  avoidRadius: 0.8
+  centerOffset: {x: 0, y: 0.5}
   rotateTransform: 0
   rotateSpeed: 350
   repath: 1
@@ -6940,6 +6940,7 @@ MonoBehaviour:
   isRoaming: 0
   inRange: 0
   idleTimer: 0
+  changeDirectionTimer: 0
 --- !u!114 &-700204878920868531
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6958,7 +6959,10 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 6557749845414040283}
+  - {fileID: 47573947206781100}
+  - {fileID: 317128564149766855}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0

@@ -23,8 +23,8 @@ public class BotController : PlayerController
     List<Transform> randomGoToPositions = new List<Transform>();
 
     public bool inRange;
-    public float idleTimer;
-    bool doneStayAtEscapePoint;
+    public float idleTimer, changeDirectionTimer;
+    bool doneStayAtEscapePoint, changeDirectionFromPolice;
     
     void Start()
     {
@@ -103,6 +103,10 @@ public class BotController : PlayerController
 
                 if(gameObject.tag == "Robber" && GetComponent<Robber>().isCaught && !GetComponent<Robber>().isInPrison){
                     botAgent.Stop();
+                    canSearch = false;
+                    GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                }else if(gameObject.tag == "Robber" && GetComponent<Robber>().isCaught && GetComponent<Robber>().isInPrison && !canSearch){
+                    canSearch = true;
                 }
             } // end canSearch
         } // end gameStarted && gameEnd
@@ -113,10 +117,28 @@ public class BotController : PlayerController
     public IEnumerator HandleTargeting(){
         switch(gameObject.tag){
             case "Robber":  // if we are robber, find moneybag, run from police, save teammates
-                if(!GameManager.instance.moneyBagOccupied && !GetComponent<Robber>().isCaught){
-                    BotRobberFindMoneybag();
-                }else{
-                    BotFindRandomGoToPoint();
+                if(!GetComponent<Robber>().isCaught){
+                    if(!GameManager.instance.moneyBagOccupied){
+                        BotRobberFindMoneybag();
+                    }else{
+                        if(!changeDirectionFromPolice){
+                            BotFindRandomGoToPoint();
+                        }
+                        
+                        if(GetClosestEnemy("Police") != null){
+                            if(changeDirectionTimer <= 0 && isRoaming){
+                                BotRobberAvoidPolice();
+                                //changeDirectionTimer = 0;
+                            }else if(changeDirectionTimer > 0){
+                                changeDirectionTimer -= Time.deltaTime;
+                            }
+                        }else{
+                            if(changeDirectionTimer != 0){
+                                changeDirectionTimer = 0;
+                            }
+                        }
+                        
+                    }
                 }
 
                 if(GetComponent<Robber>() != null && GetComponent<Robber>().isCaught && !doneStayAtEscapePoint && GetComponent<Robber>().isInPrison){
@@ -174,7 +196,7 @@ public class BotController : PlayerController
             inRange = false;
             BotFindRandomGoToPoint();
 
-        }else if(currentTarget == null && !isRoaming){
+        }else if(currentTarget == null && !isRoaming && !currentTarget.GetComponent<Robber>().isCaught){
             BotFindRandomGoToPoint();
         }
     }
@@ -186,12 +208,14 @@ public class BotController : PlayerController
         }
     }
 
-    //public void BotRobberFindMoneybag(){
-    //    if(GetClosestMoneybag() != null && !GameManager.instance.moneyBagOccupied){ // Check robber is !caught
-    //        var targetMoneybag = GetClosestMoneybag().gameObject;
-    //        GoToTarget(targetMoneybag.transform);
-    //    }
-    //}
+    public void BotRobberAvoidPolice(){
+        if(GetClosestEnemy("Police") != null && isRoaming && changeDirectionTimer <= 0){ // Check robber is !caught
+            var newTarget = GetRandomPositionTransform();
+            GoToTarget(newTarget.transform);
+            print("police detected, change new target");
+            changeDirectionTimer = .03f; 
+        }
+    }
 
     public void BotRobberGotoEscapePoint(){
         var randomIndex = Random.Range(0, GameManager.instance.botEscapeSpawnpoints.Count);

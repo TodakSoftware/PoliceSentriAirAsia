@@ -34,7 +34,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     [Header("Ingame Related")]
     [Tooltip("0 : Police & Robber (Normal Mode)")]
     int gameModeIndex = 0; // default = 0
-    public bool isInGame, isInTheRoom, isCreatingRoom,dontConnectInternet, joinedLobby;
+    public bool isInGame, isInTheRoom, isCreatingRoom,dontConnectInternet, joinedLobby, playOfflineGame;
     
 
     void Awake(){
@@ -63,7 +63,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
 
     void Update(){
-        if(!dontConnectInternet){
+        if(!dontConnectInternet && !playOfflineGame){
             CheckForInternet();
             // Reason putting in Update() & not Start() because to make sure we keep checking if we are not connected
             Connectz();
@@ -249,7 +249,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             RoomOptions roomOptions = new RoomOptions();
             roomOptions.PlayerTtl = -1; // -1 sec for infinite : Duration for player to reconnect before kicked / timeout
             if(PhotonNetwork.OfflineMode){
-                roomOptions.MaxPlayers = 10;
+                roomOptions.MaxPlayers = 3;
             }else{
                 roomOptions.MaxPlayers = maxPlayersPerRoom;
             }
@@ -265,9 +265,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             Hashtable roomProperties = new Hashtable();
             roomProperties.Add("RoomGamemodeIndex", gameModeIndex);
             if(PhotonNetwork.OfflineMode){
-                roomProperties.Add("RoomPolicePerGame", 4);
-                roomProperties.Add("RoomRobberPerGame", 6);
-                roomProperties.Add("RoomMaxTotalPlayer", 10);
+                roomProperties.Add("RoomPolicePerGame", 1);
+                roomProperties.Add("RoomRobberPerGame", 2);
+                roomProperties.Add("RoomMaxTotalPlayer", 3);
             }else{
                 roomProperties.Add("RoomPolicePerGame", maxPolicePerGame);
                 roomProperties.Add("RoomRobberPerGame", maxRobberPerGame);
@@ -301,6 +301,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         if(PhotonNetwork.IsConnected){
             PhotonNetwork.NetworkingClient.State = ClientState.JoinedLobby;
             PhotonNetwork.OfflineMode = false;
+            playOfflineGame = false;
             
         }
         
@@ -363,6 +364,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public void SetOffline(){
         //Application.internetReachability = NetworkReachability.NotReachable;
         //PhotonNetwork.Disconnect();
+        playOfflineGame = true;
         PhotonNetwork.NetworkingClient.State = ClientState.PeerCreated;
         dontConnectInternet = true;
         //PhotonNetwork.NetworkingClient.Disconnect();
