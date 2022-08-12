@@ -477,6 +477,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         }else{
             if(!hasInternet){
                 print("No Internet, so we add bot, load offline level");
+                UIManager.instance.PopupLoadingScene(); // Popup Loading Scene UI
                 HostTheRoom();
             }else{
                 print("Cannot Join. Because maybe you are in a room....maybe.");

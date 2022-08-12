@@ -7,7 +7,7 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class Robber : MonoBehaviourPunCallbacks
 {
-    public bool isHoldMoneybag, isCaught, isInPrison;
+    public bool isHoldMoneybag, isCaught, isInPrison, done;
     public GameObject moneybagDisplay;
     public GameObject jailCollider;
 
@@ -61,6 +61,13 @@ public class Robber : MonoBehaviourPunCallbacks
             }else{
                 releasedTimer -= Time.deltaTime;
                 releaseBarSlider.fillAmount = releasedTimer / releasedDuration;
+            }
+        }
+
+        if(isCaught && isInPrison && !done){
+            if(GetComponent<BotController>() != null){
+                StartCoroutine(GetComponent<BotController>().BotRobberGotoEscapePoint());
+                done = true;
             }
         }
     } // end Update()
@@ -125,6 +132,7 @@ public class Robber : MonoBehaviourPunCallbacks
             StartCoroutine(PopupGotchaBustedUI(false)); // popup busted UI
 
             UIManager.instance.NotificationPoliceCapture(policeName, GetComponent<PlayerController>().playerNameText.text.ToString()); // Popup Notification that police caught ourself
+        
         }else{
             isCaught = false;
             GetComponent<PlayerController>().playerNameText.color = Color.white;
@@ -136,6 +144,8 @@ public class Robber : MonoBehaviourPunCallbacks
     IEnumerator RedirectToJailed(float delay){
         yield return new WaitForSeconds(delay);
         transform.position = new Vector3(GameManager.instance.jailSpawnpoint.position.x + Random.Range(0,2f), GameManager.instance.jailSpawnpoint.position.y + Random.Range(0,2f), GameManager.instance.jailSpawnpoint.position.z);
+        
+
         if(photonView.IsMine){
             Hashtable updateData = new Hashtable();
             if(isHoldMoneybag){ // if we are holding moneybag

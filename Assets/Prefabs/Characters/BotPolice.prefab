@@ -12684,7 +12684,7 @@ MonoBehaviour:
   accelerationRate: 7
   decelerationRate: 7
   lookAheadDistance: 1
-  avoidRadius: 0.65
+  avoidRadius: 0.6
   centerOffset: {x: 0, y: 0.5}
   rotateTransform: 0
   rotateSpeed: 350

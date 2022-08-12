@@ -6778,6 +6778,7 @@ MonoBehaviour:
   isHoldMoneybag: 0
   isCaught: 0
   isInPrison: 0
+  done: 0
   moneybagDisplay: {fileID: 4873863653376484252}
   jailCollider: {fileID: 3996950268745697785}
   isReleasing: 0
@@ -6886,14 +6887,14 @@ MonoBehaviour:
   botFacingRight: 0
   botDestinationReach: 0
   _map: {fileID: 0}
-  maxSpeed: 7
+  maxSpeed: 8
   mass: 20
   stoppingDistance: 0.3
   slowingDistance: 1
   accelerationRate: 7
   decelerationRate: 7
   lookAheadDistance: 1
-  avoidRadius: 0.8
+  avoidRadius: 0.55
   centerOffset: {x: 0, y: 0.5}
   rotateTransform: 0
   rotateSpeed: 350

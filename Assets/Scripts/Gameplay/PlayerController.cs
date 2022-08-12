@@ -56,6 +56,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         btnDash = gameUI.dashButton.gameObject;
 
         // Link Dash
+        if(GetComponent<BotController>() == null)
         btnDash.GetComponent<Button>().onClick.AddListener(delegate{StartCoroutine(PlayerDash(dashDuration));});
 
         // Bot Setup

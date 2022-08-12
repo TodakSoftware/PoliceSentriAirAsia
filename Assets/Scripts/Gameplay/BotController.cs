@@ -24,7 +24,7 @@ public class BotController : PlayerController
 
     public bool inRange;
     public float idleTimer, changeDirectionTimer;
-    bool doneStayAtEscapePoint, changeDirectionFromPolice;
+    bool changeDirectionFromPolice;
     
     void Start()
     {
@@ -92,22 +92,6 @@ public class BotController : PlayerController
                     isGoingToTarget = false;
                 }
                 
-                /*if(currentTarget == null && isGoingToTarget && idleTimer <= 0){
-                    //Reset
-                    idleTimer = 0;
-                    isGoingToTarget = false;
-                    BotFindRandomGoToPoint();
-                }else{
-                    idleTimer -= Time.deltaTime;
-                }*/
-
-                if(gameObject.tag == "Robber" && GetComponent<Robber>().isCaught && !GetComponent<Robber>().isInPrison){
-                    botAgent.Stop();
-                    canSearch = false;
-                    GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-                }else if(gameObject.tag == "Robber" && GetComponent<Robber>().isCaught && GetComponent<Robber>().isInPrison && !canSearch){
-                    canSearch = true;
-                }
             } // end canSearch
         } // end gameStarted && gameEnd
 
@@ -139,10 +123,6 @@ public class BotController : PlayerController
                         }
                         
                     }
-                }
-
-                if(GetComponent<Robber>() != null && GetComponent<Robber>().isCaught && !doneStayAtEscapePoint && GetComponent<Robber>().isInPrison){
-                    BotRobberGotoEscapePoint();
                 }
                 
             break;
@@ -196,7 +176,7 @@ public class BotController : PlayerController
             inRange = false;
             BotFindRandomGoToPoint();
 
-        }else if(currentTarget == null && !isRoaming && !currentTarget.GetComponent<Robber>().isCaught){
+        }else if(currentTarget == null && !isRoaming){
             BotFindRandomGoToPoint();
         }
     }
@@ -212,18 +192,17 @@ public class BotController : PlayerController
         if(GetClosestEnemy("Police") != null && isRoaming && changeDirectionTimer <= 0){ // Check robber is !caught
             var newTarget = GetRandomPositionTransform();
             GoToTarget(newTarget.transform);
-            print("police detected, change new target");
             changeDirectionTimer = .03f; 
         }
     }
 
-    public void BotRobberGotoEscapePoint(){
+    public IEnumerator BotRobberGotoEscapePoint(){
+        yield return new WaitForSeconds(2f);
         var randomIndex = Random.Range(0, GameManager.instance.botEscapeSpawnpoints.Count);
-        if(GetComponent<Robber>() != null && GetComponent<Robber>().isCaught){ // Check robber is !caught
+        //if(GetComponent<Robber>() != null && GetComponent<Robber>().isCaught){ // Check robber is !caught
             GoToTarget(GameManager.instance.botEscapeSpawnpoints[randomIndex]);
             isRoaming = false;
-            doneStayAtEscapePoint = true;
-        }
+        //}
     }
 
     public void BotFindRandomGoToPoint(){
