@@ -25,7 +25,11 @@ public class BotController : PlayerController
     public bool inRange;
     public float idleTimer, changeDirectionTimer;
     bool changeDirectionFromPolice;
-    
+    // Rescue Related
+    public bool willSaveTeammate, suicideRescue, isGoingToRescue; // "willSaveTeammate = TRUE, will go save teammate. FALSE, will NEVER rescue | suicideRescue (if willSaveTeammate TRUE), TRUE = will stay until teammate rescued. FALSE = run away if police nearby"
+    public Transform targetRescue;
+    public Transform escapePointTarget;
+
     void Start()
     {
         if(gameObject.tag == "Police"){
@@ -83,7 +87,9 @@ public class BotController : PlayerController
                         currentTarget = null;
                         doneSearchingNewTarget = false;
                     }
-                }else if(currentTarget == null && gameObject.tag == "Police" && isRoaming && !isGoingToTarget){ //botAgent.botDestinationReach
+                }
+                
+                if(currentTarget == null && isRoaming && !isGoingToTarget){ //botAgent.botDestinationReach
                     BotFindRandomGoToPoint();
                 }
 
@@ -101,15 +107,15 @@ public class BotController : PlayerController
     public IEnumerator HandleTargeting(){
         switch(gameObject.tag){
             case "Robber":  // if we are robber, find moneybag, run from police, save teammates
-                if(!GetComponent<Robber>().isCaught){
-                    if(!GameManager.instance.moneyBagOccupied){
+                if(!GetComponent<Robber>().isCaught && !isGoingToRescue){
+                    if(!GameManager.instance.moneyBagOccupied){ // if no money taken, find moneybag
                         BotRobberFindMoneybag();
                     }else{
-                        if(!changeDirectionFromPolice){
+                        if(!changeDirectionFromPolice){ // if not police nearby, go random point
                             BotFindRandomGoToPoint();
                         }
                         
-                        if(GetClosestEnemy("Police") != null){
+                        if(GetClosestEnemy("Police") != null){ // if police nearby && !saveteammate, change new point
                             if(changeDirectionTimer <= 0 && isRoaming){
                                 BotRobberAvoidPolice();
                                 //changeDirectionTimer = 0;
@@ -121,9 +127,21 @@ public class BotController : PlayerController
                                 changeDirectionTimer = 0;
                             }
                         }
-                        
+                    } // end if moneybag occupied or not
+                }else{
+                    if(targetRescue != null && !targetRescue.GetComponent<Robber>().isCaught && isGoingToRescue){
+                        print("teammate Released, clear");
+                        targetRescue = null;
+                        isGoingToRescue = false;
+
                     }
-                }
+                }/*else if(willSaveTeammate && !GetComponent<Robber>().isCaught && isGoingToRescue && targetRescue != null){
+                    //GoToTarget(targetRescue);
+                    BotRobberSaveTeammate();
+                }else if(willSaveTeammate && isGoingToRescue && targetRescue != null && !targetRescue.GetComponent<Robber>().isCaught){
+                    targetRescue = null;
+                    isGoingToRescue = false;
+                } // end if !caught */
                 
             break;
 
@@ -188,21 +206,43 @@ public class BotController : PlayerController
         }
     }
 
+    public void BotRobberSaveTeammate(){
+        if(willSaveTeammate){
+            var filterTarget = GetClosestCapturedRobber();
+            
+            if(filterTarget != null && filterTarget.GetComponent<Robber>().isInPrison){ // Check robber is caught
+                targetRescue = filterTarget;
+                if(targetRescue.GetComponent<BotController>() != null){
+                    Transform child = targetRescue.GetComponent<BotController>().escapePointTarget.GetChild(0);
+                    if(child != null){
+                        GoToTarget(child);
+                    }
+                }
+                
+                isGoingToRescue = true;
+            }
+        }
+    }
+
     public void BotRobberAvoidPolice(){
         if(GetClosestEnemy("Police") != null && isRoaming && changeDirectionTimer <= 0){ // Check robber is !caught
             var newTarget = GetRandomPositionTransform();
             GoToTarget(newTarget.transform);
-            changeDirectionTimer = .03f; 
+            changeDirectionTimer = .02f; 
         }
     }
 
     public IEnumerator BotRobberGotoEscapePoint(){
-        yield return new WaitForSeconds(2f);
         var randomIndex = Random.Range(0, GameManager.instance.botEscapeSpawnpoints.Count);
-        //if(GetComponent<Robber>() != null && GetComponent<Robber>().isCaught){ // Check robber is !caught
-            GoToTarget(GameManager.instance.botEscapeSpawnpoints[randomIndex]);
-            isRoaming = false;
-        //}
+        yield return new WaitForSeconds(1f);
+        if(GetComponent<Robber>() != null && GetComponent<Robber>().isCaught){ // Check robber is !caught
+            escapePointTarget = GameManager.instance.botEscapeSpawnpoints[randomIndex];
+            GoToTarget(escapePointTarget);
+            GetComponent<Robber>().done = true;
+            GameManager.instance.TellBotRobberToRescue();
+            //isRoaming = false;
+        }
+        
     }
 
     public void BotFindRandomGoToPoint(){
@@ -277,6 +317,28 @@ public class BotController : PlayerController
         }else{
             foreach(GameObject potentialTarget in GameManager.GetAllPlayersPolice()){
             //foreach(GameObject potentialTarget in cachePolices){
+                Vector3 directionToTarget = potentialTarget.transform.position - currentPosition;
+                float dSqrToTarget = directionToTarget.sqrMagnitude;
+                if(dSqrToTarget < closestDistanceSqr)
+                {
+                    closestDistanceSqr = dSqrToTarget;
+                    bestTarget = potentialTarget.transform;
+                }
+            }
+        }
+        
+        return bestTarget;
+    } // end GetClosestEnemy
+
+    public Transform GetClosestCapturedRobber()
+    {
+        Transform bestTarget = null;
+        float closestDistanceSqr = Mathf.Infinity;
+        //float closestDistanceSqr = detectRange * 100f;
+        Vector3 currentPosition = transform.position;
+
+        foreach(GameObject potentialTarget in GameManager.GetAllPlayersRobber()){
+            if(potentialTarget.GetComponent<Robber>().isCaught){
                 Vector3 directionToTarget = potentialTarget.transform.position - currentPosition;
                 float dSqrToTarget = directionToTarget.sqrMagnitude;
                 if(dSqrToTarget < closestDistanceSqr)

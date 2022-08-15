@@ -10,6 +10,7 @@ public class Robber : MonoBehaviourPunCallbacks
     public bool isHoldMoneybag, isCaught, isInPrison, done;
     public GameObject moneybagDisplay;
     public GameObject jailCollider;
+    public bool readyToGoToEscape; // for bot only
 
     [Header("Released Related")]
     public bool isReleasing;
@@ -64,12 +65,7 @@ public class Robber : MonoBehaviourPunCallbacks
             }
         }
 
-        if(isCaught && isInPrison && !done){
-            if(GetComponent<BotController>() != null){
-                StartCoroutine(GetComponent<BotController>().BotRobberGotoEscapePoint());
-                done = true;
-            }
-        }
+            
     } // end Update()
     
     public IEnumerator PopupGotchaBustedUI(bool gotcha){
@@ -128,6 +124,12 @@ public class Robber : MonoBehaviourPunCallbacks
     public void SetIsCaught(bool caught, string policeName){
         if(caught){
             isCaught = true;
+
+            if(GetComponent<BotController>() != null){
+                GetComponent<PolyNavAgent>().Stop();
+                StartCoroutine(GetComponent<BotController>().PlayerFall(1.5f));
+            }
+
             GetComponent<PlayerController>().playerNameText.color = Color.red;
             StartCoroutine(PopupGotchaBustedUI(false)); // popup busted UI
 
@@ -144,7 +146,18 @@ public class Robber : MonoBehaviourPunCallbacks
     IEnumerator RedirectToJailed(float delay){
         yield return new WaitForSeconds(delay);
         transform.position = new Vector3(GameManager.instance.jailSpawnpoint.position.x + Random.Range(0,2f), GameManager.instance.jailSpawnpoint.position.y + Random.Range(0,2f), GameManager.instance.jailSpawnpoint.position.z);
-        
+        isInPrison = true;
+        readyToGoToEscape = true;
+
+        if(GetComponent<BotController>() != null){
+            if(isCaught && isInPrison && !done && readyToGoToEscape){
+                print("Can go to escape point");
+                if(GetComponent<BotController>() != null){
+                    StartCoroutine(GetComponent<BotController>().BotRobberGotoEscapePoint());
+                }
+            }
+        }
+
 
         if(photonView.IsMine){
             Hashtable updateData = new Hashtable();
@@ -159,8 +172,6 @@ public class Robber : MonoBehaviourPunCallbacks
             photonView.RPC("DisplayMoneybag", RpcTarget.All, false); // Hide moneybag
             photonView.RPC("DisableCollider", RpcTarget.All, false); // Enable Collider
             photonView.RPC("EnableJailCollider", RpcTarget.All, true); // Enable Jail COllider for released
-
-            isInPrison = true;
         }
     } // end RedirectToJailed()
 #endregion // end region CAUGHT RELATED
@@ -194,6 +205,11 @@ public class Robber : MonoBehaviourPunCallbacks
             
             GetOutOfJailed(teammateGO.transform.position);
             teammateGO = null; // Clear existing saviour
+
+            isInPrison = false;
+            done = false;
+            readyToGoToEscape = false;
+            GetComponent<BotController>().escapePointTarget = null;
         }
         
     } // end HasBeenReleased()
@@ -211,7 +227,7 @@ public class Robber : MonoBehaviourPunCallbacks
             isReleasing = true; // set is currentl rescued by teammates
             releasedTimer = releasedDuration; // set current releasedTimer = releaseDuration
             ShowReleaseBar(true);
-            isInPrison = false;
+            
         }else{
             isReleasing = false; // set is currentl rescued by teammates
             ShowReleaseBar(false);

@@ -522,6 +522,10 @@ public class GameManager : MonoBehaviourPunCallbacks
                 caughtCount += 1;
             }
         } // end foreach
+
+        //if(caughtCount > 0){
+        //    TellBotRobberToRescue();
+        //}
         return caughtCount;
     }
 
@@ -531,6 +535,15 @@ public class GameManager : MonoBehaviourPunCallbacks
             moneyBagOccupied = true;
         }else{
             moneyBagOccupied = false;
+        }
+    }
+
+    public void TellBotRobberToRescue(){
+        foreach(var bot in GetAllPlayersRobber()){
+            if(bot.GetComponent<BotController>() != null && !bot.GetComponent<Robber>().isCaught){
+                bot.GetComponent<BotController>().BotRobberSaveTeammate();
+                print("TellBotRobberToRescue Rnning");
+            }
         }
     }
 

@@ -6683,7 +6683,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.5581858}
+  m_Offset: {x: 0, y: 0.4}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -6694,7 +6694,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 0.90350294}
+  m_Size: {x: 0.5, y: 0.6}
   m_EdgeRadius: 0
 --- !u!58 &4873863652774326903
 CircleCollider2D:
@@ -6781,6 +6781,7 @@ MonoBehaviour:
   done: 0
   moneybagDisplay: {fileID: 4873863653376484252}
   jailCollider: {fileID: 3996950268745697785}
+  readyToGoToEscape: 0
   isReleasing: 0
   releasedTimer: 0
   releasedDuration: 1
@@ -6889,13 +6890,13 @@ MonoBehaviour:
   _map: {fileID: 0}
   maxSpeed: 8
   mass: 20
-  stoppingDistance: 0.3
+  stoppingDistance: 0.1
   slowingDistance: 1
   accelerationRate: 7
   decelerationRate: 7
   lookAheadDistance: 1
-  avoidRadius: 0.55
-  centerOffset: {x: 0, y: 0.5}
+  avoidRadius: 0.45
+  centerOffset: {x: 0, y: 0.28}
   rotateTransform: 0
   rotateSpeed: 350
   repath: 1
@@ -6942,6 +6943,11 @@ MonoBehaviour:
   inRange: 0
   idleTimer: 0
   changeDirectionTimer: 0
+  willSaveTeammate: 1
+  suicideRescue: 0
+  isGoingToRescue: 0
+  targetRescue: {fileID: 0}
+  escapePointTarget: {fileID: 0}
 --- !u!114 &-700204878920868531
 MonoBehaviour:
   m_ObjectHideFlags: 0
