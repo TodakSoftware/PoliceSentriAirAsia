@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7338695529578798318}
   - component: {fileID: 7338695529578798319}
   m_Layer: 15
-  m_Name: Deco_Wall_Light02
+  m_Name: deco_wall_light02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

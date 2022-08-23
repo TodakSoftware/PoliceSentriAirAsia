@@ -25,4 +25,9 @@ public class UI_GameplayFeeds : MonoBehaviour
         GetComponent<TextMeshProUGUI>().text = robberName + " has been released by " + teammateName;
         GetComponent<CanvasGroup>().DOFade(0f, .5f).SetDelay(3f).OnComplete(() => { Destroy(gameObject); });
     }
+
+    public void SetTextReleasedByLockpick(string robberName){
+        GetComponent<TextMeshProUGUI>().text = robberName + " has escaped using lockpick";
+        GetComponent<CanvasGroup>().DOFade(0f, .5f).SetDelay(3f).OnComplete(() => { Destroy(gameObject); });
+    }
 }

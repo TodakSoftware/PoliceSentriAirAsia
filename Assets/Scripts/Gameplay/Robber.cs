@@ -139,6 +139,7 @@ public class Robber : MonoBehaviourPunCallbacks
             isCaught = false;
             GetComponent<PlayerController>().playerNameText.color = Color.white;
 
+            if(teammateName != null)
             UIManager.instance.NotificationReleasedBy(GetComponent<PlayerController>().playerNameText.text.ToString(), teammateName); // Popup Notification that police caught ourself
         }
     }
@@ -153,11 +154,12 @@ public class Robber : MonoBehaviourPunCallbacks
             if(isCaught && isInPrison && !done && readyToGoToEscape){
                 print("Can go to escape point");
                 if(GetComponent<BotController>() != null){
-                    StartCoroutine(GetComponent<BotController>().BotRobberGotoEscapePoint());
+                    GetComponent<BotController>().BotRobberGotoEscapePoint();
                 }
             }
+        }else{
+            GameManager.instance.TellBotRobberToRescue();
         }
-
 
         if(photonView.IsMine){
             Hashtable updateData = new Hashtable();
@@ -209,7 +211,7 @@ public class Robber : MonoBehaviourPunCallbacks
             isInPrison = false;
             done = false;
             readyToGoToEscape = false;
-            GetComponent<BotController>().escapePointTarget = null;
+            //GetComponent<BotController>().escapePointTarget = null;
         }
         
     } // end HasBeenReleased()
@@ -233,6 +235,46 @@ public class Robber : MonoBehaviourPunCallbacks
             ShowReleaseBar(false);
         }
     } // end SetIsReleasing()
+
+    [PunRPC]
+    public void PicklockReleased(string robberName, E_EscapeArea jailArea, Vector3 location){
+        // Notify global robber has been released
+        if(photonView.IsMine && isCaught){
+
+        photonView.RPC("SetIsCaught", RpcTarget.AllBuffered, false, ""); // Passing empty "" because dont need
+        //photonView.RPC("SetIsReleasing", RpcTarget.AllBuffered, false);
+        Hashtable updateData = new Hashtable();
+        updateData.Add("PlayerCaught", false); // Set PlayerCaught -> FALSE
+        PhotonNetwork.LocalPlayer.SetCustomProperties(updateData);
+
+        print("Get out of jailed with lockpick");
+
+        switch(jailArea){
+            case E_EscapeArea.TOP:
+                transform.position = location + new Vector3(0, 3f, 0);
+            break;
+
+            case E_EscapeArea.RIGHT:
+                transform.position = location + new Vector3(3f, 0, 0);
+            break;
+
+            case E_EscapeArea.BOTTOM:
+                transform.position = location + new Vector3(0, -3f, 0);
+            break;
+
+            case E_EscapeArea.LEFT:
+                transform.position = location + new Vector3(-3f, 0, 0);
+            break;
+        }
+
+        photonView.RPC("EnableJailCollider", RpcTarget.All, false); // Enable Jail COllider for released
+        isInPrison = false;
+        done = false;
+        readyToGoToEscape = false;
+
+        UIManager.instance.NotificationReleasedByLockpick(GetComponent<PlayerController>().playerNameText.text.ToString());
+        }
+    }
 
 #endregion // end region RELEASED RELATED
 

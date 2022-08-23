@@ -84,8 +84,8 @@ public class UIManager : MonoBehaviour
     public IEnumerator CloseFindGame(float duration){
         if(p_MainMenu != null){
             yield return new WaitForSeconds(duration);
-            p_MainMenu.findGameGO.SetActive(false);
             NetworkManager.instance.CancelFindGameOrLeaveRoom(); // tell networkmanager to close the finding
+            p_MainMenu.findGameGO.SetActive(false);
         }
     }
 
@@ -109,12 +109,16 @@ public class UIManager : MonoBehaviour
             if(p_MainMenu != null){
                 p_MainMenu.timeoutDurationText.text = formattedTimer;
             }
+
+            //NetworkManager.instance.UpdateTotalFindGame();
+
             yield return null;
         }
 
         if(timeoutTimer >= duration && !NetworkManager.instance.isInGame){
             if(p_MainMenu != null){
                 p_MainMenu.timeoutDurationText.text = "TIMEOUT!";
+                NetworkManager.instance.CancelFindGameOrLeaveRoom();
             }
             StartCoroutine(CloseFindGame(.3f)); // Close find game UI 
         }
@@ -241,6 +245,14 @@ public class UIManager : MonoBehaviour
     public void NotificationReleasedBy(string robberName, string teammateName){
         var noti = Instantiate(SOManager.instance.prefabs.ui_GameplayFeeds);
         noti.GetComponent<UI_GameplayFeeds>().SetTextReleasedBy(robberName, teammateName);
+        noti.transform.SetParent(UIManager.instance.gameUI.feedsGroupContent.transform, false);
+
+        GameManager.instance.UpdateAvatarsUI();
+    }
+
+    public void NotificationReleasedByLockpick(string robberName){
+        var noti = Instantiate(SOManager.instance.prefabs.ui_GameplayFeeds);
+        noti.GetComponent<UI_GameplayFeeds>().SetTextReleasedByLockpick(robberName);
         noti.transform.SetParent(UIManager.instance.gameUI.feedsGroupContent.transform, false);
 
         GameManager.instance.UpdateAvatarsUI();

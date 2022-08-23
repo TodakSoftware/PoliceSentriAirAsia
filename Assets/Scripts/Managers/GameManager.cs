@@ -17,8 +17,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     public List<Transform> policeSpawnpoints = new List<Transform>();
     public List<Transform> robberSpawnpoints = new List<Transform>();
     public List<Transform> moneybagSpawnpoints = new List<Transform>();
-    public GameObject botEscapeGO;
-    public List<Transform> botEscapeSpawnpoints = new List<Transform>();
+    [HideInInspector] public GameObject botEscapeGO;
+    [HideInInspector] public List<Transform> botEscapeSpawnpoints = new List<Transform>();
 
     [Header("Moneybag Related")]
     [SerializeField] int timerStart; // <-- Will link to Game Mode settings (Clock Start)
@@ -47,6 +47,9 @@ public class GameManager : MonoBehaviourPunCallbacks
     public bool donePopupWinUI;
     public GameObject endScreenGO;
     public TextMeshProUGUI endScreenRedirectText;
+    public bool endGamePlayAgain; // if true, will stay in the game
+    public int playAgainCount;
+    bool askForHelpActivated;
 
 
     void Awake(){
@@ -99,6 +102,11 @@ public class GameManager : MonoBehaviourPunCallbacks
         UpdateTeamCount(); // Update Manual Select Role on 1st load
 
         SpawnAllMoneybag(); // Spawn moneybag
+
+        // Disable PlayAgainButton on Masterclient
+        if(PhotonNetwork.IsMasterClient){
+            endScreenGO.GetComponent<P_EndScreen>().playAgainBtn.gameObject.SetActive(false);
+        }
         
     } // end Start
 
@@ -239,6 +247,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             gameStarted = true;
 
             print("Redirect Everybody To Their Position");
+            //StartCoroutine(GameManager.instance.AskForHelp());
             var policePos = 0;
             var robberPos = 0;
             foreach(var g in GetAllPlayers()){
@@ -268,11 +277,11 @@ public class GameManager : MonoBehaviourPunCallbacks
     public void UpdateTeamCount(){
         int policeCount = 0;
         int robberCount = 0;
-        foreach (var p in GetAllPlayers())
+        foreach (GameObject p in GetAllPlayers())
         {
-            if(p.GetComponent<PlayerController>().playerTeam == E_Team.POLICE){
+            if(p.GetComponent<PlayerController>() != null && p.GetComponent<PlayerController>().playerTeam == E_Team.POLICE){
                 policeCount++;
-            }else if(p.GetComponent<PlayerController>().playerTeam == E_Team.ROBBER){
+            }else if(p.GetComponent<PlayerController>() != null && p.GetComponent<PlayerController>().playerTeam == E_Team.ROBBER){
                 robberCount++;
             }
         }
@@ -345,19 +354,11 @@ public class GameManager : MonoBehaviourPunCallbacks
     public void UpdateAvatarsUI(){
         foreach(var btn in UIManager.instance.gameUI.avatarBtnList){
             
-            if(PhotonNetwork.OfflineMode){
-                foreach(GameObject player in GameManager.GetAllPlayers()){
-                    if(player.GetComponent<PlayerController>().myGUID.ToString() == btn.goID && player.GetComponent<Robber>() != null){
-                        btn.UpdateButton(player.tag.ToString(), player.GetComponent<PlayerController>().characterCode, player.GetComponent<Robber>().isCaught, player.GetComponent<Robber>().isHoldMoneybag);
-                    }
+            foreach(Player player in GetAllNetworkPlayers()){
+                if(btn.goID == player.CustomProperties["PlayerViewID"].ToString()){
+                    btn.UpdateButton(player.CustomProperties["NetworkTeam"].ToString(), player.CustomProperties["CharacterCode"].ToString(), (bool)player.CustomProperties["PlayerCaught"], (bool)player.CustomProperties["PlayerHoldMoneybag"]);
                 }
-            }else{
-                foreach(Player player in GameManager.GetAllNetworkPlayers()){
-                    if(btn.goID == player.CustomProperties["PlayerViewID"].ToString()){
-                        btn.UpdateButton(player.CustomProperties["NetworkTeam"].ToString(), player.CustomProperties["CharacterCode"].ToString(), (bool)player.CustomProperties["PlayerCaught"], (bool)player.CustomProperties["PlayerHoldMoneybag"]);
-                    }
-                }
-            } // end if offlinemode
+            }
             
         }
     } // end UpdateAvatarsUI()
@@ -412,23 +413,58 @@ public class GameManager : MonoBehaviourPunCallbacks
     public void PopupEndScreen(){
         endScreenGO.SetActive(true);
         StartCoroutine(RedirectNewMap(5));
-
+        // Default Host will create a new game
+        if(PhotonNetwork.IsMasterClient){
+            endGamePlayAgain = true;
+        }
     } // end PopupEndScreen
 
     IEnumerator RedirectNewMap(float duration){
         float timer = duration;
         while(timer > 0){
-            endScreenRedirectText.text = "Leave game in " + timer;
+            if(!endGamePlayAgain){
+                endScreenRedirectText.text = "Leave game in " + timer;
+            }else{
+                endScreenRedirectText.text = "Next game in " + timer;
+            }
+            
             timer -= 1;
             yield return new WaitForSeconds(1);
         }
 
         if(timer <= 0){
             timer = 0;
-            endScreenRedirectText.text = "Bye-bye!";
+            
             //NetworkManager.instance.CancelFindGameOrLeaveRoom(); // Leave Room
-            PhotonNetwork.LeaveRoom();
+            if(endGamePlayAgain){
+                if(PhotonNetwork.IsMasterClient){
+                    endScreenRedirectText.text = "Creating New Game. " + (playAgainCount + 1) + " Players" ;
+                    print("Host bring all people to new map");
+                    NetworkManager.instance.HostWithCustomPlayer((playAgainCount + 1));
+                    photonView.RPC("Boom", RpcTarget.All);
+                }else{
+                    endScreenRedirectText.text = "Waiting For Host...";
+                }
+            }else{
+                endScreenRedirectText.text = "Bye-bye!";
+                PhotonNetwork.LeaveRoom();
+            }
         }
+    } // end redirect
+
+    [PunRPC]
+    public void Boom(){
+        StartCoroutine(NetworkManager.instance.ChangeScene(NetworkManager.instance.GetRandomMap()));// Host load level
+    }
+
+    public void AskHostToPlayAgain(){
+        if(!PhotonNetwork.IsMasterClient)
+        photonView.RPC("AddPlayAgainList", RpcTarget.MasterClient);
+    }
+
+    [PunRPC]
+    public void AddPlayAgainList(){
+        playAgainCount += 1;
     }
 #endregion // end END GAME RELATED
 
@@ -522,10 +558,6 @@ public class GameManager : MonoBehaviourPunCallbacks
                 caughtCount += 1;
             }
         } // end foreach
-
-        //if(caughtCount > 0){
-        //    TellBotRobberToRescue();
-        //}
         return caughtCount;
     }
 
@@ -542,7 +574,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         foreach(var bot in GetAllPlayersRobber()){
             if(bot.GetComponent<BotController>() != null && !bot.GetComponent<Robber>().isCaught){
                 bot.GetComponent<BotController>().BotRobberSaveTeammate();
-                print("TellBotRobberToRescue Rnning");
+                print("TellRobber to rescue");
             }
         }
     }

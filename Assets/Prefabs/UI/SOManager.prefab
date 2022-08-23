@@ -49,3 +49,4 @@ MonoBehaviour:
   prefabs: {fileID: 11400000, guid: 89910ecd29c0c044f9fac76dc3ed0644, type: 2}
   animVariantPolice: {fileID: 11400000, guid: 10557bfc4c7e4c842be3d121a37f51a3, type: 2}
   animVariantRobber: {fileID: 11400000, guid: 4ffdb5f9cc38bbc4bb05ab9eb0a3e94d, type: 2}
+  sharedVariant: {fileID: 11400000, guid: d906beeee81b18a45a2f77b90e8c0fbf, type: 2}

@@ -6001,6 +6001,9 @@ GameObject:
   - component: {fileID: 4752563247577771860}
   - component: {fileID: 7286462797981906344}
   - component: {fileID: 8720704872746124389}
+  - component: {fileID: 5661754936302895626}
+  - component: {fileID: 8860714669492293784}
+  - component: {fileID: 3208183170141537763}
   m_Layer: 0
   m_Name: PropUndercover
   m_TagString: Untagged
@@ -6106,6 +6109,89 @@ SortingGroup:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &5661754936302895626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4399682765701401749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d95a4b3a27ca8f54d8139cd060243a5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerSprite: {fileID: 7955344203932985295}
+  playerNameCanvas: {fileID: 8139221167767283483}
+  isActive: 0
+  propList:
+  - {fileID: 21300000, guid: 7535db6ea30cb6b49a8b80030c2adb5c, type: 3}
+  - {fileID: 21300000, guid: 9634905c0cab82b46b0a6d8a6aedf418, type: 3}
+  - {fileID: 21300000, guid: c315bd87c44d4324489597d26fafc60e, type: 3}
+  - {fileID: 21300000, guid: 4ad100e1e7fcb2141be88a053de1ce83, type: 3}
+  - {fileID: 21300000, guid: 720300ca3cc841a4aa2599fccf0f7e39, type: 3}
+  - {fileID: 21300000, guid: d1747acdc2273844e823f3664b441a25, type: 3}
+  - {fileID: 21300000, guid: 6136e4d53ca31364994eaf9bb72dce0f, type: 3}
+  - {fileID: 21300000, guid: 194730120120448429c1d5c4660b3c9f, type: 3}
+  - {fileID: 21300000, guid: aed03e379e7d5024c98751cbcf46164c, type: 3}
+  - {fileID: 21300000, guid: 5b3d08e3bdb4b8b4da47f0c3224c7d1f, type: 3}
+  - {fileID: 21300000, guid: 28b9f2cd69cf12a45b6200bf8db7700e, type: 3}
+  - {fileID: 21300000, guid: 59d49a72958b5f44dbd3159ce9771663, type: 3}
+  - {fileID: 21300000, guid: 1b3cfc58e35f01945bbbe751cf8b24a5, type: 3}
+  - {fileID: 21300000, guid: 02fe8d512c02c734785fe221f9faf9e9, type: 3}
+  - {fileID: 21300000, guid: ef45ad97fd4b04c0c9c1971b54551515, type: 3}
+  - {fileID: 21300000, guid: 8bf31af8125df6f4bbee0e1e829bbec5, type: 3}
+  - {fileID: 21300000, guid: 65d1cc0fe5291482da3192b2a56a638c, type: 3}
+  - {fileID: 21300000, guid: cd7128ad19f1f417cad92f4cb40c5c87, type: 3}
+  - {fileID: 21300000, guid: 1125df1ecd331a9408df72d58986e52a, type: 3}
+  - {fileID: 21300000, guid: b5cf3f0b2b059da4199f7438172f8340, type: 3}
+  - {fileID: 21300000, guid: 9fb55988c336fee46ab2126f341eefd6, type: 3}
+  - {fileID: 21300000, guid: 1aba3f12e9535184e9bf1c1516d875e5, type: 3}
+  - {fileID: 21300000, guid: 77044e015c97e413a99c36f57018bb17, type: 3}
+--- !u!114 &8860714669492293784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4399682765701401749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 4
+    SynchronizeType: 2
+    Name: Walk
+  m_SynchronizeLayers:
+  - SynchronizeType: 0
+    LayerIndex: 0
+--- !u!114 &3208183170141537763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4399682765701401749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 8860714669492293784}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &4492971479608518389
 GameObject:
   m_ObjectHideFlags: 0
@@ -12483,6 +12569,7 @@ GameObject:
   - component: {fileID: 4712356564564569494}
   - component: {fileID: 4941216700086080679}
   - component: {fileID: 1265834789836360676}
+  - component: {fileID: -6752427666255161062}
   m_Layer: 0
   m_Name: CharacterPolice
   m_TagString: Police
@@ -12547,7 +12634,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTeam: 0
+  rb: {fileID: 0}
+  moveDir: {x: 0, y: 0, z: 0}
   isFacingRight: 0
+  gameUI: {fileID: 0}
   moveSpeed: 8
   canMove: 1
   isMoving: 0
@@ -12560,7 +12650,11 @@ MonoBehaviour:
   dashCooldown: 3
   isDashing: 0
   isDashCooldown: 0
+  isDashingButtonDown: 0
   isFalling: 0
+  aimPoint: {fileID: 5961890606208670812}
+  throwPoint: {fileID: 7574774102801843639}
+  throwDistance: 20
   cam2D: {fileID: 0}
   playerAnim: {fileID: 407786497}
   characterCode: P01
@@ -12758,6 +12852,43 @@ MonoBehaviour:
   restrict: 0
   closerPointOnInvalid: 1
   debugPath: 1
+--- !u!114 &-6752427666255161062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7955344202334445017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1466b2294ed8ee459fefa2002fb3ea0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hasItem: 0
+  radarTimer: 0
+  radarActivated: 0
+  radarZoomVal: 0
+  isItemDashingButtonDown: 0
+  escapeArea: 0
+  hasLockpick: 0
+  lockpickUsed: 0
+  lockpickTimer: 0
+  lockpickDur: 0
+  onUndercover: 0
+  undercoverTimer: 0
+  onCaughtImmune: 0
+  caughtImmuneTimer: 0
+  propUndercover: 0
+  propUndercoverTimer: 0
+  propUndercoverGO: {fileID: 4399682765701401749}
+  charInvisible: 0
+  charInvisibleTimer: 0
+  stickyEnable: 0
+  canSpawnSticky: 0
+  stickyCount: 0
+  stickyTotal: 5
+  stickDuration: 0
+  catStunned: 0
 --- !u!1 &7955344202809199671
 GameObject:
   m_ObjectHideFlags: 0

@@ -62,7 +62,7 @@ public class SimpleObjectWaypoint : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void LateUpdate()
     {
-        if(canMove){
+        if(canMove && !GameManager.instance.gameEnded){
             if(waypoints.Length != 0){
                 if(randomMove){
                     transform.position = Vector2.MoveTowards(transform.position, waypoints[randomWaypointIndex].position, moveSpeed * Time.deltaTime);
@@ -77,10 +77,10 @@ public class SimpleObjectWaypoint : MonoBehaviourPunCallbacks
 
                             if((waypoints[randomWaypointIndex].position.x - transform.position.x) > 0f){
                                 //GetComponent<SpriteRenderer>().flipX = true;
-                                photonView.RPC("FlipRight", RpcTarget.AllBuffered);
+                                photonView.RPC("FlipRight", RpcTarget.All);
                             }else{
                                 //GetComponent<SpriteRenderer>().flipX = false;
-                                photonView.RPC("FlipLeft", RpcTarget.AllBuffered);
+                                photonView.RPC("FlipLeft", RpcTarget.All);
                             }
 
                             if(ownerAnimator != null && playRunAnim){
@@ -109,10 +109,10 @@ public class SimpleObjectWaypoint : MonoBehaviourPunCallbacks
 
                             if((waypoints[currentWaypointIndex].position.x - transform.position.x) > 0f){
                                 //GetComponent<SpriteRenderer>().flipX = true;
-                                photonView.RPC("FlipRight", RpcTarget.AllBuffered);
+                                photonView.RPC("FlipRight", RpcTarget.All);
                             }else{
                                 //GetComponent<SpriteRenderer>().flipX = false;
-                                photonView.RPC("FlipLeft", RpcTarget.AllBuffered);
+                                photonView.RPC("FlipLeft", RpcTarget.All);
                             }
 
                             if(ownerAnimator != null && !playRunAnim){

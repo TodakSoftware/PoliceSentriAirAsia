@@ -5,14 +5,14 @@ using Photon.Pun;
 using Photon.Realtime;
 
 public class Vehicle : MonoBehaviourPunCallbacks
-{/*
+{
     //public bool cannotStun;
 
     void OnTriggerEnter2D(Collider2D other) {
         //if(!cannotStun){
             if(other.gameObject.CompareTag("Police") || other.gameObject.CompareTag("Robber")){
-                if(!other.gameObject.GetComponent<PlayerControllerPhoton>().isFalling){
-                    other.gameObject.GetComponent<PlayerControllerPhoton>().photonView.RPC("PlayerFall", RpcTarget.AllBuffered, 3f);
+                if(!other.gameObject.GetComponent<PlayerController>().isFalling){
+                    other.gameObject.GetComponent<PlayerController>().photonView.RPC("PlayerFall", RpcTarget.All, 3f);
                     //cannotStun = true;
                     //Invoke("DelayReset", 4f);
                 }
@@ -23,5 +23,5 @@ public class Vehicle : MonoBehaviourPunCallbacks
 
     //public void DelayReset(){
     //    cannotStun = false;
-    //}*/
+    //}
 }

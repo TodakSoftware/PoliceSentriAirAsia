@@ -12,6 +12,7 @@ TagManager:
   - MoneyBag
   - SafeAreaUI
   - BotEscape
+  - RobberJailCollider
   layers:
   - Default
   - TransparentFX
@@ -21,15 +22,15 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Walls
+  - Objects
+  - Robber
+  - Police
+  - MoneyBag
+  - Cauliflower
+  - PostProcessing
+  - Deco
+  - PickupItem
   - 
   - 
   - 

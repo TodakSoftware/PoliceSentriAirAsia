@@ -16,7 +16,7 @@ public class P_MainMenu : MonoBehaviour
     public Button cancelFindGameBtn;
     public Button playButton, playWithBotButton;
     public TextMeshProUGUI playText;
-    public TextMeshProUGUI statusText;
+    public TextMeshProUGUI statusText, waitingForPlayersText;
 
 
     void Start()
@@ -34,6 +34,6 @@ public class P_MainMenu : MonoBehaviour
         }
 
         playButton.onClick.AddListener(delegate{ NetworkManager.instance.PlayOnlineGame(); }); // JoinTheGame(0)   Link playBtn with network manager join game
-        playWithBotButton.onClick.AddListener(delegate{ NetworkManager.instance.SetOffline(); }); // Link playWithBotBtn with network manager join game
+        //playWithBotButton.onClick.AddListener(delegate{ NetworkManager.instance.SetOffline(); }); // Link playWithBotBtn with network manager join game
     }
 }

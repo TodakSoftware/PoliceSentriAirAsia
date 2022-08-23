@@ -12,13 +12,13 @@ public class PlayerController : MonoBehaviourPunCallbacks
 {
     public E_Team playerTeam;
     [Header("Movement")]
-    Rigidbody2D rb;
-    Vector3 moveDir;
+    [HideInInspector] public Rigidbody2D rb;
+    [HideInInspector]public Vector3 moveDir;
     float horizontal, vertical;
     public bool isFacingRight;
-    GameUI gameUI;
+    public GameUI gameUI;
     Joystick moveJoystick;
-    [SerializeField] float moveSpeed = 8f;
+    public float moveSpeed = 8f;
     public bool canMove = true;
     public bool isMoving;
 
@@ -29,14 +29,20 @@ public class PlayerController : MonoBehaviourPunCallbacks
     public GameObject rankImg;
 
     [Header("Dash")]
-    [SerializeField] float dashSpeedMultiplier = 2f;
+    [SerializeField] public float dashSpeedMultiplier = 2f;
     [SerializeField] public float dashDuration = .2f;
     [SerializeField] public float dashCooldown = 3f;
-    [HideInInspector] public bool isDashing, isDashCooldown;
+    [HideInInspector] public bool isDashing, isDashCooldown, isDashingButtonDown;
     GameObject btnDash;
 
     [Header("Fall")]
     [HideInInspector] public bool isFalling;
+
+    [Header("Throw")]
+    public GameObject aimPoint; // for item
+    public GameObject throwPoint; // for moneybag
+    public float throwDistance = 20f;
+    Vector3 startPos,endPos;
     
     [Header("Camera Related")]
     [HideInInspector] public CinemachineVirtualCamera cam2D;
@@ -134,6 +140,27 @@ public class PlayerController : MonoBehaviourPunCallbacks
         }else{
             gameUI.fpsText.text = "";
         } // end if hasInternet (FPS Counter)
+
+        // Aim & Shot Point START --------------------
+        if(moveDir.magnitude >= 0.01f){
+            isMoving = true;
+            endPos = aimPoint.transform.position;
+            endPos.z = 0;
+            endPos = new Vector3((horizontal * 1.8f) + aimPoint.transform.position.x, (vertical * 1.8f) + aimPoint.transform.position.y, 0f);
+
+            aimPoint.transform.GetChild(0).transform.position = endPos; // For any throwable item
+        }else{
+            isMoving = false;
+            if(isFacingRight){
+                endPos = new Vector3((1 * 1.8f) + aimPoint.transform.position.x, (0 * 1.8f) + aimPoint.transform.position.y, 0f);
+                aimPoint.transform.GetChild(0).transform.position = endPos; // For any throwable item
+                
+            }else{
+                endPos = new Vector3((-1 * 1.8f) + aimPoint.transform.position.x, (0 * 1.8f) + aimPoint.transform.position.y, 0f);
+                aimPoint.transform.GetChild(0).transform.position = endPos; // For any throwable item
+            }
+        }
+        // Aim & Shot Point END --------------------
         
     }
 
@@ -144,6 +171,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
         if(canMove){
             rb.velocity = moveDir * moveSpeed;
+
+            
         } // end canMove
     }
 
@@ -190,6 +219,30 @@ public class PlayerController : MonoBehaviourPunCallbacks
         }
     } // end HandleMovement
 
+    [PunRPC]
+    public IEnumerator PauseMovement(float duration){
+        ForceStopMove();
+        yield return new WaitForSeconds(duration);
+        ForceStartMove();
+    }
+
+    public void ForceStopMove(){  // Disable Movement
+        if(photonView.IsMine){
+            moveDir = Vector3.zero;
+            //rb.velocity = Vector2.zero;
+            rb.bodyType = RigidbodyType2D.Static;
+            canMove = false;
+            playerAnim.PlayAnimation("Idle");
+        }
+    }
+
+    public void ForceStartMove(){  // Re-enable movement
+        if(photonView.IsMine){
+            canMove = true;
+            rb.bodyType = RigidbodyType2D.Dynamic;
+        }
+    }
+
     public void FlipRight(bool flipRight){
         if(!isFalling){ // only do this when !Falling
             if(flipRight){
@@ -209,7 +262,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 #endregion // end MOVEMENT RELATED
 
 #region DASH RELATED
-    IEnumerator PlayerDash(float duration){
+    public IEnumerator PlayerDash(float duration){
         if(!isDashing && !isDashCooldown && !isFalling){
             btnDash.GetComponent<ButtonCooldown>().StartCooldown(dashCooldown);
             StartCoroutine(CooldownPlayerDash(dashCooldown)); // Set Button Cooldown
@@ -238,6 +291,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 #endregion // end DASH RELATED
 
 #region FALL RELATED
+    [PunRPC]
     public IEnumerator PlayerFall(float fallDuration){
         if(!isFalling){
             SpawnSmoke();
@@ -256,16 +310,16 @@ public class PlayerController : MonoBehaviourPunCallbacks
 #region ANIMATION RELATED
     public void HandleAnimation(){
         if(moveDir != Vector3.zero){
-            if(!isDashing){
+            if(!isDashing && !GetComponent<PlayerAbilities>().isItemDashingButtonDown){
                 playerAnim.PlayAnimation("Run");
             }
         }else{
-            if(!isDashing){
+            if(!isDashing && !GetComponent<PlayerAbilities>().isItemDashingButtonDown){
                 playerAnim.PlayAnimation("Idle");
             }
         }
 
-        if(isFalling){
+        if(isFalling && !GetComponent<PlayerAbilities>().isItemDashingButtonDown){
             playerAnim.PlayAnimation("Fall");
         }
     } // end HandleAnimation
@@ -287,8 +341,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
                                 teamRole.Add("CharacterCode", characterCode);
                                 teamRole.Add("PlayerCaught", false);
                                 teamRole.Add("PlayerHoldMoneybag", false);
-                                //teamRole.Add("PlayerViewID", photonView.ViewID);
-                                teamRole.Add("PlayerViewID", myGUID.ToString());
+                                teamRole.Add("PlayerViewID", photonView.ViewID);
+                                //teamRole.Add("PlayerViewID", myGUID.ToString());
                                 PhotonNetwork.LocalPlayer.SetCustomProperties(teamRole);
                             }
                         }
@@ -310,8 +364,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
                                 teamRole.Add("CharacterCode", characterCode);
                                 teamRole.Add("PlayerCaught", false);
                                 teamRole.Add("PlayerHoldMoneybag", false);
-                                //teamRole.Add("PlayerViewID", photonView.ViewID);
-                                teamRole.Add("PlayerViewID", myGUID.ToString());
+                                teamRole.Add("PlayerViewID", photonView.ViewID);
+                                //teamRole.Add("PlayerViewID", myGUID.ToString());
                                 PhotonNetwork.LocalPlayer.SetCustomProperties(teamRole);
                             }
                         }

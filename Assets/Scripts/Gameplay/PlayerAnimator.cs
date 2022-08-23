@@ -58,6 +58,27 @@ public class PlayerAnimator : MonoBehaviourPunCallbacks
                 }
             break;
 
+            case "Shared":
+                // SHARED
+                foreach(var p in SOManager.instance.sharedVariant.animatorLists){
+                    if(p.code == charCode){
+                        animatorController = p.runTimeAnimController;
+                        animator.runtimeAnimatorController = animatorController;
+
+                        // Set Player New Code
+                        if(GameManager.instance.ownedPlayerGO != null){
+                            GameManager.instance.ownedPlayerGO.GetComponent<PlayerController>().characterCode = p.code;
+                        }
+
+                        if(photonView.IsMine){ // Save Changes to network
+                            Hashtable teamRole = new Hashtable();
+                            teamRole.Add("CharacterCode", charCode);
+                            PhotonNetwork.LocalPlayer.SetCustomProperties(teamRole);
+                        }
+                    }
+                }
+            break;
+
             default:
             break;
         }
@@ -65,6 +86,7 @@ public class PlayerAnimator : MonoBehaviourPunCallbacks
         
     } // end SwitchAnimController
 
+    [PunRPC]
     public void RevertAnimController(){
         animatorController = originalAnimatorController;
         animator.runtimeAnimatorController = animatorController;

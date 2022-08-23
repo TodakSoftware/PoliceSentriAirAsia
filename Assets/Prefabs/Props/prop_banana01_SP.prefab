@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1304552677929724202}
   - component: {fileID: -6253930663657849596}
   - component: {fileID: -6210801940169020297}
+  - component: {fileID: -73030709717627264}
   m_Layer: 0
   m_Name: prop_banana01_SP
   m_TagString: Untagged
@@ -181,3 +182,18 @@ MonoBehaviour:
     InterpolateOption: 0
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 0
+--- !u!114 &-73030709717627264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1304552677929724198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b1aaf68e0a982047b912dbccfd1058a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerTeam: 0
+  ownerGO: {fileID: 0}
+  dur: 3

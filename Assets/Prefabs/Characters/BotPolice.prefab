@@ -12548,6 +12548,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTeam: 0
+  rb: {fileID: 0}
+  moveDir: {x: 0, y: 0, z: 0}
   isFacingRight: 0
   moveSpeed: 8
   canMove: 1
@@ -12677,7 +12679,7 @@ MonoBehaviour:
   botFacingRight: 0
   botDestinationReach: 0
   _map: {fileID: 0}
-  maxSpeed: 0
+  maxSpeed: 7
   mass: 20
   stoppingDistance: 0.3
   slowingDistance: 1
@@ -12705,6 +12707,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTeam: 0
+  rb: {fileID: 0}
+  moveDir: {x: 0, y: 0, z: 0}
   isFacingRight: 0
   moveSpeed: 8
   canMove: 1
@@ -12713,7 +12717,7 @@ MonoBehaviour:
   canvasReleasedBar: {fileID: 6259274992226047519}
   playerNameText: {fileID: 2386455948271624773}
   rankImg: {fileID: 4331846541284606937}
-  dashSpeedMultiplier: 2
+  dashSpeedMultiplier: 3
   dashDuration: 0.2
   dashCooldown: 3
   isDashing: 0
@@ -12737,6 +12741,7 @@ MonoBehaviour:
   isGoingToRescue: 0
   targetRescue: {fileID: 0}
   escapePointTarget: {fileID: 0}
+  useDashTimer: 10
 --- !u!114 &2398935656547781103
 MonoBehaviour:
   m_ObjectHideFlags: 0

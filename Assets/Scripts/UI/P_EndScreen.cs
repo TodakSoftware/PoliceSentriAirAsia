@@ -5,9 +5,22 @@ using UnityEngine.UI;
 
 public class P_EndScreen : MonoBehaviour
 {
-    public Button endScreenleaveBtn;
+    public Button endScreenleaveBtn, playAgainBtn;
 
     void Start(){
         endScreenleaveBtn.onClick.AddListener(delegate{NetworkManager.instance.CancelFindGameOrLeaveRoom();});
+        playAgainBtn.onClick.AddListener(delegate{ PlayAgainButton();});
+    }
+
+    void PlayAgainButton(){
+        GameManager.instance.endGamePlayAgain = true;
+        GameManager.instance.AskHostToPlayAgain();
+        
+        HideButton();
+    }
+
+    void HideButton(){
+        playAgainBtn.gameObject.SetActive(false);
+        endScreenleaveBtn.gameObject.SetActive(false);
     }
 }

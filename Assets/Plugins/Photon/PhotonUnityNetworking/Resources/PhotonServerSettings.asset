@@ -63,6 +63,27 @@ MonoBehaviour:
   - PopupCaptureNotification
   - SetMoneybagOccupied
   - SetTeammateName
+  - DestroyMe
+  - PlayerFall
+  - ChangeToProps
+  - DisableUndercover
+  - EnableUndercover
+  - PropsToNormal
+  - RevertAnimController
+  - PauseMovement
+  - ItemPropUndercover
+  - ItemCharInvisible
+  - EnableInvisible
+  - DisableInvisible
+  - BlindByFlashbang
+  - ChangeToIdle
+  - Exploding
+  - flickerRed
+  - StunnedByCat
+  - PicklockReleased
+  - AddPlayAgainList
+  - Boom
+  - TellOthersToDisplayLoading
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

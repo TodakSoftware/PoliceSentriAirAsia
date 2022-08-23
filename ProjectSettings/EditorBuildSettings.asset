@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Map07.unity
     guid: 39992dd4de9d23e42827aafcf983c2bf
+  - enabled: 1
+    path: Assets/Scenes/Map_KualaLumpur.unity
+    guid: aa9b84a5ecf51c040a8999b162b23b10
   m_configObjects: {}

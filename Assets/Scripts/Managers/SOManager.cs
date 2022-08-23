@@ -10,6 +10,8 @@ public class SOManager : MonoBehaviour
     public SO_Prefabs prefabs;
     public SO_AnimatorVariant animVariantPolice;
     public SO_AnimatorVariant animVariantRobber;
+    public SO_AnimatorVariant sharedVariant;
+    public SO_ItemInfo itemInfo;
 
     void Awake(){
         if(instance == null){
