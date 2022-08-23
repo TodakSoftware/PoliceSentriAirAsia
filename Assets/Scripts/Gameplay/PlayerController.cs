@@ -51,7 +51,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [Header("Animation Related")]
     public PlayerAnimator playerAnim;
     public string characterCode;
-    public System.Guid myGUID = System.Guid.NewGuid();
 
     void Awake(){
         rb = GetComponent<Rigidbody2D>();
@@ -341,8 +340,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
                                 teamRole.Add("CharacterCode", characterCode);
                                 teamRole.Add("PlayerCaught", false);
                                 teamRole.Add("PlayerHoldMoneybag", false);
-                                teamRole.Add("PlayerViewID", photonView.ViewID);
-                                //teamRole.Add("PlayerViewID", myGUID.ToString());
                                 PhotonNetwork.LocalPlayer.SetCustomProperties(teamRole);
                             }
                         }
@@ -364,8 +361,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
                                 teamRole.Add("CharacterCode", characterCode);
                                 teamRole.Add("PlayerCaught", false);
                                 teamRole.Add("PlayerHoldMoneybag", false);
-                                teamRole.Add("PlayerViewID", photonView.ViewID);
-                                //teamRole.Add("PlayerViewID", myGUID.ToString());
                                 PhotonNetwork.LocalPlayer.SetCustomProperties(teamRole);
                             }
                         }
@@ -387,8 +382,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         switch(playerTeam){
             case E_Team.POLICE:
                 var policeAvatar = Instantiate(UIManager.instance.gameUI.avatarBtnPrefab);
-                policeAvatar.GetComponent<Btn_Avatar>().SetupButton("Police", GetComponent<PhotonView>().Owner.NickName, characterCode, myGUID.ToString());
-                
+                policeAvatar.GetComponent<Btn_Avatar>().SetupButton("Police", GetComponent<PhotonView>().Owner.NickName, characterCode, GetComponent<PhotonView>().Owner.ActorNumber);
                 policeAvatar.transform.SetParent(UIManager.instance.gameUI.avatarPoliceContent,false);
                 UIManager.instance.gameUI.avatarBtnList.Add(policeAvatar.GetComponent<Btn_Avatar>());
 
@@ -401,8 +395,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
             case E_Team.ROBBER:
                 var robberAvatar = Instantiate(UIManager.instance.gameUI.avatarBtnPrefab);
-                robberAvatar.GetComponent<Btn_Avatar>().SetupButton("Robber", GetComponent<PhotonView>().Owner.NickName, characterCode, myGUID.ToString());
-                
+                robberAvatar.GetComponent<Btn_Avatar>().SetupButton("Robber", GetComponent<PhotonView>().Owner.NickName, characterCode, GetComponent<PhotonView>().Owner.ActorNumber);
                 robberAvatar.transform.SetParent(UIManager.instance.gameUI.avatarRobberContent,false);
                 UIManager.instance.gameUI.avatarBtnList.Add(robberAvatar.GetComponent<Btn_Avatar>());
 
@@ -412,7 +405,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
                     playerNameText.text = photonView.Owner.NickName;
                 }
             break;
-        }
+        } // end switch
     }
 #endregion
 

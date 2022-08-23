@@ -13,8 +13,10 @@ public class P_EndScreen : MonoBehaviour
     }
 
     void PlayAgainButton(){
-        GameManager.instance.endGamePlayAgain = true;
-        GameManager.instance.AskHostToPlayAgain();
+        //GameManager.instance.endGamePlayAgain = true;
+        //GameManager.instance.AskHostToPlayAgain();
+        PlayerPrefs.SetInt("PlayAgain", 1);
+        PlayerPrefs.Save();
         
         HideButton();
     }

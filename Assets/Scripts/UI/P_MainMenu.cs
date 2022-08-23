@@ -8,6 +8,7 @@ using Photon.Pun;
 public class P_MainMenu : MonoBehaviour
 {
     public GameObject modalUsernameGO;
+    public GameObject mainAreaGO;
     public TextMeshProUGUI usernameText;
     public string usernameValue;
     public TextMeshProUGUI timeoutDurationText;
@@ -33,7 +34,7 @@ public class P_MainMenu : MonoBehaviour
             modalUsernameGO.SetActive(true);
         }
 
-        playButton.onClick.AddListener(delegate{ NetworkManager.instance.PlayOnlineGame(); }); // JoinTheGame(0)   Link playBtn with network manager join game
+        playButton.onClick.AddListener(delegate{  NetworkManager.instance.PlayOnlineGame(); }); // JoinTheGame(0)   Link playBtn with network manager join game
         //playWithBotButton.onClick.AddListener(delegate{ NetworkManager.instance.SetOffline(); }); // Link playWithBotBtn with network manager join game
     }
 }

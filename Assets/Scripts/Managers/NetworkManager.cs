@@ -34,22 +34,36 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     [Header("Ingame Related")]
     [Tooltip("0 : Police & Robber (Normal Mode)")]
     int gameModeIndex = 0; // default = 0
-    public bool isInGame, isInTheRoom, isCreatingRoom,dontConnectInternet, joinedLobby, playOfflineGame;
-    
+    public bool isInGame, isInTheRoom, isCreatingRoom,dontConnectInternet, joinedLobby, playOfflineGame, playAgainEnable;
+    bool playAgainExecuted;
 
     void Awake(){
         if(instance == null){
             instance = this;
+
+            if(PlayerPrefs.HasKey("PlayAgain") && PlayerPrefs.GetInt("PlayAgain") == 1){
+                PlayerPrefs.SetInt("PlayAgain", 0);
+                PlayerPrefs.DeleteKey("PlayAgain");
+                PlayerPrefs.Save();
+            }
         }else{
-            Destroy(this.gameObject);
+            Destroy(instance.gameObject);
+
+            if(PlayerPrefs.HasKey("PlayAgain") && PlayerPrefs.GetInt("PlayAgain") == 1){
+                playAgainEnable = true;
+            }
+        }
+
+        if(GetComponent<PhotonView>() == null){
+            this.gameObject.AddComponent<PhotonView>();
         }
         DontDestroyOnLoad(gameObject);
-        
     }
 
     void Start(){
         if(!dontConnectInternet){
             CheckForInternet(); // Check for internet
+            //PhotonNetwork.ConnectUsingSettings();
         }
         
         pool = PhotonNetwork.PrefabPool as DefaultPool;
@@ -94,6 +108,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             doneQueing = true;
         }
 
+        // Auto start if 1 minit passed
         if(isInTheRoom && PhotonNetwork.CurrentRoom.PlayerCount > 1 && PhotonNetwork.CurrentRoom.PlayerCount < (int)maxPlayersPerRoom && UIManager.instance.timeoutTimer >= findGameAutoStart && !autoStartCreateGame){ // if we in room & timer find game >= autostart
             
             if(PhotonNetwork.IsMasterClient){
@@ -109,7 +124,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
                 autoStartCreateGame = true;
             }
-            
+        }
+
+        if(!playAgainExecuted && !isInGame && !isInTheRoom && playAgainEnable && PhotonNetwork.IsConnectedAndReady){
+            print("Can Rejoin Any Game");
+            PlayOnlineGame();
+            playAgainExecuted = true;
         }
 
     } // end Update
@@ -129,7 +149,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
                 if(UIManager.instance.p_MainMenu.statusText != null)
                 UIManager.instance.p_MainMenu.statusText.text = "Network: CONNECTING...";
             }
-            PhotonNetwork.OfflineMode = false;
+            //PhotonNetwork.OfflineMode = false;
             
             PhotonNetwork.ConnectUsingSettings(); // Connect to master server using settings | Noted: ConnectUsingSettings("v0.0.1") <-- Also can
             
@@ -228,7 +248,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         joinedLobby = true;
 
         if(UIManager.instance.p_MainMenu.statusText != null)
-                UIManager.instance.p_MainMenu.statusText.text = "Network: <color=green>Connected</color>";
+                UIManager.instance.p_MainMenu.statusText.text = "Network: <color=green>Connected</color> "+ PhotonNetwork.CloudRegion;
 
         if(UIManager.instance.p_MainMenu != null){
             UIManager.instance.p_MainMenu.playButton.interactable = true;
@@ -274,13 +294,31 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         //if(queingTimer >= queingCooldown){
             print("No available room found! Creating...");
             RoomOptions roomOptions = new RoomOptions();
-            //roomOptions.PlayerTtl = -1; // -1 sec for infinite : Duration for player to reconnect before kicked / timeout
+            roomOptions.PlayerTtl = -1; // -1 sec for infinite : Duration for player to reconnect before kicked / timeout
             roomOptions.MaxPlayers = maxPlayersPerRoom;
             
             roomOptions.EmptyRoomTtl = 0;
 
             PhotonNetwork.CreateRoom(null, roomOptions);
         //}
+    }
+
+    public override void OnCreateRoomFailed(short returnCode, string message)
+    {
+        base.OnCreateRoomFailed(returnCode, message);
+        print("x dpt buat room: "+ message);
+        //StopAllCoroutines();
+        PhotonNetwork.Disconnect();
+
+        isInGame = false;
+        isCreatingRoom = false;
+        isInTheRoom = false;
+        isFindingGame = false; // Set status to isFindingGame
+        isQueing = false;
+        doneQueing = false;
+
+        UIManager.instance.p_MainMenu.findGameGO.SetActive(false);
+        UIManager.instance.p_MainMenu.mainAreaGO.SetActive(true);
     }
 
     public override void OnCreatedRoom(){ // Create default room properties on 1st created room
@@ -530,6 +568,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     } // end UpdateTotalFindGame
 
     public void PlayOnlineGame(){
+        UIManager.instance.p_MainMenu.mainAreaGO.SetActive(false);
         PhotonNetwork.OfflineMode = false;
         JoinTheGame(0);
     }
@@ -539,6 +578,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         isCreatingRoom = false;
         isInTheRoom = false;
         isFindingGame = true; // Set status to isFindingGame
+
+        if(PlayerPrefs.HasKey("PlayAgain") && PlayerPrefs.GetInt("PlayAgain") == 1){
+            PlayerPrefs.SetInt("PlayAgain", 0);
+            PlayerPrefs.DeleteKey("PlayAgain");
+            PlayerPrefs.Save();
+        }
 
         UIManager.instance.timeoutTimer = 0; // Reset timer
 

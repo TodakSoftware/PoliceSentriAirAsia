@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PhotonServerSettings
   m_EditorClassIdentifier: 
   AppSettings:
-    AppIdRealtime: 6fe65b32-d949-45dc-80a6-ae2dff5921d2
+    AppIdRealtime: 3576b437-ebce-4a1f-bd75-2ba3e1628078
     AppIdFusion: 
     AppIdChat: 
     AppIdVoice: 
@@ -23,7 +23,7 @@ MonoBehaviour:
     Server: 
     Port: 0
     ProxyServer: 
-    Protocol: 5
+    Protocol: 1
     EnableProtocolFallback: 1
     AuthMode: 0
     EnableLobbyStatistics: 0

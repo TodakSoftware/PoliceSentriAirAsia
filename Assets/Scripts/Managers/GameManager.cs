@@ -102,11 +102,6 @@ public class GameManager : MonoBehaviourPunCallbacks
         UpdateTeamCount(); // Update Manual Select Role on 1st load
 
         SpawnAllMoneybag(); // Spawn moneybag
-
-        // Disable PlayAgainButton on Masterclient
-        if(PhotonNetwork.IsMasterClient){
-            endScreenGO.GetComponent<P_EndScreen>().playAgainBtn.gameObject.SetActive(false);
-        }
         
     } // end Start
 
@@ -330,7 +325,7 @@ public class GameManager : MonoBehaviourPunCallbacks
                 print("SpawnAllMoney");
                 foreach(var mb in moneybagSpawnpoints){
                     //var moneyBag = PhotonNetwork.InstantiateRoomObject(NetworkManager.GetPhotonPrefab("Props", "prop_moneybag01"), mb.position, Quaternion.identity);
-                    var moneyBag = PhotonNetwork.Instantiate(NetworkManager.GetPhotonPrefab("Props", "prop_moneybag01"), mb.position, Quaternion.identity);
+                    var moneyBag = PhotonNetwork.InstantiateRoomObject(NetworkManager.GetPhotonPrefab("Props", "prop_moneybag01"), mb.position, Quaternion.identity);
                     moneybagList.Add(moneyBag);
                 }
                 moneybagSpawned = true;
@@ -353,13 +348,11 @@ public class GameManager : MonoBehaviourPunCallbacks
 #region MID GAME RELATED
     public void UpdateAvatarsUI(){
         foreach(var btn in UIManager.instance.gameUI.avatarBtnList){
-            
-            foreach(Player player in GetAllNetworkPlayers()){
-                if(btn.goID == player.CustomProperties["PlayerViewID"].ToString()){
+            foreach(Player player in GameManager.GetAllNetworkPlayers()){
+                if(btn.actorNumber == player.ActorNumber){
                     btn.UpdateButton(player.CustomProperties["NetworkTeam"].ToString(), player.CustomProperties["CharacterCode"].ToString(), (bool)player.CustomProperties["PlayerCaught"], (bool)player.CustomProperties["PlayerHoldMoneybag"]);
                 }
             }
-            
         }
     } // end UpdateAvatarsUI()
 
@@ -413,10 +406,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public void PopupEndScreen(){
         endScreenGO.SetActive(true);
         StartCoroutine(RedirectNewMap(5));
-        // Default Host will create a new game
-        if(PhotonNetwork.IsMasterClient){
-            endGamePlayAgain = true;
-        }
+        
     } // end PopupEndScreen
 
     IEnumerator RedirectNewMap(float duration){
@@ -436,23 +426,26 @@ public class GameManager : MonoBehaviourPunCallbacks
             timer = 0;
             
             //NetworkManager.instance.CancelFindGameOrLeaveRoom(); // Leave Room
-            if(endGamePlayAgain){
+            /*if(endGamePlayAgain){
                 if(PhotonNetwork.IsMasterClient){
                     endScreenRedirectText.text = "Creating New Game. " + (playAgainCount + 1) + " Players" ;
                     print("Host bring all people to new map");
-                    NetworkManager.instance.HostWithCustomPlayer((playAgainCount + 1));
-                    photonView.RPC("Boom", RpcTarget.All);
+                    //NetworkManager.instance.HostWithCustomPlayer((playAgainCount + 1));
+                    //photonView.RPC("Boom", RpcTarget.All);
                 }else{
                     endScreenRedirectText.text = "Waiting For Host...";
                 }
             }else{
                 endScreenRedirectText.text = "Bye-bye!";
                 PhotonNetwork.LeaveRoom();
-            }
+            }*/
+
+            endScreenRedirectText.text = "Bye-bye!";
+            PhotonNetwork.LeaveRoom();
         }
     } // end redirect
 
-    [PunRPC]
+    /*[PunRPC]
     public void Boom(){
         StartCoroutine(NetworkManager.instance.ChangeScene(NetworkManager.instance.GetRandomMap()));// Host load level
     }
@@ -465,7 +458,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void AddPlayAgainList(){
         playAgainCount += 1;
-    }
+    }*/
 #endregion // end END GAME RELATED
 
 #region RARELY UNTOUCHED FUNCTIONS

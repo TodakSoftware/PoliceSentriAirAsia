@@ -15,15 +15,14 @@ public class Btn_Avatar : MonoBehaviourPunCallbacks
     [Header("Team Related")]
     public Sprite policeSlotBG;
     public Sprite robberSlotBG;
-    public string goID, charGO;
+    public int actorNumber;
 
-    public void SetupButton(string team, string playerNickname, string characterCode, string actorNmbr){ // Called by GameUI (CreateAvatar) 
-        charGO = characterCode;
+    public void SetupButton(string team, string playerNickname, string characterCode, int actorNmbr){ // Called by GameUI (CreateAvatar) 
         switch(team){
             case "Police":
                 slotBG.sprite = policeSlotBG;
                 playerName.text = playerNickname;
-                goID = actorNmbr;
+                actorNumber = actorNmbr;
                 foreach(var c in SOManager.instance.animVariantPolice.animatorLists){
                     if(c.code == characterCode){
                         playerIcon.sprite = c.iconHead;
@@ -34,22 +33,17 @@ public class Btn_Avatar : MonoBehaviourPunCallbacks
             case "Robber":
                 slotBG.sprite = robberSlotBG;
                 playerName.text = playerNickname;
-                goID = actorNmbr;
+                actorNumber = actorNmbr;
                 foreach(var c in SOManager.instance.animVariantRobber.animatorLists){
                     if(c.code == characterCode){
                         playerIcon.sprite = c.iconHead;
                     }
                 }
             break;
-
-            default:
-                print("unknown");
-            break;
         } // end switch
     }
 
     public void UpdateButton(string team, string CharCode, bool isCaught, bool holdMoneybag){ // Called everytime by GameManager(UpdateAvatarsUI) when player custom properties changed
-        charGO = CharCode;
         switch(team){
             case "Police":
                 foreach(var c in SOManager.instance.animVariantPolice.animatorLists){
@@ -93,10 +87,6 @@ public class Btn_Avatar : MonoBehaviourPunCallbacks
                         }
                     }
                 }
-            break;
-
-            default:
-                print("unknown");
             break;
         } // end switch
     }
