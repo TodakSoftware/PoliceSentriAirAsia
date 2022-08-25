@@ -246,7 +246,7 @@ MonoBehaviour:
     SynchronizeType: 1
     Name: Shrink
   - Type: 9
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: Idle
   m_SynchronizeLayers:
   - SynchronizeType: 0

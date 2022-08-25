@@ -6739,7 +6739,6 @@ GameObject:
   - component: {fileID: 6557749845414040283}
   - component: {fileID: 47573947206781100}
   - component: {fileID: 317128564149766855}
-  - component: {fileID: 6896164752177416597}
   - component: {fileID: -8904270021112252793}
   m_Layer: 10
   m_Name: CharacterRobber
@@ -7007,36 +7006,6 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 1
   m_UseLocal: 1
---- !u!114 &6896164752177416597
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4873863652774326898}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93cc6a4987f7c684798156c56d545838, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  botFacingRight: 0
-  botDestinationReach: 0
-  _map: {fileID: 0}
-  maxSpeed: 8
-  mass: 20
-  stoppingDistance: 0.1
-  slowingDistance: 1
-  accelerationRate: 7
-  decelerationRate: 7
-  lookAheadDistance: 1
-  avoidRadius: 0.45
-  centerOffset: {x: 0, y: 0.28}
-  rotateTransform: 0
-  rotateSpeed: 350
-  repath: 1
-  restrict: 0
-  closerPointOnInvalid: 1
-  debugPath: 1
 --- !u!114 &-8904270021112252793
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8366,8 +8335,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: df616d9bb00151044897898441f5e2ce, type: 2}
+  m_sharedMaterial: {fileID: -5442417487350576617, guid: df616d9bb00151044897898441f5e2ce, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

@@ -6521,8 +6521,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: df616d9bb00151044897898441f5e2ce, type: 2}
+  m_sharedMaterial: {fileID: -5442417487350576617, guid: df616d9bb00151044897898441f5e2ce, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -12568,7 +12568,6 @@ GameObject:
   - component: {fileID: 6630326361857483945}
   - component: {fileID: 4712356564564569494}
   - component: {fileID: 4941216700086080679}
-  - component: {fileID: 1265834789836360676}
   - component: {fileID: -6752427666255161062}
   m_Layer: 11
   m_Name: CharacterPolice
@@ -12822,36 +12821,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.15}
   serializedVersion: 2
   m_Radius: 0.28
---- !u!114 &1265834789836360676
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7955344202334445017}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93cc6a4987f7c684798156c56d545838, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  botFacingRight: 0
-  botDestinationReach: 0
-  _map: {fileID: 0}
-  maxSpeed: 7
-  mass: 20
-  stoppingDistance: 0.3
-  slowingDistance: 1
-  accelerationRate: 7
-  decelerationRate: 7
-  lookAheadDistance: 1
-  avoidRadius: 0.6
-  centerOffset: {x: 0, y: 0.5}
-  rotateTransform: 0
-  rotateSpeed: 350
-  repath: 1
-  restrict: 0
-  closerPointOnInvalid: 1
-  debugPath: 1
 --- !u!114 &-6752427666255161062
 MonoBehaviour:
   m_ObjectHideFlags: 0

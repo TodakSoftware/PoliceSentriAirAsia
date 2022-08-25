@@ -8,7 +8,7 @@ public class P_EndScreen : MonoBehaviour
     public Button endScreenleaveBtn, playAgainBtn;
 
     void Start(){
-        endScreenleaveBtn.onClick.AddListener(delegate{NetworkManager.instance.CancelFindGameOrLeaveRoom();});
+        endScreenleaveBtn.onClick.AddListener(delegate{ StartCoroutine(NetworkManager.instance.InGameLeaveRoom());});
         playAgainBtn.onClick.AddListener(delegate{ PlayAgainButton();});
     }
 

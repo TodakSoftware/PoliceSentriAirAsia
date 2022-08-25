@@ -66,6 +66,13 @@ public class UIManager : MonoBehaviour
         }
     } // end CloseLoadingScene
 
+    public IEnumerator ShowAndCloseLoadingScene(float duration){ // Close the loading UI with certain duration
+        var loading = Instantiate(SOManager.instance.prefabs.modalLoadingScene);
+        loading.transform.SetParent(mainCanvas.transform, false);
+        yield return new WaitForSeconds(duration);
+        loading.SetActive(false);
+    }
+
 #endregion
 /* ------------------------------------------------ SCENE LOADING END ---------------------------------------------------------*/
 
@@ -77,7 +84,7 @@ public class UIManager : MonoBehaviour
             p_MainMenu.findGameGO.SetActive(true);
         }else{
             p_MainMenu.findGameGO.SetActive(true); // if we have cache the UI, resuse instead destroy
-            p_MainMenu.timeoutDurationText.text = "0:00"; // Reset find game timeout timer
+            p_MainMenu.timeoutDurationText.text = ""; // Reset find game timeout timer
         }
     }
 

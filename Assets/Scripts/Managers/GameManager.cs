@@ -47,7 +47,6 @@ public class GameManager : MonoBehaviourPunCallbacks
     public bool donePopupWinUI;
     public GameObject endScreenGO;
     public TextMeshProUGUI endScreenRedirectText;
-    public bool endGamePlayAgain; // if true, will stay in the game
     public int playAgainCount;
     bool askForHelpActivated;
 
@@ -58,6 +57,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         }else{
             Destroy(this.gameObject);
         }
+
+        
     } // end Awake
 
     void Start(){
@@ -69,13 +70,15 @@ public class GameManager : MonoBehaviourPunCallbacks
                 }
             }
         }
-
         UIManager.instance.RefreshMainCanvas(); // Make sure we have main canvas
         UIManager.instance.RefreshControllerGroup(); // Make sure we have reference the CanvasGroup
 
         UIManager.instance.PopupManualSelectRole(); // Popup Role Select UI
         UIManager.instance.PopupCharacterSelect(); // Popup Character Select
         StartCoroutine(UIManager.instance.CloseCharacterSelect(0)); // Close the char selection UI
+
+        StartCoroutine(UIManager.instance.ShowAndCloseLoadingScene(1f));
+        
         
         // Get Game Mode data
         foreach(var gm in SOManager.instance.gameSettings.gameMode){
@@ -414,11 +417,12 @@ public class GameManager : MonoBehaviourPunCallbacks
     IEnumerator RedirectNewMap(float duration){
         float timer = duration;
         while(timer > 0){
-            if(!endGamePlayAgain){
-                endScreenRedirectText.text = "Leave game in " + timer;
+            if(PhotonNetwork.CurrentRoom.PlayerCount > 1){
+                endScreenRedirectText.text = "Redirect to new map in " + timer;
             }else{
-                endScreenRedirectText.text = "Next game in " + timer;
+                endScreenRedirectText.text = "Leave game in " + timer;
             }
+            
             
             timer -= 1;
             yield return new WaitForSeconds(1);
@@ -426,32 +430,32 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         if(timer <= 0){
             timer = 0;
-            
-            //NetworkManager.instance.CancelFindGameOrLeaveRoom(); // Leave Room
-            /*if(endGamePlayAgain){
-                if(PhotonNetwork.IsMasterClient){
-                    endScreenRedirectText.text = "Creating New Game. " + (playAgainCount + 1) + " Players" ;
-                    print("Host bring all people to new map");
-                    //NetworkManager.instance.HostWithCustomPlayer((playAgainCount + 1));
-                    //photonView.RPC("Boom", RpcTarget.All);
+            PhotonNetwork.AutomaticallySyncScene = true;
+
+            if(PhotonNetwork.IsMasterClient){
+                if(PhotonNetwork.CurrentRoom.PlayerCount > 1){
+                    endScreenRedirectText.text = "Loading...";
+                    photonView.RPC("Boom", RpcTarget.All);
                 }else{
-                    endScreenRedirectText.text = "Waiting For Host...";
+                    endScreenRedirectText.text = "Bye-bye";
+                    StartCoroutine(NetworkManager.instance.InGameLeaveRoom());
                 }
             }else{
-                endScreenRedirectText.text = "Bye-bye!";
-                PhotonNetwork.LeaveRoom();
-            }*/
-
-            endScreenRedirectText.text = "Bye-bye!";
-            PhotonNetwork.LeaveRoom();
+                if(PhotonNetwork.CurrentRoom.PlayerCount > 1){
+                    endScreenRedirectText.text = "Waiting for host...";
+                }else{
+                    endScreenRedirectText.text = "Bye-bye";
+                    StartCoroutine(NetworkManager.instance.InGameLeaveRoom());
+                }
+            }
         }
     } // end redirect
 
-    /*[PunRPC]
+    [PunRPC]
     public void Boom(){
         StartCoroutine(NetworkManager.instance.ChangeScene(NetworkManager.instance.GetRandomMap()));// Host load level
     }
-
+    /*
     public void AskHostToPlayAgain(){
         if(!PhotonNetwork.IsMasterClient)
         photonView.RPC("AddPlayAgainList", RpcTarget.MasterClient);
