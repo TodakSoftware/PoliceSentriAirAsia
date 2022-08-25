@@ -35,6 +35,7 @@ public class P_MainMenu : MonoBehaviour
         }
 
         playButton.onClick.AddListener(delegate{  NetworkManager.instance.PlayOnlineGame(); }); // JoinTheGame(0)   Link playBtn with network manager join game
+        cancelFindGameBtn.onClick.AddListener(delegate{  NetworkManager.instance.CancelFindGameOrLeaveRoom(); }); // JoinTheGame(0)   Link playBtn with network manager join game
         //playWithBotButton.onClick.AddListener(delegate{ NetworkManager.instance.SetOffline(); }); // Link playWithBotBtn with network manager join game
     }
 }

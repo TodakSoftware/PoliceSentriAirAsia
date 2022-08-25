@@ -6741,7 +6741,7 @@ GameObject:
   - component: {fileID: 317128564149766855}
   - component: {fileID: 6896164752177416597}
   - component: {fileID: -8904270021112252793}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: CharacterRobber
   m_TagString: Robber
   m_Icon: {fileID: 0}

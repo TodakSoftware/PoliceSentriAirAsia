@@ -46,6 +46,8 @@ MonoBehaviour:
     prefabs: {fileID: 5363875853611812119, guid: 409046fe377c39544811accf1c61f907, type: 3}
   - name: prop_catstun01_SP
     prefabs: {fileID: 2219382937239592163, guid: ce7282c66228d554a8a37127deb85d9b, type: 3}
+  - name: ItemBox
+    prefabs: {fileID: 968339240226716551, guid: 882b738bb9e47c04898e10ea4e5baf6a, type: 3}
   particlePrefabs:
   - name: PuffSmoke
     prefabs: {fileID: 5244426577859811845, guid: 549ec6a5f4307a247ae9af8bb4b2a3a7, type: 3}

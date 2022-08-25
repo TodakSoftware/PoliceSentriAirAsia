@@ -126,6 +126,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             }
         }
 
+        // Play Again 
         if(!playAgainExecuted && !isInGame && !isInTheRoom && playAgainEnable && PhotonNetwork.IsConnectedAndReady){
             print("Can Rejoin Any Game");
             PlayOnlineGame();
@@ -261,14 +262,14 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         UpdateTotalFindGame(); // Update total players in room
         if(!isInGame){
-            UIManager.instance.activeFindgameCancel(true); // Enable cancel find game button when joined
+            //UIManager.instance.activeFindgameCancel(true); // Enable cancel find game button when joined
             UIManager.instance.p_MainMenu.coroutinefindRoomTimeout = StartCoroutine(UIManager.instance.UpdateUI_FindgameTimeout(findGameTimeoutDuration)); // Timeout duration updates
         }
         
     } // end OnJoinedRoom
 
     public override void OnJoinRandomFailed(short returnCode, string message){ // we create new room with this
-        if(!isCreatingRoom){
+        if(!isCreatingRoom && isQueing){
             Invoke("DelayRejoin", 1.5f);
         }
         
@@ -280,7 +281,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         expectedRoomProperties["RoomGamemodeIndex"] = 0;
 
         // Join Random Room With expected properties
-        if(!PhotonNetwork.InRoom && hasInternet && queingTimer < queingCooldown){
+        if(!PhotonNetwork.InRoom && hasInternet && queingTimer < queingCooldown && isQueing){
             PhotonNetwork.JoinRandomRoom(expectedRoomProperties, maxPlayersPerRoom);
         }
     }
@@ -415,7 +416,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             string[] exposedPropertiesInLobby = { "RoomGamemodeIndex", "RoomMaxTotalPlayer", "RoomMapName" }; 
             PhotonNetwork.CurrentRoom.SetPropertiesListedInLobby(exposedPropertiesInLobby);
         } // end if isMasterclient
-    }
+    } // end HostCustomPlayer
 
     public override void OnPlayerEnteredRoom(Player newPlayer){ // When non host player enter a room. "Display / Update UI"
         UpdateTotalFindGame();
@@ -427,6 +428,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnLeftRoom(){ // When player successfully left the room
         print("Player Has Left The Room Completely");
+
+        if(isInGame && GameManager.instance.gameStarted && !GameManager.instance.gameEnded){
+            GameManager.instance.CheckWinningCondition();
+        }
         
         if(!isInGame){ // if we are in main menu
             if(UIManager.instance.p_MainMenu.coroutinefindRoomTimeout != null){
@@ -606,7 +611,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
                 isQueing = true;
                 queingTimer = 0;
             }
-            UIManager.instance.activeFindgameCancel(false);
+            //UIManager.instance.activeFindgameCancel(false);
             print("HAS INTERNET");
         }else{
             if(!hasInternet){
@@ -622,17 +627,13 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public void CancelFindGameOrLeaveRoom(){ // Cancel while finding game or Leave Room. Used by cancel button in Modal_Findgame
         // Makesure we are in a room
-        if(PhotonNetwork.InRoom && PhotonNetwork.IsConnected){
-            print("Player cancelling find game / leave room");
-            StartCoroutine(InitLeaveRoom());
-        }else{
-            print("Not ready yet to cancel or leave.");
-        }
+        StartCoroutine(InitLeaveRoom());
     } // end CancelFindGameOrLeaveRoom
 
     IEnumerator InitLeaveRoom(){
         print("Get Out");
-       PhotonNetwork.LeaveRoom();
+        if(PhotonNetwork.CurrentRoom != null)
+        PhotonNetwork.LeaveRoom();
 
         isFindingGame = false; // Set status to isFindingGame
         isInTheRoom = false;
@@ -640,6 +641,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         isInGame = false;
         isCreatingRoom = false;
         autoStartCreateGame = false;
+
+        StopAllCoroutines();
 
         if(isQueing){
             isQueing = false;

@@ -266,6 +266,8 @@ public class GameManager : MonoBehaviourPunCallbacks
 
             yield return new WaitForSeconds(2f); // wait for seconds to clear text
             UIManager.instance.gameUI.redirectCountdownText.text = "";
+
+            CheckWinningCondition();
         } // end if(currentStartGameCountdown <= 0)
     } // end StartGameCountdown
 

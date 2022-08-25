@@ -12570,7 +12570,7 @@ GameObject:
   - component: {fileID: 4941216700086080679}
   - component: {fileID: 1265834789836360676}
   - component: {fileID: -6752427666255161062}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: CharacterPolice
   m_TagString: Police
   m_Icon: {fileID: 0}
