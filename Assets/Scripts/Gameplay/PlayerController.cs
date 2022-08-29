@@ -36,7 +36,14 @@ public class PlayerController : MonoBehaviourPunCallbacks
     GameObject btnDash;
 
     [Header("Fall")]
-    [HideInInspector] public bool isFalling;
+    public bool isFalling;
+    [Header("Slow")]
+    public bool isSlow;
+    float MOVE_SPEED_MODIFIED;
+    // Slow movement fixed
+    public float slowTimer;
+    [Header("Slide")]
+    public bool isSlide;
 
     [Header("Throw")]
     public GameObject aimPoint; // for item
@@ -124,7 +131,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         }
 
         if(Input.GetKeyDown(KeyCode.J)){
-            //StartCoroutine(PlayerFall(3f));
+            
         }
 
         // FPS Counter
@@ -161,6 +168,27 @@ public class PlayerController : MonoBehaviourPunCallbacks
         }
         // Aim & Shot Point END --------------------
         
+        // IsSlow START ----------------------------------------------
+        if(!isFalling && !isDashing && !isSlow && !isSlide){ // if is normal state
+            if(GetComponent<PlayerRank>().rankLevel == 0 && moveSpeed > 8f && !isSlow){
+                moveSpeed = 8f;
+            }else if(GetComponent<PlayerRank>().rankLevel == 1 && moveSpeed > 8.5f && !isSlow){
+                moveSpeed = 8.5f;
+            }else if(GetComponent<PlayerRank>().rankLevel == 4 && moveSpeed > 9.5f && !isSlow){
+                moveSpeed = 9.5f;
+            }
+        }
+
+        if(isSlow){
+            if(slowTimer <= 0){
+                slowTimer = 0;
+                isSlow = false;
+                DisableSlowMovement();
+            }else{
+                slowTimer -= Time.deltaTime;
+            }
+        }
+        // IsSlow END ----------------------------------------------
     }
 
     void FixedUpdate(){
@@ -223,6 +251,26 @@ public class PlayerController : MonoBehaviourPunCallbacks
         ForceStopMove();
         yield return new WaitForSeconds(duration);
         ForceStartMove();
+    }
+
+    public void EnableSlowMovement(){
+        if(photonView.IsMine){
+            if(isDashing){
+                MOVE_SPEED_MODIFIED = moveSpeed;
+                moveSpeed = moveSpeed / 2f;
+            }else{
+                MOVE_SPEED_MODIFIED = moveSpeed;
+                moveSpeed = moveSpeed / 2f;
+            }
+            //AudioManager.instance.PlaySound("PS_UI_StuckInMud");
+            slowTimer = 5f;
+        }
+    }
+
+    public void DisableSlowMovement(){
+        if(photonView.IsMine){
+            moveSpeed = MOVE_SPEED_MODIFIED;
+        }
     }
 
     public void ForceStopMove(){  // Disable Movement

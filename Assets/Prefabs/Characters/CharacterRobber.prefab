@@ -6740,6 +6740,7 @@ GameObject:
   - component: {fileID: 47573947206781100}
   - component: {fileID: 317128564149766855}
   - component: {fileID: -8904270021112252793}
+  - component: {fileID: -8195031054936927111}
   m_Layer: 10
   m_Name: CharacterRobber
   m_TagString: Robber
@@ -6865,6 +6866,9 @@ MonoBehaviour:
   isDashCooldown: 0
   isDashingButtonDown: 0
   isFalling: 0
+  isSlow: 0
+  slowTimer: 0
+  isSlide: 0
   aimPoint: {fileID: 9185264782647292919}
   throwPoint: {fileID: 4961698664398694940}
   throwDistance: 20
@@ -7043,6 +7047,25 @@ MonoBehaviour:
   stickyTotal: 5
   stickDuration: 0
   catStunned: 0
+--- !u!114 &-8195031054936927111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4873863652774326898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2820575526d6e3343aac80c8dc9c3e40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteList:
+  - {fileID: 21300000, guid: f53178a68e196614fa547551c9666d82, type: 3}
+  - {fileID: 21300000, guid: 41f6768aac2e8fe4483b5af02d530103, type: 3}
+  - {fileID: 21300000, guid: ac2a95cee3564c9459ab2e178030038e, type: 3}
+  - {fileID: 21300000, guid: d239c67b66212574b8de9c22f396118c, type: 3}
+  rankGO: {fileID: 1286254014875348082}
+  rankLevel: 0
 --- !u!1 &4873863652798532647
 GameObject:
   m_ObjectHideFlags: 0
@@ -8370,7 +8393,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: 5
+  m_characterSpacing: 0
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
