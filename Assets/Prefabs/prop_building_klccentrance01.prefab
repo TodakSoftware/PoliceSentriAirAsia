@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8296658184004527288}
   - component: {fileID: 4944801754545720009}
+  - component: {fileID: 2138667517621413300}
   m_Layer: 0
   m_Name: prop_building_klccentrance01
   m_TagString: Untagged
@@ -81,3 +82,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!68 &2138667517621413300
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5518054425465432759}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 0
+  m_Points:
+  - {x: 5.4510856, y: -0.87449455}
+  - {x: 5.57321, y: -0.87449455}
+  - {x: 5.55134, y: 4.512453}
+  - {x: -5.6537094, y: 4.426756}
+  - {x: -5.5958824, y: -0.81398964}
+  - {x: -4.879116, y: -0.93894386}
+  - {x: -4.726391, y: 0.26379013}
+  - {x: -2.0554008, y: -0.049585342}
+  - {x: -1.989811, y: -1.2695312}
+  - {x: -1.4224358, y: -1.2599716}
+  - {x: -1.4452286, y: -0.10319519}
+  - {x: 1.4466057, y: -0.14171028}
+  - {x: 1.4913254, y: -1.2618904}
+  - {x: 2.148529, y: -1.2428112}
+  - {x: 2.0902138, y: -0.07296944}
+  - {x: 4.819519, y: 0.13886642}
+  - {x: 4.882019, y: -0.89874077}
+  - {x: 5.4311833, y: -0.8742733}
