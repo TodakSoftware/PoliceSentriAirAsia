@@ -102,10 +102,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         if(!isInGame){
             if(PhotonNetwork.IsConnectedAndReady && hasInternet && joinedLobby && !dontConnectInternet && UIManager.instance.p_MainMenu != null){
-                if(!UIManager.instance.p_MainMenu.playButton.interactable)
+                if(!UIManager.instance.p_MainMenu.playButton.interactable && UIManager.instance.p_MainMenu.playButton != null)
                     UIManager.instance.p_MainMenu.playButton.interactable = true;
             }else{
-                if(UIManager.instance.p_MainMenu.playButton.interactable)
+                if(UIManager.instance.p_MainMenu.playButton.interactable && UIManager.instance.p_MainMenu.playButton != null)
                     UIManager.instance.p_MainMenu.playButton.interactable = false;
             }
         }
