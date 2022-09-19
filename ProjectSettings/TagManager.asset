@@ -13,6 +13,8 @@ TagManager:
   - SafeAreaUI
   - BotEscape
   - RobberJailCollider
+  - Objects
+  - Walls
   layers:
   - Default
   - TransparentFX
