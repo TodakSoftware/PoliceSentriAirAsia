@@ -34,6 +34,9 @@ MonoBehaviour:
   - name: Map07
     displayName: Basic Map
     description: This is just a description for map
-  - name: Map_KualaLumpur
+  - name: Map_KualaLumpur_02
+    displayName: Basic Map
+    description: This is just a description for map
+  - name: Map_Langkawi_03
     displayName: Basic Map
     description: This is just a description for map

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4387713581696316297}
   - component: {fileID: 4387713581696316296}
   m_Layer: 0
-  m_Name: deco_grass_large03
+  m_Name: Deco_Grass_Large03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
