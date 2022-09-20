@@ -74,3 +74,9 @@ MonoBehaviour:
     idlePose: {fileID: 21300000, guid: 65a1805c37f85d247ac97f65ed6382ae, type: 3}
     runTimeAnimController: {fileID: 22100000, guid: 59972de8ba5216646ab29aec87dc8166, type: 2}
     temporaryDisable: 0
+  - name: Cabin Crew Male
+    code: R69
+    iconHead: {fileID: 21300000, guid: d2c802e21ef184023b2aae5d64ae0a49, type: 3}
+    idlePose: {fileID: 21300000, guid: 7f5ff4eb01ebb4a7182e95ec10ad505f, type: 3}
+    runTimeAnimController: {fileID: 22100000, guid: 3b0d1cea84bc7354caba4d661f93ab6a, type: 2}
+    temporaryDisable: 0
