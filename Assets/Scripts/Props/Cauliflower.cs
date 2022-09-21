@@ -64,7 +64,7 @@ public class Cauliflower : MonoBehaviourPunCallbacks, IPunObservable
     void OnTriggerEnter2D(Collider2D other) {
             if(photonView.IsMine){
                 if(other.CompareTag("Robber") || other.CompareTag("Police") && !hitted && !other.GetComponent<PlayerController>().isFalling){
-                    //AudioManager.instance.PlaySound("PS_UI_BodyHit");
+                    AudioManager.instance.PlaySound("PS_UI_BodyHit");
 
                     // Send Statistic
                     /*if(itemOwner != null && teamOwner == "Police" && other.CompareTag("Robber") && !hitted && ownerGO.GetComponent<PlayerStatisticPhoton>().sharpShooterHit == 0){

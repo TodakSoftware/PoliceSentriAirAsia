@@ -18,7 +18,7 @@ public class PlayerRank : MonoBehaviourPunCallbacks
             rankLevel += 1;
 
             if(photonView.IsMine){
-                //AudioManager.instance.PlaySound("PS_UI_LevelUp");
+                AudioManager.instance.PlaySound("PS_UI_LevelUp");
                 // Add Player Statistic
                 //GetComponent<PlayerStatisticPhoton>().veryCoolPromotion += 1;
                 //GetComponent<PlayerStatisticPhoton>().photonView.RPC("SetRank", RpcTarget.All, rankLevel);

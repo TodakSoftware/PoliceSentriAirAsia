@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab9ee3978b1748b4e901ecb1431cae25, type: 3}
+  m_Name: SO_Maps Backup
+  m_EditorClassIdentifier: 
+  mapsList:
+  - name: Map01
+    displayName: Basic Map
+    description: This is just a description for map
+  - name: Map02
+    displayName: Basic Map
+    description: This is just a description for map
+  - name: Map03
+    displayName: Basic Map
+    description: This is just a description for map
+  - name: Map04
+    displayName: Basic Map
+    description: This is just a description for map
+  - name: Map05
+    displayName: Basic Map
+    description: This is just a description for map
+  - name: Map06
+    displayName: Basic Map
+    description: This is just a description for map
+  - name: Map07
+    displayName: Basic Map
+    description: This is just a description for map
+  - name: Map_KualaLumpur_02
+    displayName: Basic Map
+    description: This is just a description for map
+  - name: Map_Langkawi_03
+    displayName: Basic Map
+    description: This is just a description for map

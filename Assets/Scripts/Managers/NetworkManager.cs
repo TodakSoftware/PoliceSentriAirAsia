@@ -56,6 +56,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             Destroy(gameObject);
         }
         DontDestroyOnLoad(gameObject);
+        Application.targetFrameRate = 30;
     }
 
     public bool GetRandomBool(){
@@ -102,10 +103,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         if(!isInGame){
             if(PhotonNetwork.IsConnectedAndReady && hasInternet && joinedLobby && !dontConnectInternet && UIManager.instance.p_MainMenu != null){
-                if(!UIManager.instance.p_MainMenu.playButton.interactable && UIManager.instance.p_MainMenu.playButton != null)
+                if(UIManager.instance.p_MainMenu.playButton != null && !UIManager.instance.p_MainMenu.playButton.interactable)
                     UIManager.instance.p_MainMenu.playButton.interactable = true;
             }else{
-                if(UIManager.instance.p_MainMenu.playButton.interactable && UIManager.instance.p_MainMenu.playButton != null)
+                if(UIManager.instance.p_MainMenu.playButton != null && UIManager.instance.p_MainMenu.playButton.interactable)
                     UIManager.instance.p_MainMenu.playButton.interactable = false;
             }
         }
@@ -346,10 +347,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks
                 roomProperties.Add("RoomPolicePerGame", 4);
                 roomProperties.Add("RoomRobberPerGame", 6);
                 roomProperties.Add("RoomMaxTotalPlayer", 10);
+                roomProperties.Add("RealTotalPlayer", 10);
             }else{
                 roomProperties.Add("RoomPolicePerGame", maxPolicePerGame);
                 roomProperties.Add("RoomRobberPerGame", maxRobberPerGame);
                 roomProperties.Add("RoomMaxTotalPlayer", (int)maxPlayersPerRoom);
+                roomProperties.Add("RealTotalPlayer", (int)maxPlayersPerRoom);
             }
             
             roomProperties.Add("RoomMapName", GetRandomMap()); // Random map
@@ -366,7 +369,14 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         if(PhotonNetwork.IsMasterClient){ // Set room properties after we are in a room
             Hashtable roomProperties = new Hashtable();
             roomProperties.Add("RoomGamemodeIndex", gameModeIndex);
-            switch(amount){
+
+            roomProperties.Add("RoomPolicePerGame", 4);
+            roomProperties.Add("RoomRobberPerGame", 6);
+            roomProperties.Add("RoomMaxTotalPlayer", 10);
+
+            roomProperties.Add("RealTotalPlayer", amount);
+
+            /* switch(amount){
                 case 2:
                     roomProperties.Add("RoomPolicePerGame", 1);
                     roomProperties.Add("RoomRobberPerGame", 1);
@@ -424,7 +434,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
                 default:
                     print("Invalid amount : HostCustomPlayer");
                 break;
-            }
+            } */
 
             roomProperties.Add("RoomMapName", GetRandomMap()); // Random map
             PhotonNetwork.CurrentRoom.SetCustomProperties(roomProperties);
@@ -438,12 +448,13 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         UpdateTotalFindGame();
 
         if(PhotonNetwork.IsMasterClient && isInTheRoom && PhotonNetwork.CurrentRoom.PlayerCount > 1 && PhotonNetwork.CurrentRoom.PlayerCount < (int)maxPlayersPerRoom){ //HOI
-            FindGameAutoStartAdder(10f);
+            FindGameAutoStartAdder(5f);
         }
     } // end OnPlayerEnteredRoom
 
     public override void OnPlayerLeftRoom(Player otherPlayer){ // When player cancel find game or after leave a room
         print("Player Left Room");
+        UpdateTotalFindGame();
     } // end OnPlayerLeftRoom
 
     public override void OnLeftRoom(){ // When player successfully left the room
@@ -637,7 +648,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
                 queingTimer = 0;
             }
             //UIManager.instance.activeFindgameCancel(false);
-            print("HAS INTERNET");
+            //print("HAS INTERNET");
         }else{
             if(!hasInternet){
                 print("No Internet, so we add bot, load offline level");

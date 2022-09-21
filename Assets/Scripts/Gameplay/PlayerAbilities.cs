@@ -332,7 +332,7 @@ public class PlayerAbilities : MonoBehaviourPunCallbacks
             radarActivated = true;
             radarZoomVal = 16f;
             radarTimer = duration;
-            //AudioManager.instance.PlaySound("PS_UI_Radar");
+            AudioManager.instance.PlaySound("PS_UI_Radar");
             hasItem = false;
             btnItem.SetActive(false);
         }
@@ -376,7 +376,7 @@ public class PlayerAbilities : MonoBehaviourPunCallbacks
             }
 
             // Play Dash Sound
-            //AudioManager.instance.PlaySound("PS_UI_Dash");
+            AudioManager.instance.PlaySound("PS_UI_Dash");
 
             hasItem = false;
             btnItem.SetActive(false);
@@ -387,7 +387,7 @@ public class PlayerAbilities : MonoBehaviourPunCallbacks
     //  -------------------------------- Item ItemBanana START ------------------------------------------------
     public void ItemBanana(float duration){
         if(photonView.IsMine){
-            //AudioManager.instance.PlaySound("PS_UI_ThrowObject");
+            AudioManager.instance.PlaySound("PS_UI_ThrowObject");
             GameObject ban = null;
             if(playerController.isFacingRight){
                 ban = PhotonNetwork.InstantiateRoomObject(NetworkManager.GetPhotonPrefab("Props", "prop_banana01_SP"), transform.position + new Vector3(-2f,0,0), Quaternion.identity);
@@ -408,7 +408,7 @@ public class PlayerAbilities : MonoBehaviourPunCallbacks
     //  -------------------------------- Item ItemUndercover START ------------------------------------------------
     public void ItemUndercover(float duration){
         if(photonView.IsMine){
-            //AudioManager.instance.PlaySound("PS_UI_Undercover");
+            AudioManager.instance.PlaySound("PS_UI_Undercover");
             playerController.SpawnSmoke();
             StartCoroutine(playerController.PauseMovement(.3f));
             
@@ -434,10 +434,10 @@ public class PlayerAbilities : MonoBehaviourPunCallbacks
 
         if(gameObject.tag == "Robber"){
             playerController.playerAnim.SwitchAnimController("Police", "P01"); //SOManager.instance.animVariantPolice.animatorLists[0].runTimeAnimController
-            playerController.playerNameText.color = new Color32(81,151,255,255); // Change to police blue
+            //playerController.playerNameText.color = new Color32(81,151,255,255); // Change to police blue
         }else{
             playerController.playerAnim.SwitchAnimController("Robber", "R01");
-            playerController.playerNameText.color = new Color32(255,140,16,255); // Change to robber orange
+            //playerController.playerNameText.color = new Color32(255,140,16,255); // Change to robber orange
         }
     } // end EnableUndercover
 
@@ -449,9 +449,9 @@ public class PlayerAbilities : MonoBehaviourPunCallbacks
             onUndercover = false;
         }
         if(gameObject.tag == "Robber"){
-            playerController.playerNameText.color = new Color32(255,140,16,255); // Change to robber orange
+            //playerController.playerNameText.color = new Color32(255,140,16,255); // Change to robber orange
         }else{
-            playerController.playerNameText.color = new Color32(81,151,255,255); // Change to police blue
+            //playerController.playerNameText.color = new Color32(81,151,255,255); // Change to police blue
         }
     } // end DisableUndercover
     //  -------------------------------- Item ItemUndercover END ------------------------------------------------
@@ -464,7 +464,7 @@ public class PlayerAbilities : MonoBehaviourPunCallbacks
             if(!propUndercover){
                 var ran = Random.Range(0, propUndercoverGO.GetComponent<PropUndercover>().propList.Count);
                 propUndercoverGO.GetComponent<PropUndercover>().photonView.RPC("ChangeToProps", RpcTarget.All, ran);
-                //AudioManager.instance.PlaySound("PS_UI_Jutsu");
+                AudioManager.instance.PlaySound("PS_UI_Jutsu");
             }
 
             // also hide pet when invi
@@ -486,7 +486,7 @@ public class PlayerAbilities : MonoBehaviourPunCallbacks
     [PunRPC]
     public void ItemCharInvisible(float duration){
         if(photonView.IsMine){
-            //AudioManager.instance.PlaySound("PS_UI_Invisible");
+            AudioManager.instance.PlaySound("PS_UI_Invisible");
             // if on prop under cover. cancel it
             if(propUndercover){
                 propUndercoverTimer = 0;
@@ -508,7 +508,7 @@ public class PlayerAbilities : MonoBehaviourPunCallbacks
             if(!charInvisible){
                 //photonView.RPC("EnableInvisible", RpcTarget.AllBuffered);
                 photonView.RPC("EnableInvisible", RpcTarget.All);
-                //AudioManager.instance.PlaySound("PS_UI_Jutsu");
+                AudioManager.instance.PlaySound("PS_UI_Jutsu");
             }
 
             // also hide pet when invi
@@ -550,7 +550,7 @@ public class PlayerAbilities : MonoBehaviourPunCallbacks
     // Item Sticky Trail
     public void ItemStickyTrail(float duration){
         if(photonView.IsMine){
-            //AudioManager.instance.PlaySound("PS_UI_ThrowObject");
+            AudioManager.instance.PlaySound("PS_UI_ThrowObject");
             stickyEnable = true;
             canSpawnSticky = true;
             stickyCount = 0;
@@ -584,7 +584,7 @@ public class PlayerAbilities : MonoBehaviourPunCallbacks
     public void ItemCauliflower(float duration){
         var cauliSpeed = 20f; // adjust speed
         if(photonView.IsMine){
-            //AudioManager.instance.PlaySound("PS_UI_ThrowObject"); 
+            AudioManager.instance.PlaySound("PS_UI_ThrowObject"); 
             
             var cau = PhotonNetwork.Instantiate(NetworkManager.GetPhotonPrefab("Props", "prop_cauliflower01_SP"), playerController.aimPoint.transform.GetChild(0).position, Quaternion.identity);
             Physics2D.IgnoreCollision(GetComponent<Collider2D>(), cau.GetComponent<Collider2D>());
@@ -615,7 +615,7 @@ public class PlayerAbilities : MonoBehaviourPunCallbacks
     public void ItemFlashbang(float duration){
         var throwSpeed = 28f; // adjust speed
         if(photonView.IsMine){
-            //AudioManager.instance.PlaySound("PS_UI_ThrowObject"); 
+            AudioManager.instance.PlaySound("PS_UI_ThrowObject"); 
             var cau = PhotonNetwork.Instantiate(NetworkManager.GetPhotonPrefab("Props", "prop_flashbang01_SP"), playerController.aimPoint.transform.GetChild(0).transform.position, Quaternion.identity);
             cau.GetComponent<Flashbang>().explodeCountdown = duration;
             if(playerController.moveDir == Vector3.zero){
@@ -648,7 +648,7 @@ public class PlayerAbilities : MonoBehaviourPunCallbacks
     public void ItemCatStun(float duration){
         var throwSpeed = 20f; // adjust speed
         if(photonView.IsMine){
-            //AudioManager.instance.PlaySound("PS_UI_ThrowObject");
+            AudioManager.instance.PlaySound("PS_UI_ThrowObject");
             var cau = PhotonNetwork.Instantiate(NetworkManager.GetPhotonPrefab("Props", "prop_catstun01_SP"), playerController.aimPoint.transform.GetChild(0).transform.position, Quaternion.identity);
         
             if(playerController.isFacingRight){
@@ -704,7 +704,7 @@ public class PlayerAbilities : MonoBehaviourPunCallbacks
     public void ItemLockpick(float duration){
         if(photonView.IsMine){
             lockpickUsed = true;
-            //AudioManager.instance.PlaySound("PS_Lockpick");
+            AudioManager.instance.PlaySound("PS_Lockpick");
             playerController.ForceStopMove();
             lockpickTimer = duration;
             lockpickDur = duration;

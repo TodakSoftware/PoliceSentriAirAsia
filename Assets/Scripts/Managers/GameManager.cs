@@ -62,6 +62,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     } // end Awake
 
     void Start(){
+        Invoke("DelayMusic", 2f);
+
         // Bot add escape points
         if(botEscapeGO != null){
             foreach(var child in botEscapeGO.GetComponentsInChildren<Transform>()){
@@ -70,6 +72,7 @@ public class GameManager : MonoBehaviourPunCallbacks
                 }
             }
         }
+
         UIManager.instance.RefreshMainCanvas(); // Make sure we have main canvas
         UIManager.instance.RefreshControllerGroup(); // Make sure we have reference the CanvasGroup
 
@@ -108,7 +111,14 @@ public class GameManager : MonoBehaviourPunCallbacks
         
     } // end Start
 
-    
+    public void DelayMusic(){
+         // Play Music
+        AudioManager.instance.PlayMusic2("PS_BGM_LobbySong", false);
+    }
+
+    public void delayMusicStart(){
+        AudioManager.instance.PlayMusic2("PS_BGM_MainTheme", true);
+    }
 
     void Update(){
         // Moneybag Timer Related
@@ -166,7 +176,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         UIManager.instance.cacheCharacterSelect.SetActive(true); // Active Character Select Screen
         UIManager.instance.p_CharacterSelect.InitializeAllCharacters(team); // Initialize all available characters
 
-        if(fillWithBots && PhotonNetwork.OfflineMode && PhotonNetwork.InRoom){
+        if(fillWithBots && PhotonNetwork.InRoom){
             if(PhotonNetwork.IsMasterClient){
                 StartCoroutine(SpawnBots());
             }
@@ -178,37 +188,43 @@ public class GameManager : MonoBehaviourPunCallbacks
         // Fill in police 1st
         if(GameManager.GetAllPlayersPolice().Count < (int)PhotonNetwork.CurrentRoom.CustomProperties["RoomPolicePerGame"]){
             int polDif = (int)PhotonNetwork.CurrentRoom.CustomProperties["RoomPolicePerGame"] - GameManager.GetAllPlayersPolice().Count;
-            for(int i = 0; i < polDif; i++){
-                yield return new WaitForSeconds(Random.Range(0f, 1f));
-                GameObject player = PhotonNetwork.InstantiateRoomObject(NetworkManager.GetPhotonPrefab("Characters", "BotPolice"), GameManager.instance.waitingSpawnpoint.position + new Vector3(Random.Range(0,3f), Random.Range(0,3f), 0f), Quaternion.identity);
-                player.GetPhotonView().Owner.NickName = "BOT POLICE";
-                player.GetComponent<BotController>().enabled = true;
 
-                var randomPoliceSkin = Random.Range(0, SOManager.instance.animVariantPolice.animatorLists.Count);
-                player.GetComponent<PlayerController>().characterCode = SOManager.instance.animVariantPolice.animatorLists[randomPoliceSkin].code;
+            if(polDif >= 1){
+                for(int i = 0; i < 1; i++){
+                    yield return new WaitForSeconds(Random.Range(0f, 1f));
+                    GameObject player = PhotonNetwork.InstantiateRoomObject(NetworkManager.GetPhotonPrefab("Characters", "BotPolice"), GameManager.instance.waitingSpawnpoint.position + new Vector3(Random.Range(0,3f), Random.Range(0,3f), 0f), Quaternion.identity);
+                    player.GetPhotonView().Owner.NickName = "BOT POLICE";
+                    player.GetComponent<BotController>().enabled = true;
 
-                player.GetComponent<PlayerController>().CreateAvatar();
-                player.GetComponent<PlayerController>().SetupPlayerAnimator();
+                    var randomPoliceSkin = Random.Range(0, SOManager.instance.animVariantPolice.animatorLists.Count);
+                    player.GetComponent<PlayerController>().characterCode = SOManager.instance.animVariantPolice.animatorLists[randomPoliceSkin].code;
+
+                    //player.GetComponent<PlayerController>().CreateAvatar();
+                    player.GetComponent<PlayerController>().SetupPlayerAnimator();
+                }
             }
+            
             
         }
 
         // Fill in robber 1st
         if(GameManager.GetAllPlayersRobber().Count < (int)PhotonNetwork.CurrentRoom.CustomProperties["RoomRobberPerGame"]){
             int robDif = (int)PhotonNetwork.CurrentRoom.CustomProperties["RoomRobberPerGame"] - GameManager.GetAllPlayersRobber().Count;
-            for(int i = 0; i < robDif; i++){
-                yield return new WaitForSeconds(Random.Range(0f, 1f));
-                GameObject player = PhotonNetwork.InstantiateRoomObject(NetworkManager.GetPhotonPrefab("Characters", "BotRobber"), GameManager.instance.waitingSpawnpoint.position + new Vector3(Random.Range(0,3f), Random.Range(0,3f), 0f), Quaternion.identity);
-                player.GetPhotonView().Owner.NickName = "BOT ROBBER";
-                player.GetComponent<BotController>().enabled = true;
-                
-                var randomRobberSkin = Random.Range(0, SOManager.instance.animVariantRobber.animatorLists.Count);
-                player.GetComponent<PlayerController>().characterCode = SOManager.instance.animVariantRobber.animatorLists[randomRobberSkin].code;
 
-                player.GetComponent<PlayerController>().CreateAvatar();
-                player.GetComponent<PlayerController>().SetupPlayerAnimator();
-            }
-            
+            if(robDif >= 1){
+                for(int i = 0; i < 1; i++){
+                    yield return new WaitForSeconds(Random.Range(0f, 1f));
+                    GameObject player = PhotonNetwork.InstantiateRoomObject(NetworkManager.GetPhotonPrefab("Characters", "BotRobber"), GameManager.instance.waitingSpawnpoint.position + new Vector3(Random.Range(0,3f), Random.Range(0,3f), 0f), Quaternion.identity);
+                    player.GetPhotonView().Owner.NickName = "BOT ROBBER";
+                    player.GetComponent<BotController>().enabled = true;
+                    
+                    var randomRobberSkin = Random.Range(0, SOManager.instance.animVariantRobber.animatorLists.Count);
+                    player.GetComponent<PlayerController>().characterCode = SOManager.instance.animVariantRobber.animatorLists[randomRobberSkin].code;
+
+                    //player.GetComponent<PlayerController>().CreateAvatar();
+                    player.GetComponent<PlayerController>().SetupPlayerAnimator();
+                }
+            } 
         }
         
     } // end SPawnBots
@@ -235,12 +251,24 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     IEnumerator StartGameCountdown(){ // Start countdown before transferring all players to their positions
         while(currentStartGameCountdown != 0){
+            if(currentStartGameCountdown > 0 && currentStartGameCountdown <= 3){
+                AudioManager.instance.PlaySound("PS_UI_Countdown");
+            }
             UIManager.instance.gameUI.redirectCountdownText.text = ""+currentStartGameCountdown;
             yield return new WaitForSeconds(1f);
             currentStartGameCountdown -= 1;
         }
 
         if(currentStartGameCountdown <= 0){
+            // Play Sound
+            AudioManager.instance.PlaySound("PS_UI_StartGame");
+
+            // Stop Music
+            AudioManager.instance.Invoke("StopMusic", .3f);
+
+            // Play Music
+            Invoke("delayMusicStart", 1f);
+
             UIManager.instance.gameUI.redirectCountdownText.text = "START!";
             gameStarted = true;
 
@@ -410,19 +438,26 @@ public class GameManager : MonoBehaviourPunCallbacks
 #region END GAME RELATED
     public void PopupEndScreen(){
         endScreenGO.SetActive(true);
+
+        if(photonView.IsMine){
+            AudioManager.instance.PlaySound("PS_UI_Endscreen_v1");
+        }
+
         StartCoroutine(RedirectNewMap(5));
+        AudioManager.instance.StopMusic();
         
     } // end PopupEndScreen
 
     IEnumerator RedirectNewMap(float duration){
         float timer = duration;
         while(timer > 0){
-            if(PhotonNetwork.CurrentRoom.PlayerCount > 1){
+            endScreenRedirectText.text = "Leave game in " + timer;
+            /*if(PhotonNetwork.CurrentRoom.PlayerCount > 1){
                 endScreenRedirectText.text = "Redirect to new map in " + timer;
             }else{
                 endScreenRedirectText.text = "Leave game in " + timer;
-            }
-            
+            }*/
+            AudioManager.instance.PlaySound("Placeholder_RedirectCountdown");
             
             timer -= 1;
             yield return new WaitForSeconds(1);
@@ -431,8 +466,10 @@ public class GameManager : MonoBehaviourPunCallbacks
         if(timer <= 0){
             timer = 0;
             PhotonNetwork.AutomaticallySyncScene = true;
-
-            if(PhotonNetwork.IsMasterClient){
+            
+            endScreenRedirectText.text = "Bye-bye";
+            StartCoroutine(NetworkManager.instance.InGameLeaveRoom());
+            /*if(PhotonNetwork.IsMasterClient){
                 if(PhotonNetwork.CurrentRoom.PlayerCount > 1){
                     endScreenRedirectText.text = "Loading...";
                     photonView.RPC("Boom", RpcTarget.All);
@@ -447,7 +484,7 @@ public class GameManager : MonoBehaviourPunCallbacks
                     endScreenRedirectText.text = "Bye-bye";
                     StartCoroutine(NetworkManager.instance.InGameLeaveRoom());
                 }
-            }
+            }*/
         }
     } // end redirect
 
@@ -572,7 +609,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public void TellBotRobberToRescue(){
         foreach(var bot in GetAllPlayersRobber()){
             if(bot.GetComponent<BotController>() != null && !bot.GetComponent<Robber>().isCaught){
-                bot.GetComponent<BotController>().BotRobberSaveTeammate();
+                //bot.GetComponent<BotController>().BotRobberSaveTeammate();
                 print("TellRobber to rescue");
             }
         }

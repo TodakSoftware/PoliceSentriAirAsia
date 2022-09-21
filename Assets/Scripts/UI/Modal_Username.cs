@@ -16,7 +16,7 @@ public class Modal_Username : MonoBehaviour
     }
 
     void Update(){
-        if(usernameInput.text.Length > 3){
+        if(usernameInput.text.Length >= 3){
             confirmBtn.interactable = true;
         }else{
             confirmBtn.interactable = false;
