@@ -36519,7 +36519,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c2ea7640f4a92e46a7f789def887be9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemSpawnpoints: []
+  itemSpawnpoints:
+  - {fileID: 1554926503}
+  - {fileID: 1551480307}
+  - {fileID: 387269430}
+  - {fileID: 1307623433}
+  - {fileID: 1619854485}
+  - {fileID: 723760977}
+  - {fileID: 1892446914}
+  - {fileID: 279493211}
+  - {fileID: 1083705912}
+  - {fileID: 937176934}
+  - {fileID: 694129053}
+  - {fileID: 2012676962}
+  - {fileID: 1161903219}
+  - {fileID: 899800643}
+  - {fileID: 273423356}
+  - {fileID: 584284178}
+  - {fileID: 579353895}
+  - {fileID: 1163229267}
   spawnAmount: 4
   randomSpawnIndex: 
   newSpawnDuration: 20
@@ -50568,7 +50586,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.6, y: 1}
+    m_SensorSize: {x: 1.3333334, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
