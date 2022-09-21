@@ -204,6 +204,8 @@ public class UIManager : MonoBehaviour
         }else{
             popupUI = Instantiate(SOManager.instance.prefabs.p_RobberWinUI);
         }
+        AudioManager.instance.PlaySound("PS_UI_YouWon");
+        
         popupUI.transform.SetParent(mainCanvas.transform, false);
         yield return new WaitForSeconds(2f);
         popupUI.SetActive(false);
@@ -221,6 +223,8 @@ public class UIManager : MonoBehaviour
             popupUI = Instantiate(SOManager.instance.prefabs.p_RobberLoseUI);
         }
         popupUI.transform.SetParent(mainCanvas.transform, false);
+        AudioManager.instance.PlaySound("PS_UI_YouLose");
+        
         yield return new WaitForSeconds(2f);
         popupUI.SetActive(false);
         yield return new WaitForSeconds(1f);

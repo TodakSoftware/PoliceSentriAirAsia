@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ba03d1894bdc6b468add3b1642e79bb, type: 3}
+  m_Name: Music_Playlist
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: PS_BGM_MainTheme
+    audioMixerGroup: {fileID: -3257698784130146540, guid: 188df98c50303844792e69d088ad6ef6,
+      type: 2}
+    clip: {fileID: 8300000, guid: d4708ee455e8ab74fb7cfd3c9c2fcf8f, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 1
+  - name: PS_BGM_LobbySong
+    audioMixerGroup: {fileID: -3257698784130146540, guid: 188df98c50303844792e69d088ad6ef6,
+      type: 2}
+    clip: {fileID: 8300000, guid: ed1c5a56812c59f4d97f6b5215cff4b5, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 1

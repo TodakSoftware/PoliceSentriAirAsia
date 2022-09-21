@@ -105,6 +105,8 @@ public class Robber : MonoBehaviourPunCallbacks
     public void HasBeenCaught(string policeName){
         // Update properties PlayerCaught -> true
         if(!isCaught){
+            AudioManager.instance.PlaySound("PS_UI_Caught");
+            
             photonView.RPC("SetIsCaught", RpcTarget.AllBuffered, true, policeName);
             StartCoroutine(GetComponent<PlayerController>().PlayerFall(1.5f)); // Fall
             photonView.RPC("DisableCollider", RpcTarget.All, true); // Disable Collider
@@ -154,7 +156,7 @@ public class Robber : MonoBehaviourPunCallbacks
             if(isCaught && isInPrison && !done && readyToGoToEscape){
                 print("Can go to escape point");
                 if(GetComponent<BotController>() != null){
-                    GetComponent<BotController>().BotRobberGotoEscapePoint();
+                    //GetComponent<BotController>().BotRobberGotoEscapePoint();
                 }
             }
         }else{

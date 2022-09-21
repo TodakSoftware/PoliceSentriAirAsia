@@ -33,7 +33,7 @@ public class FlashbangEffect : MonoBehaviour
 
     public void Explode(){
         stayTimer = stayDuration;
-        //AudioManager.instance.PlaySound("PS_Flashbang");
+        AudioManager.instance.PlaySound("PS_Flashbang");
         if(!explode){
             var temp = GetComponent<Image>().color;
             temp.a = 0;

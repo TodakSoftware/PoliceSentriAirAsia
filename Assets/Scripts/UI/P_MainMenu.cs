@@ -22,6 +22,9 @@ public class P_MainMenu : MonoBehaviour
 
     void Start()
     {
+        // Play Music
+        AudioManager.instance.PlayMusic2("PS_BGM_MainTheme", true);
+        
         if(UIManager.instance.p_MainMenu == null){
             UIManager.instance.p_MainMenu = this;
             NetworkManager.instance.isInGame = false;

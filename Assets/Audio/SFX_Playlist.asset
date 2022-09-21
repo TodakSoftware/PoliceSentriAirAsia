@@ -1,0 +1,287 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ba03d1894bdc6b468add3b1642e79bb, type: 3}
+  m_Name: SFX_Playlist
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: PS_UI_Caught
+    audioMixerGroup: {fileID: -6469416043128007445, guid: 188df98c50303844792e69d088ad6ef6,
+      type: 2}
+    clip: {fileID: 8300000, guid: 0d552b969a224714d82deafba36837bc, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: PS_UI_Dash
+    audioMixerGroup: {fileID: -6469416043128007445, guid: 188df98c50303844792e69d088ad6ef6,
+      type: 2}
+    clip: {fileID: 8300000, guid: 4b4f378c92b27d64989a082c4e2450cb, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: PS_UI_Footstep
+    audioMixerGroup: {fileID: -6469416043128007445, guid: 188df98c50303844792e69d088ad6ef6,
+      type: 2}
+    clip: {fileID: 8300000, guid: f91af31dd0500a54db3dd75164ec4bd3, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: PS_UI_StartGame
+    audioMixerGroup: {fileID: -6469416043128007445, guid: 188df98c50303844792e69d088ad6ef6,
+      type: 2}
+    clip: {fileID: 8300000, guid: 570ce82e1e4105b4698369583cb68dda, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: PS_UI_StuckInMud
+    audioMixerGroup: {fileID: -6469416043128007445, guid: 188df98c50303844792e69d088ad6ef6,
+      type: 2}
+    clip: {fileID: 8300000, guid: ca5a5f4f88210b84e80a4eea985946d9, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: PS_UI_YouLose
+    audioMixerGroup: {fileID: -6469416043128007445, guid: 188df98c50303844792e69d088ad6ef6,
+      type: 2}
+    clip: {fileID: 8300000, guid: 7ffdcedc3a7a19e4488e8157abaa08bd, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: PS_UI_YouWon
+    audioMixerGroup: {fileID: -6469416043128007445, guid: 188df98c50303844792e69d088ad6ef6,
+      type: 2}
+    clip: {fileID: 8300000, guid: d2c76c8f15029ed4daf13b1551debaf3, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: PS_UI_BananaSlipped
+    audioMixerGroup: {fileID: -6469416043128007445, guid: 188df98c50303844792e69d088ad6ef6,
+      type: 2}
+    clip: {fileID: 8300000, guid: 546f0e2bde20ccb4db96a70754b01749, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: PS_UI_PotholeEnter
+    audioMixerGroup: {fileID: -6469416043128007445, guid: 188df98c50303844792e69d088ad6ef6,
+      type: 2}
+    clip: {fileID: 8300000, guid: fd74a9b460f6864459c68f0b5a28ad81, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: PS_UI_Radar
+    audioMixerGroup: {fileID: -6469416043128007445, guid: 188df98c50303844792e69d088ad6ef6,
+      type: 2}
+    clip: {fileID: 8300000, guid: 71d30016cafc2c743a38fcd187e693c4, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: PS_UI_BodyHit
+    audioMixerGroup: {fileID: -6469416043128007445, guid: 188df98c50303844792e69d088ad6ef6,
+      type: 2}
+    clip: {fileID: 8300000, guid: f7f6d7376c89caf42ac89ffb005c8bce, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: PS_UI_Button_Click
+    audioMixerGroup: {fileID: -6469416043128007445, guid: 188df98c50303844792e69d088ad6ef6,
+      type: 2}
+    clip: {fileID: 8300000, guid: 7ab9e957a3f4f1c439b4011ddd81b8ba, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: PS_UI_Button_Select
+    audioMixerGroup: {fileID: -6469416043128007445, guid: 188df98c50303844792e69d088ad6ef6,
+      type: 2}
+    clip: {fileID: 8300000, guid: 73ff02887e07a3c4095147bd49f8a73a, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: PS_UI_HologramOpen
+    audioMixerGroup: {fileID: -6469416043128007445, guid: 188df98c50303844792e69d088ad6ef6,
+      type: 2}
+    clip: {fileID: 8300000, guid: 5a6ab313a31281f4c998b529a60557ad, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: PS_UI_LevelUp
+    audioMixerGroup: {fileID: -6469416043128007445, guid: 188df98c50303844792e69d088ad6ef6,
+      type: 2}
+    clip: {fileID: 8300000, guid: e11ef9400e2ca764287575c2f4fe8737, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: PS_UI_ThrowObject
+    audioMixerGroup: {fileID: -6469416043128007445, guid: 188df98c50303844792e69d088ad6ef6,
+      type: 2}
+    clip: {fileID: 8300000, guid: b479fd7dcb4ea5f44a732009246c5f0a, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: Placeholder_NotifyHostStart
+    audioMixerGroup: {fileID: -6469416043128007445, guid: 188df98c50303844792e69d088ad6ef6,
+      type: 2}
+    clip: {fileID: 8300000, guid: 8471540d390df3c4cb8a2c92c5b9c5a2, type: 3}
+    volume: 0.7
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: Placeholder_RedirectCountdown
+    audioMixerGroup: {fileID: -6469416043128007445, guid: 188df98c50303844792e69d088ad6ef6,
+      type: 2}
+    clip: {fileID: 8300000, guid: 7e989d42bf0b3ce4bacf7a4646a2119c, type: 3}
+    volume: 0.3
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: PS_UI_Jutsu
+    audioMixerGroup: {fileID: -6469416043128007445, guid: 188df98c50303844792e69d088ad6ef6,
+      type: 2}
+    clip: {fileID: 8300000, guid: 13b46a825ae2fcc488bc8d1dba6a9034, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: PS_UI_Undercover
+    audioMixerGroup: {fileID: -6469416043128007445, guid: 188df98c50303844792e69d088ad6ef6,
+      type: 2}
+    clip: {fileID: 8300000, guid: 306f563de0b232c4ba103c0c62e84210, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: PS_UI_Countdown
+    audioMixerGroup: {fileID: -6469416043128007445, guid: 188df98c50303844792e69d088ad6ef6,
+      type: 2}
+    clip: {fileID: 8300000, guid: c32633bc8387a7848885bfdb235c1743, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: PS_Flashbang
+    audioMixerGroup: {fileID: -6469416043128007445, guid: 188df98c50303844792e69d088ad6ef6,
+      type: 2}
+    clip: {fileID: 8300000, guid: 85274bd5402be034683e28cd11481d52, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: PS_KupangBurst
+    audioMixerGroup: {fileID: -6469416043128007445, guid: 188df98c50303844792e69d088ad6ef6,
+      type: 2}
+    clip: {fileID: 8300000, guid: 3f47ebc7dfd188d40abd286782e6f195, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: PS_KupangPickup
+    audioMixerGroup: {fileID: -6469416043128007445, guid: 188df98c50303844792e69d088ad6ef6,
+      type: 2}
+    clip: {fileID: 8300000, guid: 3f771491b56b89845946819da0ab5367, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: PS_Lockpick
+    audioMixerGroup: {fileID: -6469416043128007445, guid: 188df98c50303844792e69d088ad6ef6,
+      type: 2}
+    clip: {fileID: 8300000, guid: 22ffad5c7c0fe94418927ac6bd0b9eb6, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: PS_UI_Invisible
+    audioMixerGroup: {fileID: -6469416043128007445, guid: 188df98c50303844792e69d088ad6ef6,
+      type: 2}
+    clip: {fileID: 8300000, guid: c04e937f12b19f54e8becfd2cb01d0ed, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: PS_UI_Popup_Invalid
+    audioMixerGroup: {fileID: -6469416043128007445, guid: 188df98c50303844792e69d088ad6ef6,
+      type: 2}
+    clip: {fileID: 8300000, guid: 794d0f4caaa7b214f9024979f30157f1, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: PS_UI_Popup_Valid
+    audioMixerGroup: {fileID: -6469416043128007445, guid: 188df98c50303844792e69d088ad6ef6,
+      type: 2}
+    clip: {fileID: 8300000, guid: ea30b76157a02a34d94601de1ed8643e, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: PS_UI_Reward
+    audioMixerGroup: {fileID: -6469416043128007445, guid: 188df98c50303844792e69d088ad6ef6,
+      type: 2}
+    clip: {fileID: 8300000, guid: 532dde51d0abc7b418b3b3d5737338ca, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: PS_UI_Endscreen_v1
+    audioMixerGroup: {fileID: -6469416043128007445, guid: 188df98c50303844792e69d088ad6ef6,
+      type: 2}
+    clip: {fileID: 8300000, guid: c2dc03cd879c82944acb03c7aba4036d, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: PS_UI_Endscreen_v2
+    audioMixerGroup: {fileID: -6469416043128007445, guid: 188df98c50303844792e69d088ad6ef6,
+      type: 2}
+    clip: {fileID: 8300000, guid: 07311168e79e7b443ae74c91a40d1fb1, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: PS_UI_board_erase
+    audioMixerGroup: {fileID: -6469416043128007445, guid: 188df98c50303844792e69d088ad6ef6,
+      type: 2}
+    clip: {fileID: 8300000, guid: e0ad7d0901f903042bebb115b865f27c, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: PS_UI_board_write
+    audioMixerGroup: {fileID: -6469416043128007445, guid: 188df98c50303844792e69d088ad6ef6,
+      type: 2}
+    clip: {fileID: 8300000, guid: db549ad639bd7eb43849102823e1d553, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: PS_UI_Chat_emote
+    audioMixerGroup: {fileID: -6469416043128007445, guid: 188df98c50303844792e69d088ad6ef6,
+      type: 2}
+    clip: {fileID: 8300000, guid: 530e28ba892e7c24bb7f1987e420c24d, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0

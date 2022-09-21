@@ -27,7 +27,7 @@ public class Banana : MonoBehaviourPunCallbacks
                 //other.GetComponent<PlayerControllerPhoton>().PlayerFall(dur);
                 other.GetComponent<PlayerController>().photonView.RPC("PlayerFall", RpcTarget.AllBuffered, dur);
             }
-            //other.GetComponent<PlayerController>().FallSound("Banana");
+            other.GetComponent<PlayerController>().FallSound("Banana");
 
             if(photonView.IsMine){
                 PhotonNetwork.Destroy(this.gameObject);

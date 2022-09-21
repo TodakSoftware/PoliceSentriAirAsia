@@ -262,7 +262,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 MOVE_SPEED_MODIFIED = moveSpeed;
                 moveSpeed = moveSpeed / 2f;
             }
-            //AudioManager.instance.PlaySound("PS_UI_StuckInMud");
+            AudioManager.instance.PlaySound("PS_UI_StuckInMud");
             slowTimer = 5f;
         }
     }
@@ -311,6 +311,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
 #region DASH RELATED
     public IEnumerator PlayerDash(float duration){
         if(!isDashing && !isDashCooldown && !isFalling){
+            AudioManager.instance.PlaySound("PS_UI_Dash");
+
             btnDash.GetComponent<ButtonCooldown>().StartCooldown(dashCooldown);
             StartCoroutine(CooldownPlayerDash(dashCooldown)); // Set Button Cooldown
             playerAnim.PlayAnimation("Dash"); // Play Dash Animation
@@ -351,6 +353,17 @@ public class PlayerController : MonoBehaviourPunCallbacks
             isFalling = false;
         }
     } // end PlayerFall
+
+    public void FallSound(string type){
+        if(photonView.IsMine){
+            switch(type){
+                case "Banana":
+                    AudioManager.instance.PlaySound("PS_UI_BananaSlipped");
+                break;
+            }
+        }
+        
+    }
 
 #endregion // end FALL RELATED
 
