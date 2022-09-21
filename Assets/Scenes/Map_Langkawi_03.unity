@@ -13178,88 +13178,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4667305836917577941, guid: 7f6677f0b86ebfc40b499791dc2f571e, type: 3}
   m_PrefabInstance: {fileID: 313294272}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &315393675
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 8057092212636084455}
-    m_Modifications:
-    - target: {fileID: 6977476466506776838, guid: 8d188d19db8695e4ba13d16c1f84b671, type: 3}
-      propertyPath: m_Name
-      value: AdinmoSprite
-      objectReference: {fileID: 0}
-    - target: {fileID: 8269338026483698088, guid: 8d188d19db8695e4ba13d16c1f84b671, type: 3}
-      propertyPath: m_placementKey
-      value: pk_917a0d8724f24eb184acc11403130fd4
-      objectReference: {fileID: 0}
-    - target: {fileID: 8269338026483698088, guid: 8d188d19db8695e4ba13d16c1f84b671, type: 3}
-      propertyPath: m_hideUntilReady
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8269338026483698088, guid: 8d188d19db8695e4ba13d16c1f84b671, type: 3}
-      propertyPath: m_disablePlaceholder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8751992151562982627, guid: 8d188d19db8695e4ba13d16c1f84b671, type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8751992151562982627, guid: 8d188d19db8695e4ba13d16c1f84b671, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.35
-      objectReference: {fileID: 0}
-    - target: {fileID: 8751992151562982627, guid: 8d188d19db8695e4ba13d16c1f84b671, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.35
-      objectReference: {fileID: 0}
-    - target: {fileID: 8751992151562982627, guid: 8d188d19db8695e4ba13d16c1f84b671, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8751992151562982627, guid: 8d188d19db8695e4ba13d16c1f84b671, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8751992151562982627, guid: 8d188d19db8695e4ba13d16c1f84b671, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8751992151562982627, guid: 8d188d19db8695e4ba13d16c1f84b671, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8751992151562982627, guid: 8d188d19db8695e4ba13d16c1f84b671, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8751992151562982627, guid: 8d188d19db8695e4ba13d16c1f84b671, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8751992151562982627, guid: 8d188d19db8695e4ba13d16c1f84b671, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8751992151562982627, guid: 8d188d19db8695e4ba13d16c1f84b671, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8751992151562982627, guid: 8d188d19db8695e4ba13d16c1f84b671, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8751992151562982627, guid: 8d188d19db8695e4ba13d16c1f84b671, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 8d188d19db8695e4ba13d16c1f84b671, type: 3}
---- !u!4 &315393676 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8751992151562982627, guid: 8d188d19db8695e4ba13d16c1f84b671, type: 3}
-  m_PrefabInstance: {fileID: 315393675}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &315970664
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30360,7 +30278,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.3333334, y: 1}
+    m_SensorSize: {x: 1.6, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -84048,7 +83966,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8114632155629452139}
-  - {fileID: 315393676}
   m_Father: {fileID: 720016345}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
