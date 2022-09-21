@@ -12815,6 +12815,7 @@ GameObject:
   - component: {fileID: 498154142}
   - component: {fileID: 498154141}
   - component: {fileID: 498154140}
+  - component: {fileID: 498154143}
   m_Layer: 0
   m_Name: BottomArea
   m_TagString: Untagged
@@ -12913,6 +12914,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 498154137}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &498154143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 498154137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ff69cefd2124034886ea11d5b236c9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  area: 2
+  someOneInArea: 0
 --- !u!1001 &507200951
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17303,6 +17318,7 @@ GameObject:
   - component: {fileID: 653849028}
   - component: {fileID: 653849027}
   - component: {fileID: 653849026}
+  - component: {fileID: 653849029}
   m_Layer: 0
   m_Name: RightArea
   m_TagString: Untagged
@@ -17401,6 +17417,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 653849023}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &653849029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 653849023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ff69cefd2124034886ea11d5b236c9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  area: 1
+  someOneInArea: 0
 --- !u!1001 &660869453
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35272,7 +35302,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.6, y: 1}
+    m_SensorSize: {x: 1.3333334, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -37332,6 +37362,7 @@ GameObject:
   - component: {fileID: 1391030601}
   - component: {fileID: 1391030600}
   - component: {fileID: 1391030599}
+  - component: {fileID: 1391030602}
   m_Layer: 0
   m_Name: LeftArea
   m_TagString: Untagged
@@ -37430,6 +37461,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1391030596}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1391030602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1391030596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ff69cefd2124034886ea11d5b236c9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  area: 3
+  someOneInArea: 0
 --- !u!1001 &1395277969
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -42066,6 +42111,7 @@ GameObject:
   - component: {fileID: 1565745510}
   - component: {fileID: 1565745509}
   - component: {fileID: 1565745508}
+  - component: {fileID: 1565745511}
   m_Layer: 0
   m_Name: TopArea
   m_TagString: Untagged
@@ -42164,6 +42210,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1565745505}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1565745511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1565745505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ff69cefd2124034886ea11d5b236c9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  area: 0
+  someOneInArea: 0
 --- !u!1001 &1566222799
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -43244,6 +43304,10 @@ PrefabInstance:
     - target: {fileID: -7969242180880632155, guid: 97a66bcaedac2db45ac6b9cdeb166e7b, type: 3}
       propertyPath: sceneViewId
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -5103292891254581590, guid: 97a66bcaedac2db45ac6b9cdeb166e7b, type: 3}
+      propertyPath: sceneViewId
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8630800090023105044, guid: 97a66bcaedac2db45ac6b9cdeb166e7b, type: 3}
       propertyPath: m_RootOrder

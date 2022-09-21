@@ -4217,7 +4217,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 100435033}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58422c3e32971434d91027400db9c985, type: 3}
+  m_Script: {fileID: 11500000, guid: 505b27d807bf50a49b87a025452cbf67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!61 &100435036
@@ -30360,7 +30360,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.9114584, y: 1}
+    m_SensorSize: {x: 1.3333334, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -39097,7 +39097,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1003897351}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58422c3e32971434d91027400db9c985, type: 3}
+  m_Script: {fileID: 11500000, guid: 505b27d807bf50a49b87a025452cbf67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!61 &1003897354
@@ -55426,7 +55426,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1423959679}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58422c3e32971434d91027400db9c985, type: 3}
+  m_Script: {fileID: 11500000, guid: 505b27d807bf50a49b87a025452cbf67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!61 &1423959682
@@ -62146,7 +62146,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1609205112}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58422c3e32971434d91027400db9c985, type: 3}
+  m_Script: {fileID: 11500000, guid: 505b27d807bf50a49b87a025452cbf67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!61 &1609205115
