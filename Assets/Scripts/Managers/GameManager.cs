@@ -548,6 +548,38 @@ public class GameManager : MonoBehaviourPunCallbacks
         return moneybag;
     } // end GetAllPlayersRobber
 
+    public static Sprite GetCharacterIconHead(string team, string code){ // Return character icon head sprite
+       switch (team)
+       {
+            case "Police":
+                foreach (var icon in SOManager.instance.animVariantPolice.animatorLists)
+                {
+                    if (icon.code == code)
+                    {
+                        return icon.iconHead;
+                    }
+                }
+            break;
+
+            case "Robber":
+                foreach (var icon in SOManager.instance.animVariantRobber.animatorLists)
+                {
+                    if (icon.code == code)
+                    {
+                        return icon.iconHead;
+                    }
+                }
+            break;
+
+            default:
+            print ("Wrong Team Name");
+            break;
+       }
+
+       return null;
+
+    } // end GetCharacterIconHead
+
     public static List<Player> GetAllNetworkPlayers(){ // Return list of NETWORK players
         List<Player> allPlayers = new List<Player>();
         List<Player> polices = new List<Player>();

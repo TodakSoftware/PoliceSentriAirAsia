@@ -30,7 +30,8 @@ public class Robber : MonoBehaviourPunCallbacks
             if(other.gameObject.GetComponent<Robber>().isCaught == false){ // our team mates who not caught
                 if(photonView.IsMine){
                     photonView.RPC("SetIsReleasing", RpcTarget.All, true);
-                    photonView.RPC("SetTeammateName", RpcTarget.All, other.gameObject.GetPhotonView().Owner.NickName);
+                    photonView.RPC("SetTeammateName", RpcTarget.All, other.gameObject.GetPhotonView().Owner.NickName); 
+                    photonView.RPC("AddReleasedCount", other.gameObject.GetPhotonView().Owner, 1);
                     teammateGO = other.gameObject; // Set our saviour
                 }
             }
@@ -121,6 +122,19 @@ public class Robber : MonoBehaviourPunCallbacks
             StartCoroutine(RedirectToJailed(1.5f));
         }
     } // end HasBeenCaught()
+
+    [PunRPC]
+    public void AddReleasedCount(int value)
+    {
+        //Save Police Caught Count
+        if(photonView.IsMine){
+            var _currentReleased = (int)photonView.Owner.CustomProperties["RobberReleasedCount"];
+
+            Hashtable teamRole = new Hashtable();
+            teamRole.Add("RobberReleasedCount", _currentReleased + 1);
+            PhotonNetwork.LocalPlayer.SetCustomProperties(teamRole);
+        }
+    }
 
     [PunRPC]
     public void SetIsCaught(bool caught, string policeName){

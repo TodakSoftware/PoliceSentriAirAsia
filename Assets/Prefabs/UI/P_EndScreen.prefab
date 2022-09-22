@@ -322,6 +322,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   endScreenleaveBtn: {fileID: 3701586533175246731}
   playAgainBtn: {fileID: 1721591800}
+  scoreListPrefab: {fileID: 182173006194768826, guid: a98616a38f9520f4ab190982f6ce272a, type: 3}
+  mvpPrefab: {fileID: 4057114541184708778}
+  listContent: {fileID: 4057114542679059277}
 --- !u!1 &3701586533175246729
 GameObject:
   m_ObjectHideFlags: 0
@@ -1192,7 +1195,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4057114542584937799}
   m_HandleRect: {fileID: 4057114542584937798}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -4392,8 +4395,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4057114543205603780}
   m_HandleRect: {fileID: 4057114543205603779}
   m_Direction: 0
-  m_Value: 1
-  m_Size: 1
+  m_Value: 0.0000033236504
+  m_Size: 0.9407616
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
