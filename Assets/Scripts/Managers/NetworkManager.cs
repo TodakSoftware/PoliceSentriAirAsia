@@ -448,7 +448,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         UpdateTotalFindGame();
 
         if(PhotonNetwork.IsMasterClient && isInTheRoom && PhotonNetwork.CurrentRoom.PlayerCount > 1 && PhotonNetwork.CurrentRoom.PlayerCount < (int)maxPlayersPerRoom){ //HOI
-            FindGameAutoStartAdder(5f);
+            FindGameAutoStartAdder(3f);
         }
     } // end OnPlayerEnteredRoom
 

@@ -401,6 +401,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
                                 teamRole.Add("CharacterCode", characterCode);
                                 teamRole.Add("PlayerCaught", false);
                                 teamRole.Add("PlayerHoldMoneybag", false);
+                                teamRole.Add("PoliceCaughtCount", 0);
                                 PhotonNetwork.LocalPlayer.SetCustomProperties(teamRole);
                             }
                         }
@@ -422,6 +423,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
                                 teamRole.Add("CharacterCode", characterCode);
                                 teamRole.Add("PlayerCaught", false);
                                 teamRole.Add("PlayerHoldMoneybag", false);
+                                teamRole.Add("RobberReleasedCount", 0);
                                 PhotonNetwork.LocalPlayer.SetCustomProperties(teamRole);
                             }
                         }
