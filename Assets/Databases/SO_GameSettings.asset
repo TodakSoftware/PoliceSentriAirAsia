@@ -20,6 +20,6 @@ MonoBehaviour:
     maxPolicePerGame: 1
     maxRobberPerGame: 0
     findGameTimeoutDuration: 180
-    findGameAutoStart: 60
+    findGameAutoStart: 20
     clockStartTime: 90
     clockEndTime: 0

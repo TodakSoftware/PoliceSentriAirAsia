@@ -6749,6 +6749,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   moveDir: {x: 0, y: 0, z: 0}
   isFacingRight: 0
+  gameUI: {fileID: 0}
   moveSpeed: 8
   canMove: 1
   isMoving: 0
@@ -6761,7 +6762,14 @@ MonoBehaviour:
   dashCooldown: 3
   isDashing: 0
   isDashCooldown: 0
+  isDashingButtonDown: 0
   isFalling: 0
+  isSlow: 0
+  slowTimer: 0
+  isSlide: 0
+  aimPoint: {fileID: 0}
+  throwPoint: {fileID: 0}
+  throwDistance: 20
   cam2D: {fileID: 0}
   playerAnim: {fileID: 3297899693586578346}
   characterCode: R01
@@ -6921,6 +6929,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   moveDir: {x: 0, y: 0, z: 0}
   isFacingRight: 0
+  gameUI: {fileID: 0}
   moveSpeed: 8
   canMove: 1
   isMoving: 0
@@ -6933,7 +6942,14 @@ MonoBehaviour:
   dashCooldown: 3
   isDashing: 0
   isDashCooldown: 0
+  isDashingButtonDown: 0
   isFalling: 0
+  isSlow: 0
+  slowTimer: 0
+  isSlide: 0
+  aimPoint: {fileID: 0}
+  throwPoint: {fileID: 0}
+  throwDistance: 20
   cam2D: {fileID: 0}
   playerAnim: {fileID: 3297899693586578346}
   characterCode: 

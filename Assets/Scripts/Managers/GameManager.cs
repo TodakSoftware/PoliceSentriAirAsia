@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public TextMeshProUGUI endScreenRedirectText;
     public int playAgainCount;
     bool askForHelpActivated;
+    bool doneSpawnBots;
 
 
     void Awake(){
@@ -135,7 +136,18 @@ public class GameManager : MonoBehaviourPunCallbacks
                 }
             }
         } // end gameStarted
-        
+
+        if(currentStartGameCountdown <= 5 && !doneSpawnBots){
+            // Fill Bots
+            if(GetAllPlayers().Count == (int)PhotonNetwork.CurrentRoom.CustomProperties["RealTotalPlayer"]){
+                if(fillWithBots && PhotonNetwork.InRoom){
+                    if(PhotonNetwork.IsMasterClient){
+                        StartCoroutine(SpawnBots());
+                        doneSpawnBots = true;
+                    }
+                }
+            }
+        }
 
         if(Input.GetKeyDown(KeyCode.M)){
             
@@ -175,16 +187,10 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         UIManager.instance.cacheCharacterSelect.SetActive(true); // Active Character Select Screen
         UIManager.instance.p_CharacterSelect.InitializeAllCharacters(team); // Initialize all available characters
-
-        if(fillWithBots && PhotonNetwork.InRoom){
-            if(PhotonNetwork.IsMasterClient){
-                StartCoroutine(SpawnBots());
-            }
-        }
     } // end SpawnSelectedCharacter
 
     public IEnumerator SpawnBots(){
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         // Fill in police 1st
         if(GameManager.GetAllPlayersPolice().Count < (int)PhotonNetwork.CurrentRoom.CustomProperties["RoomPolicePerGame"]){
             int polDif = (int)PhotonNetwork.CurrentRoom.CustomProperties["RoomPolicePerGame"] - GameManager.GetAllPlayersPolice().Count;
@@ -193,7 +199,6 @@ public class GameManager : MonoBehaviourPunCallbacks
                 for(int i = 0; i < 1; i++){
                     yield return new WaitForSeconds(Random.Range(0f, 1f));
                     GameObject player = PhotonNetwork.InstantiateRoomObject(NetworkManager.GetPhotonPrefab("Characters", "BotPolice"), GameManager.instance.waitingSpawnpoint.position + new Vector3(Random.Range(0,3f), Random.Range(0,3f), 0f), Quaternion.identity);
-                    player.GetPhotonView().Owner.NickName = "BOT POLICE";
                     player.GetComponent<BotController>().enabled = true;
 
                     var randomPoliceSkin = Random.Range(0, SOManager.instance.animVariantPolice.animatorLists.Count);
@@ -215,7 +220,6 @@ public class GameManager : MonoBehaviourPunCallbacks
                 for(int i = 0; i < 1; i++){
                     yield return new WaitForSeconds(Random.Range(0f, 1f));
                     GameObject player = PhotonNetwork.InstantiateRoomObject(NetworkManager.GetPhotonPrefab("Characters", "BotRobber"), GameManager.instance.waitingSpawnpoint.position + new Vector3(Random.Range(0,3f), Random.Range(0,3f), 0f), Quaternion.identity);
-                    player.GetPhotonView().Owner.NickName = "BOT ROBBER";
                     player.GetComponent<BotController>().enabled = true;
                     
                     var randomRobberSkin = Random.Range(0, SOManager.instance.animVariantRobber.animatorLists.Count);
@@ -257,49 +261,52 @@ public class GameManager : MonoBehaviourPunCallbacks
             UIManager.instance.gameUI.redirectCountdownText.text = ""+currentStartGameCountdown;
             yield return new WaitForSeconds(1f);
             currentStartGameCountdown -= 1;
+
+            if(currentStartGameCountdown <= 0){
+                // Play Sound
+                AudioManager.instance.PlaySound("PS_UI_StartGame");
+
+                // Stop Music
+                AudioManager.instance.Invoke("StopMusic", .3f);
+
+                // Play Music
+                Invoke("delayMusicStart", 1f);
+
+                UIManager.instance.gameUI.redirectCountdownText.text = "START!";
+                
+                
+                gameStarted = true;
+
+                print("Redirect Everybody To Their Position");
+                //StartCoroutine(GameManager.instance.AskForHelp());
+                var policePos = 0;
+                var robberPos = 0;
+                foreach(var g in GetAllPlayers()){
+                    if(g.GetComponent<PlayerController>().playerTeam == E_Team.POLICE){
+                        g.transform.position = policeSpawnpoints[policePos].position;
+                        policePos++;
+                    }else{ // else robber
+                        g.transform.position = robberSpawnpoints[robberPos].position;
+                        robberPos++;
+                    }
+                } // end foreach
+
+                // Close Select Character UI
+                StartCoroutine(UIManager.instance.CloseCharacterSelect(0));
+
+                // Close Lobby Button Group
+                UIManager.instance.gameUI.lobbyButtonGroup.SetActive(false);
+
+                // Close Lobby Button Group
+                UIManager.instance.gameUI.moneybagTimerGroup.SetActive(true);
+
+                yield return new WaitForSeconds(2f); // wait for seconds to clear text
+                UIManager.instance.gameUI.redirectCountdownText.text = "";
+
+                CheckWinningCondition();
+            } // end if(currentStartGameCountdown <= 0)
         }
-
-        if(currentStartGameCountdown <= 0){
-            // Play Sound
-            AudioManager.instance.PlaySound("PS_UI_StartGame");
-
-            // Stop Music
-            AudioManager.instance.Invoke("StopMusic", .3f);
-
-            // Play Music
-            Invoke("delayMusicStart", 1f);
-
-            UIManager.instance.gameUI.redirectCountdownText.text = "START!";
-            gameStarted = true;
-
-            print("Redirect Everybody To Their Position");
-            //StartCoroutine(GameManager.instance.AskForHelp());
-            var policePos = 0;
-            var robberPos = 0;
-            foreach(var g in GetAllPlayers()){
-                if(g.GetComponent<PlayerController>().playerTeam == E_Team.POLICE){
-                    g.transform.position = policeSpawnpoints[policePos].position;
-                    policePos++;
-                }else{ // else robber
-                    g.transform.position = robberSpawnpoints[robberPos].position;
-                    robberPos++;
-                }
-            } // end foreach
-
-            // Close Select Character UI
-            StartCoroutine(UIManager.instance.CloseCharacterSelect(0));
-
-            // Close Lobby Button Group
-            UIManager.instance.gameUI.lobbyButtonGroup.SetActive(false);
-
-            // Close Lobby Button Group
-            UIManager.instance.gameUI.moneybagTimerGroup.SetActive(true);
-
-            yield return new WaitForSeconds(2f); // wait for seconds to clear text
-            UIManager.instance.gameUI.redirectCountdownText.text = "";
-
-            CheckWinningCondition();
-        } // end if(currentStartGameCountdown <= 0)
+        
     } // end StartGameCountdown
 
     public void UpdateTeamCount(){

@@ -293,7 +293,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     } // end OnJoinRandomFailed
 
     void DelayRejoin(){
-        print("Rejoin Called");
+        //print("Rejoin Called");
         Hashtable expectedRoomProperties = new Hashtable();
         expectedRoomProperties["RoomGamemodeIndex"] = 0;
 
@@ -370,9 +370,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             Hashtable roomProperties = new Hashtable();
             roomProperties.Add("RoomGamemodeIndex", gameModeIndex);
 
-            roomProperties.Add("RoomPolicePerGame", 4);
-            roomProperties.Add("RoomRobberPerGame", 6);
-            roomProperties.Add("RoomMaxTotalPlayer", 10);
+            roomProperties.Add("RoomPolicePerGame", SOManager.instance.gameSettings.gameMode[gameModeIndex].maxPolicePerGame);
+            roomProperties.Add("RoomRobberPerGame", SOManager.instance.gameSettings.gameMode[gameModeIndex].maxRobberPerGame);
+            roomProperties.Add("RoomMaxTotalPlayer", (int)SOManager.instance.gameSettings.gameMode[gameModeIndex].maxPolicePerGame + (int)SOManager.instance.gameSettings.gameMode[gameModeIndex].maxRobberPerGame);
 
             roomProperties.Add("RealTotalPlayer", amount);
 

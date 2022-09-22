@@ -102,6 +102,28 @@ public class PlayerController : MonoBehaviourPunCallbacks
         cam2D.m_Follow = this.transform;
         cam2D.m_LookAt = this.transform;
 
+        if(playerTeam == E_Team.POLICE){
+            if(photonView.IsMine){
+                Hashtable teamRole = new Hashtable();
+                teamRole.Add("NetworkTeam", "Police");
+                teamRole.Add("CharacterCode", characterCode);
+                teamRole.Add("PlayerCaught", false);
+                teamRole.Add("PlayerHoldMoneybag", false);
+                teamRole.Add("PoliceCaughtCount", 0);
+                PhotonNetwork.LocalPlayer.SetCustomProperties(teamRole);
+            }
+        }else{
+            if(photonView.IsMine){
+                Hashtable teamRole = new Hashtable();
+                teamRole.Add("NetworkTeam", "Robber");
+                teamRole.Add("CharacterCode", characterCode);
+                teamRole.Add("PlayerCaught", false);
+                teamRole.Add("PlayerHoldMoneybag", false);
+                teamRole.Add("RobberReleasedCount", 0);
+                PhotonNetwork.LocalPlayer.SetCustomProperties(teamRole);
+            }
+        }
+
         SetupPlayerAnimator(); // cannot put on awake because of order execution
 
         // Enable Joystick on Mobile Devices
@@ -395,15 +417,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
                             playerAnim.originalAnimatorController = animator.runTimeAnimController;
                             playerAnim.animator.runtimeAnimatorController = animator.runTimeAnimController;
 
-                            if(photonView.IsMine){
-                                Hashtable teamRole = new Hashtable();
-                                teamRole.Add("NetworkTeam", "Police");
-                                teamRole.Add("CharacterCode", characterCode);
-                                teamRole.Add("PlayerCaught", false);
-                                teamRole.Add("PlayerHoldMoneybag", false);
-                                teamRole.Add("PoliceCaughtCount", 0);
-                                PhotonNetwork.LocalPlayer.SetCustomProperties(teamRole);
-                            }
+                            
                         }
                     } // end foreach
                 }
@@ -417,15 +431,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
                             playerAnim.originalAnimatorController = animator.runTimeAnimController;
                             playerAnim.animator.runtimeAnimatorController = animator.runTimeAnimController;
 
-                            if(photonView.IsMine){
-                                Hashtable teamRole = new Hashtable();
-                                teamRole.Add("NetworkTeam", "Robber");
-                                teamRole.Add("CharacterCode", characterCode);
-                                teamRole.Add("PlayerCaught", false);
-                                teamRole.Add("PlayerHoldMoneybag", false);
-                                teamRole.Add("RobberReleasedCount", 0);
-                                PhotonNetwork.LocalPlayer.SetCustomProperties(teamRole);
-                            }
+                            
                         }
                     } // end foreach
                 }

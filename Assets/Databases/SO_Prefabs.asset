@@ -21,6 +21,7 @@ MonoBehaviour:
   p_RobberWinUI: {fileID: 406653032331418260, guid: c1f9bd22dcf430744847962893fe8ef0, type: 3}
   p_RobberLoseUI: {fileID: 1782553641273191181, guid: fc68282e438361d409e305edad36a7a9, type: 3}
   ui_GameplayFeeds: {fileID: 4499566258254079363, guid: 68251c6f7c1f334458e6dff675168fec, type: 3}
+  modalIngameSetting: {fileID: 5559437913764347164, guid: a4b78ec7897c8e14db828c50d572b578, type: 3}
   btnCharacterSelectAvatar: {fileID: 5209461420037623589, guid: 513a38328444f444c9f4267d468bc760, type: 3}
   characterPrefabs:
   - name: CharacterPolice

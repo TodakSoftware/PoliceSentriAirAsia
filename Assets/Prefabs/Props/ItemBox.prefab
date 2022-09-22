@@ -191,8 +191,6 @@ MonoBehaviour:
   doneAdd: 0
   robberItems:
   - Radar
-  - Boots
-  - Lockpick
   - Banana
   - Undercover
   - Flashbang
@@ -202,7 +200,6 @@ MonoBehaviour:
   - Sticky Trail
   policeItems:
   - Radar
-  - Boots
   - Undercover
   - Flashbang
   - Prop Undercover
@@ -283,7 +280,7 @@ MonoBehaviour:
     SynchronizeType: 1
     Name: Idle
   m_SynchronizeLayers:
-  - SynchronizeType: 0
+  - SynchronizeType: 1
     LayerIndex: 0
 --- !u!95 &6133331791533825113
 Animator:

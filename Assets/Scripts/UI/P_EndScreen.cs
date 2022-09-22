@@ -44,9 +44,20 @@ public class P_EndScreen : MonoBehaviourPunCallbacks
             var ScoreTemp = Instantiate(scoreListPrefab);
             ScoreTemp.transform.SetParent(listContent.transform, false);
 
-            ScoreTemp.GetComponent<PlayerscoreList>().playerIcon.GetComponent<Image>().sprite = GameManager.GetCharacterIconHead("Police", _totalPolice[i].GetPhotonView().Controller.CustomProperties["CharacterCode"].ToString());
+            if(GameManager.GetCharacterIconHead("Police", _totalPolice[i].GetPhotonView().Controller.CustomProperties["CharacterCode"].ToString()) != null){
+                ScoreTemp.GetComponent<PlayerscoreList>().playerIcon.GetComponent<Image>().sprite = GameManager.GetCharacterIconHead("Police", _totalPolice[i].GetPhotonView().Controller.CustomProperties["CharacterCode"].ToString());
+            }else{
+                ScoreTemp.GetComponent<PlayerscoreList>().playerIcon.GetComponent<Image>().sprite = GameManager.GetCharacterIconHead("Police", "P01");
+            }
+            
             ScoreTemp.GetComponent<PlayerscoreList>().playerName.GetComponent<TextMeshProUGUI>().text = _totalPolice[i].GetComponent<PlayerController>().playerNameText.text;
-            ScoreTemp.GetComponent<PlayerscoreList>().scoreText.text = _totalPolice[i].GetPhotonView().Controller.CustomProperties["PoliceCaughtCount"].ToString();
+            
+            if(_totalPolice[i].GetPhotonView().Controller.CustomProperties["PoliceCaughtCount"] != null){
+                ScoreTemp.GetComponent<PlayerscoreList>().scoreText.text = _totalPolice[i].GetPhotonView().Controller.CustomProperties["PoliceCaughtCount"].ToString();
+            }else{
+                ScoreTemp.GetComponent<PlayerscoreList>().scoreText.text = "1";
+            }
+            
 
         //Loop Total Player & Instantiate Score List Prefab
         }
@@ -59,9 +70,20 @@ public class P_EndScreen : MonoBehaviourPunCallbacks
             var ScoreTemp = Instantiate(scoreListPrefab);
             ScoreTemp.transform.SetParent(listContent.transform, false);
 
-            ScoreTemp.GetComponent<PlayerscoreList>().playerIcon.GetComponent<Image>().sprite = GameManager.GetCharacterIconHead("Robber", _totalRobber[i].GetPhotonView().Controller.CustomProperties["CharacterCode"].ToString());
+            if(GameManager.GetCharacterIconHead("Robber", _totalRobber[i].GetPhotonView().Controller.CustomProperties["CharacterCode"].ToString()) != null){
+                ScoreTemp.GetComponent<PlayerscoreList>().playerIcon.GetComponent<Image>().sprite = GameManager.GetCharacterIconHead("Robber", _totalRobber[i].GetPhotonView().Controller.CustomProperties["CharacterCode"].ToString());
+            }else{
+                ScoreTemp.GetComponent<PlayerscoreList>().playerIcon.GetComponent<Image>().sprite = GameManager.GetCharacterIconHead("Robber", "R01");
+            }
+            
             ScoreTemp.GetComponent<PlayerscoreList>().playerName.GetComponent<TextMeshProUGUI>().text = _totalRobber[i].GetComponent<PlayerController>().playerNameText.text;
-            ScoreTemp.GetComponent<PlayerscoreList>().scoreText.text = _totalRobber[i].GetPhotonView().Controller.CustomProperties["RobberReleasedCount"].ToString();
+            
+            if(_totalRobber[i].GetPhotonView().Controller.CustomProperties["RobberReleasedCount"] != null){
+                ScoreTemp.GetComponent<PlayerscoreList>().scoreText.text = _totalRobber[i].GetPhotonView().Controller.CustomProperties["RobberReleasedCount"].ToString();
+            }else{
+                ScoreTemp.GetComponent<PlayerscoreList>().scoreText.text = "1";
+            }
+            
 
         //Loop Total Player & Instantiate Score List Prefab
         }

@@ -30,5 +30,6 @@ public class GameUI : MonoBehaviourPunCallbacks
     void Start(){
         lobbyLeaveGame.onClick.AddListener(delegate{PhotonNetwork.LeaveRoom();});
         changeCharacterBtn.onClick.AddListener(delegate{UIManager.instance.PopupCharacterSelect();});
+        settingButton.onClick.AddListener(delegate{});
     }
 }

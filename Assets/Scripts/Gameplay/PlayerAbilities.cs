@@ -64,8 +64,8 @@ public class PlayerAbilities : MonoBehaviourPunCallbacks
     {
         if(photonView.IsMine){
             if(Input.GetKeyDown(KeyCode.B)){
-                EnableItem("Cauliflower");
-                print("Enable Item");
+                /* EnableItem("Cauliflower");
+                print("Enable Item"); */
             }
 
             if(Input.GetKeyDown(KeyCode.G)){

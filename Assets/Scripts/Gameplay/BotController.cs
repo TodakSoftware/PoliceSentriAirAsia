@@ -37,8 +37,10 @@ public class BotController : PlayerController
     {
         if(gameObject.tag == "Police"){
             reactDelay = Random.Range(0.3f, .4f);
+            playerNameText.text = "Police" + photonView.OwnerActorNr;
         }else{
             reactDelay = 0.2f;
+            playerNameText.text = "Robber" + photonView.OwnerActorNr;
         }
         
         if(GameManager.instance.gameStarted && !doneCachePlayers){
@@ -55,6 +57,8 @@ public class BotController : PlayerController
         foreach(var r in GameManager.instance.robberSpawnpoints){
             randomGoToPositions.Add(r);
         }
+
+        
         
     }
 

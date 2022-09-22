@@ -72,3 +72,5 @@ UserSettings/Layouts/default-2021.dwlt
 *.dwlt
 UserSettings/EditorUserSettings.asset
 UserSettings/Layouts/default-2021.dwlt
+*.dwlt
+*.asset
