@@ -17,11 +17,12 @@ public class Police : MonoBehaviourPunCallbacks
 
                 //Save Police Caught Count
                 if(photonView.IsMine){
-                    var _currentCaught = (int)photonView.Owner.CustomProperties["PoliceCaughtCount"];
+                    var _currentCaught = (int)photonView.Owner.CustomProperties["PoliceCaughtCount"] + 1;
 
                     Hashtable teamRole = new Hashtable();
-                    teamRole.Add("PoliceCaughtCount", _currentCaught + 1);
+                    teamRole.Add("PoliceCaughtCount", _currentCaught);
                     PhotonNetwork.LocalPlayer.SetCustomProperties(teamRole);
+                    print ("Total Police Caught :" + _currentCaught);
                 }
                 
                 photonView.RPC("PopupGotchaBustedUI", RpcTarget.All, true);

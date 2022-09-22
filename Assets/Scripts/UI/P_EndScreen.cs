@@ -44,9 +44,9 @@ public class P_EndScreen : MonoBehaviourPunCallbacks
             var ScoreTemp = Instantiate(scoreListPrefab);
             ScoreTemp.transform.SetParent(listContent.transform, false);
 
-            ScoreTemp.GetComponent<PlayerscoreList>().playerIcon.GetComponent<Image>().sprite = GameManager.GetCharacterIconHead("Police", _totalPolice[i].GetComponent<PlayerController>().characterCode);
+            ScoreTemp.GetComponent<PlayerscoreList>().playerIcon.GetComponent<Image>().sprite = GameManager.GetCharacterIconHead("Police", _totalPolice[i].GetPhotonView().Controller.CustomProperties["CharacterCode"].ToString());
             ScoreTemp.GetComponent<PlayerscoreList>().playerName.GetComponent<TextMeshProUGUI>().text = _totalPolice[i].GetComponent<PlayerController>().playerNameText.text;
-            ScoreTemp.GetComponent<PlayerscoreList>().scoreText.text = _totalPolice[i].GetPhotonView().Owner.CustomProperties["PoliceCaughtCount"].ToString();
+            ScoreTemp.GetComponent<PlayerscoreList>().scoreText.text = _totalPolice[i].GetPhotonView().Controller.CustomProperties["PoliceCaughtCount"].ToString();
 
         //Loop Total Player & Instantiate Score List Prefab
         }
@@ -59,9 +59,9 @@ public class P_EndScreen : MonoBehaviourPunCallbacks
             var ScoreTemp = Instantiate(scoreListPrefab);
             ScoreTemp.transform.SetParent(listContent.transform, false);
 
-            ScoreTemp.GetComponent<PlayerscoreList>().playerIcon.GetComponent<Image>().sprite = GameManager.GetCharacterIconHead("Robber", _totalRobber[i].GetComponent<PlayerController>().characterCode);
+            ScoreTemp.GetComponent<PlayerscoreList>().playerIcon.GetComponent<Image>().sprite = GameManager.GetCharacterIconHead("Robber", _totalRobber[i].GetPhotonView().Controller.CustomProperties["CharacterCode"].ToString());
             ScoreTemp.GetComponent<PlayerscoreList>().playerName.GetComponent<TextMeshProUGUI>().text = _totalRobber[i].GetComponent<PlayerController>().playerNameText.text;
-            ScoreTemp.GetComponent<PlayerscoreList>().scoreText.text = _totalRobber[i].GetPhotonView().Owner.CustomProperties["RobberReleasedCount"].ToString();
+            ScoreTemp.GetComponent<PlayerscoreList>().scoreText.text = _totalRobber[i].GetPhotonView().Controller.CustomProperties["RobberReleasedCount"].ToString();
 
         //Loop Total Player & Instantiate Score List Prefab
         }

@@ -64,13 +64,12 @@ public class PlayerAbilities : MonoBehaviourPunCallbacks
     {
         if(photonView.IsMine){
             if(Input.GetKeyDown(KeyCode.B)){
-                EnableItem("Lockpick");
+                EnableItem("Cauliflower");
                 print("Enable Item");
             }
 
             if(Input.GetKeyDown(KeyCode.G)){
-                GetComponent<Robber>().photonView.RPC("HasBeenCaught", RpcTarget.All, "Gaban1");
-                print("Caught");
+                
             }
 
             #if UNITY_EDITOR || UNITY_STANDALONE

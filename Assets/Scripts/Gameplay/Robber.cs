@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using Photon.Realtime;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class Robber : MonoBehaviourPunCallbacks
@@ -24,6 +25,8 @@ public class Robber : MonoBehaviourPunCallbacks
     public GameObject gotchaUI;
     public GameObject bustedUI;
 
+    public Player savior;
+
     void OnTriggerEnter2D(Collider2D other) {
         // If we(are in jail), collide with other non caught robber, onRelease start
         if(isCaught && other.gameObject.CompareTag("Robber")){
@@ -31,7 +34,8 @@ public class Robber : MonoBehaviourPunCallbacks
                 if(photonView.IsMine){
                     photonView.RPC("SetIsReleasing", RpcTarget.All, true);
                     photonView.RPC("SetTeammateName", RpcTarget.All, other.gameObject.GetPhotonView().Owner.NickName); 
-                    photonView.RPC("AddReleasedCount", other.gameObject.GetPhotonView().Owner, 1);
+                    
+                    savior = other.gameObject.GetPhotonView().Controller;
                     teammateGO = other.gameObject; // Set our saviour
                 }
             }
@@ -127,13 +131,13 @@ public class Robber : MonoBehaviourPunCallbacks
     public void AddReleasedCount(int value)
     {
         //Save Police Caught Count
-        if(photonView.IsMine){
-            var _currentReleased = (int)photonView.Owner.CustomProperties["RobberReleasedCount"];
+       
+            var _currentReleased = (int)photonView.Controller.CustomProperties["RobberReleasedCount"] + value;
 
             Hashtable teamRole = new Hashtable();
-            teamRole.Add("RobberReleasedCount", _currentReleased + 1);
+            teamRole.Add("RobberReleasedCount", _currentReleased);
             PhotonNetwork.LocalPlayer.SetCustomProperties(teamRole);
-        }
+       
     }
 
     [PunRPC]
@@ -227,6 +231,15 @@ public class Robber : MonoBehaviourPunCallbacks
             isInPrison = false;
             done = false;
             readyToGoToEscape = false;
+
+            if (savior != null)
+            {
+                photonView.RPC("AddReleasedCount", savior, 1); 
+            } else 
+            {
+                print("NOT WORKING");
+            }
+            
             //GetComponent<BotController>().escapePointTarget = null;
         }
         
@@ -236,6 +249,7 @@ public class Robber : MonoBehaviourPunCallbacks
         transform.position = teammatePosition;
         if(photonView.IsMine){
             photonView.RPC("EnableJailCollider", RpcTarget.All, false); // Enable Jail COllider for released
+            
         }
     } // end RedirectToJailed()
 
