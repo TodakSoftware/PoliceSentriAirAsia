@@ -62,7 +62,7 @@ public class SimpleObjectWaypoint : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void LateUpdate()
     {
-        if(canMove && !GameManager.instance.gameEnded){
+        if(canMove && !GameManager.instance.gameEnded && GameManager.instance.gameStarted){
             if(waypoints.Length != 0){
                 if(randomMove){
                     transform.position = Vector2.MoveTowards(transform.position, waypoints[randomWaypointIndex].position, moveSpeed * Time.deltaTime);
@@ -148,7 +148,7 @@ public class SimpleObjectWaypoint : MonoBehaviourPunCallbacks
     }
 
     void OnCollisionEnter2D(Collision2D other) {
-        if(other.gameObject.CompareTag("Police") || other.gameObject.CompareTag("Robber")){
+        if(other.gameObject.CompareTag("Police") || other.gameObject.CompareTag("Robber") && GameManager.instance.gameStarted){
             if(canMove){
                 canMove = false;
                 Invoke("ResetCanMove", hitPlayerPause);

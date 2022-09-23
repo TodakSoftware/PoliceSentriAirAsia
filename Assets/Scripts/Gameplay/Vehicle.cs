@@ -10,7 +10,7 @@ public class Vehicle : MonoBehaviourPunCallbacks
 
     void OnTriggerEnter2D(Collider2D other) {
         //if(!cannotStun){
-            if(other.gameObject.CompareTag("Police") || other.gameObject.CompareTag("Robber")){
+            if(other.gameObject.CompareTag("Police") || other.gameObject.CompareTag("Robber") && GameManager.instance.gameStarted){
                 if(!other.gameObject.GetComponent<PlayerController>().isFalling){
                     other.gameObject.GetComponent<PlayerController>().photonView.RPC("PlayerFall", RpcTarget.All, 3f);
                     //cannotStun = true;
