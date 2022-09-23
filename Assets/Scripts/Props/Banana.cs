@@ -22,11 +22,14 @@ public class Banana : MonoBehaviourPunCallbacks
 
             if(other.GetComponent<Robber>() != null && !other.GetComponent<Robber>().isCaught){
                 //other.GetComponent<PlayerControllerPhoton>().PlayerFall(dur);
+                if(other.GetComponent<PlayerController>().enabled)
                 other.GetComponent<PlayerController>().photonView.RPC("PlayerFall", RpcTarget.AllBuffered, dur);
             }else{
                 //other.GetComponent<PlayerControllerPhoton>().PlayerFall(dur);
+                if(other.GetComponent<PlayerController>().enabled)
                 other.GetComponent<PlayerController>().photonView.RPC("PlayerFall", RpcTarget.AllBuffered, dur);
             }
+            if(other.GetComponent<PlayerController>().enabled)
             other.GetComponent<PlayerController>().FallSound("Banana");
 
             if(photonView.IsMine){

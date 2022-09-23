@@ -28,6 +28,7 @@ public class Flashbang : MonoBehaviourPunCallbacks, IPunObservable
             explodeTimer = 0;
             if(overlappedPlayers.Count > 0){
                 foreach(var go in overlappedPlayers){
+                    if(go.GetComponent<PlayerAbilities>().enabled)
                     go.GetComponent<PlayerAbilities>().photonView.RPC("BlindByFlashbang", RpcTarget.All);
                 }
             }

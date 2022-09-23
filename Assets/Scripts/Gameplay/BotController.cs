@@ -315,7 +315,7 @@ public class BotController : PlayerController
         if(GetClosestEnemy("Police") != null && isRoaming && changeDirectionTimer <= 0 && !suicideRescue){ // Check robber is !caught
             var newTarget = GetRandomPositionTransform();
             GoToTarget(newTarget.transform);
-            changeDirectionTimer = .03f; 
+            changeDirectionTimer = .1f; 
 
             /*if(isGoingToRescue){
                 isGoingToRescue = false;
