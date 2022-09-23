@@ -13,6 +13,12 @@ MonoBehaviour:
   m_Name: SO_Maps
   m_EditorClassIdentifier: 
   mapsList:
+  - name: Map01
+    displayName: Basic Map
+    description: This is just a description for map
+  - name: Map02
+    displayName: Basic Map
+    description: This is just a description for map
   - name: Map_KualaLumpur_02
     displayName: Basic Map
     description: This is just a description for map

@@ -47,7 +47,7 @@ public class BotController : PlayerController
             cacheRobbers = GameManager.GetAllPlayersRobber();
             cachePolices = GameManager.GetAllPlayersPolice();
             doneCachePlayers = true;
-            //StartCoroutine(HandleTargeting());
+            StartCoroutine(HandleTargeting());
         }
 
         foreach(var p in GameManager.instance.policeSpawnpoints){

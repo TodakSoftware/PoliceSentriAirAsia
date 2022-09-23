@@ -19,10 +19,12 @@ public class PlayerAnimator : MonoBehaviourPunCallbacks
     public void SwitchAnimController(string team, string charCode){ // Switching own team design, not undercover
         switch(team){
             case "Police":
+                originalAnimatorController = animatorController;
                 foreach(var p in SOManager.instance.animVariantPolice.animatorLists){
                     if(p.code == charCode){
                         animatorController = p.runTimeAnimController;
                         animator.runtimeAnimatorController = animatorController;
+                        
 
                         // Set Player New Code
                         if(GameManager.instance.ownedPlayerGO != null){
@@ -39,6 +41,7 @@ public class PlayerAnimator : MonoBehaviourPunCallbacks
             break;
 
             case "Robber":
+                originalAnimatorController = animatorController;
                 foreach(var p in SOManager.instance.animVariantRobber.animatorLists){
                     if(p.code == charCode){
                         animatorController = p.runTimeAnimController;
@@ -60,10 +63,12 @@ public class PlayerAnimator : MonoBehaviourPunCallbacks
 
             case "Shared":
                 // SHARED
+                originalAnimatorController = animatorController;
                 foreach(var p in SOManager.instance.sharedVariant.animatorLists){
                     if(p.code == charCode){
                         animatorController = p.runTimeAnimController;
                         animator.runtimeAnimatorController = animatorController;
+                        //originalAnimatorController = animatorController;
 
                         // Set Player New Code
                         if(GameManager.instance.ownedPlayerGO != null){
