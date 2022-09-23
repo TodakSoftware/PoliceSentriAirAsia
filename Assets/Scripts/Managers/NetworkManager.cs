@@ -606,6 +606,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public void PlayOnlineGame(){
         instantCreateFindGame = GetRandomBool();
+        autoStartCreateGame = false;
 
         UIManager.instance.p_MainMenu.mainAreaGO.SetActive(false);
         PhotonNetwork.OfflineMode = false;
