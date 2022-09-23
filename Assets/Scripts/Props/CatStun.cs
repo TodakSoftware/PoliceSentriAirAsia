@@ -156,7 +156,7 @@ public class CatStun : MonoBehaviourPunCallbacks, IPunObservable
 
         if(overlappedPlayers.Count > 0){
             foreach(var go in overlappedPlayers){
-                if(go.GetComponent<PlayerAbilities>().enabled)
+                if(go.GetComponent<PlayerAbilities>().enabled && go.GetComponent<PlayerAbilities>() != null)
                 go.GetComponent<PlayerAbilities>().photonView.RPC("StunnedByCat", RpcTarget.All, 3f, transform.position);
             }
 
