@@ -695,6 +695,18 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(.5f);
         if(!PhotonNetwork.InRoom)
         StartCoroutine(ChangeScene("MainMenu"));
+
+       isFindingGame = false; // Set status to isFindingGame
+        isInTheRoom = false;
+        doneQueing = false;
+        isInGame = false;
+        isCreatingRoom = false;
+        autoStartCreateGame = false;
+
+        if(isQueing){
+            isQueing = false;
+            queingTimer = 0;
+        }
     }
 
     public string GetRandomMap(){
