@@ -47,6 +47,7 @@ public class BotController : PlayerController
             cacheRobbers = GameManager.GetAllPlayersRobber();
             cachePolices = GameManager.GetAllPlayersPolice();
             doneCachePlayers = true;
+            StartCoroutine(HandleTargeting());
         }
 
         foreach(var p in GameManager.instance.policeSpawnpoints){
@@ -56,6 +57,8 @@ public class BotController : PlayerController
         foreach(var r in GameManager.instance.robberSpawnpoints){
             randomGoToPositions.Add(r);
         }
+
+        
         
     }
 
@@ -192,6 +195,7 @@ public class BotController : PlayerController
                         if(GetClosestEnemy("Police") != null){ // if police nearby && !saveteammate, change new point
                             if(changeDirectionTimer <= 0 && isRoaming && !suicideRescue){
                                 BotRobberAvoidPolice();
+                                //changeDirectionTimer = 0;
                             }else if(changeDirectionTimer > 0){
                                 changeDirectionTimer -= Time.deltaTime;
                             }
@@ -210,7 +214,13 @@ public class BotController : PlayerController
                     // if not suiceideRescue, we clear when police nearby
                 }else{
                     
-                }
+                }/*else if(willSaveTeammate && !GetComponent<Robber>().isCaught && isGoingToRescue && targetRescue != null){
+                    //GoToTarget(targetRescue);
+                    BotRobberSaveTeammate();
+                }else if(willSaveTeammate && isGoingToRescue && targetRescue != null && !targetRescue.GetComponent<Robber>().isCaught){
+                    targetRescue = null;
+                    isGoingToRescue = false;
+                } // end if !caught */
                 
             break;
 
@@ -305,10 +315,16 @@ public class BotController : PlayerController
         if(GetClosestEnemy("Police") != null && isRoaming && changeDirectionTimer <= 0 && !suicideRescue){ // Check robber is !caught
             var newTarget = GetRandomPositionTransform();
             GoToTarget(newTarget.transform);
-            changeDirectionTimer = .03f;
+            changeDirectionTimer = .03f; 
+
+            /*if(isGoingToRescue){
+                isGoingToRescue = false;
+                targetRescue = null;
+            }*/
         }
     }
 
+    //public IEnumerator BotRobberGotoEscapePoint(){
     public void BotRobberGotoEscapePoint(){
         var randomIndex = Random.Range(0, GameManager.instance.botEscapeSpawnpoints.Count);
         
@@ -319,6 +335,7 @@ public class BotController : PlayerController
             isRoaming = false;
             GetComponent<Robber>().done = true;
         }
+        //yield return new WaitForSeconds(0);
     }
 
     public void BotFindRandomGoToPoint(){

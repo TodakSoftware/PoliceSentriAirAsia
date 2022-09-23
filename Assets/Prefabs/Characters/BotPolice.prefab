@@ -6400,9 +6400,9 @@ RectTransform:
   m_Father: {fileID: 333792247027118889}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 200, y: -785}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 200, y: 0}
   m_SizeDelta: {x: 0, y: 50}
   m_Pivot: {x: 0.5, y: -14.5}
 --- !u!222 &3374210933372037604
@@ -6435,8 +6435,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: df616d9bb00151044897898441f5e2ce, type: 2}
+  m_sharedMaterial: {fileID: -5442417487350576617, guid: df616d9bb00151044897898441f5e2ce, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -12551,6 +12551,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   moveDir: {x: 0, y: 0, z: 0}
   isFacingRight: 0
+  gameUI: {fileID: 0}
   moveSpeed: 8
   canMove: 1
   isMoving: 0
@@ -12563,7 +12564,14 @@ MonoBehaviour:
   dashCooldown: 3
   isDashing: 0
   isDashCooldown: 0
+  isDashingButtonDown: 0
   isFalling: 0
+  isSlow: 0
+  slowTimer: 0
+  isSlide: 0
+  aimPoint: {fileID: 0}
+  throwPoint: {fileID: 0}
+  throwDistance: 20
   cam2D: {fileID: 0}
   playerAnim: {fileID: 407786497}
   characterCode: P01
@@ -12679,7 +12687,7 @@ MonoBehaviour:
   botFacingRight: 0
   botDestinationReach: 0
   _map: {fileID: 0}
-  maxSpeed: 7
+  maxSpeed: 8
   mass: 20
   stoppingDistance: 0.3
   slowingDistance: 1
@@ -12710,6 +12718,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   moveDir: {x: 0, y: 0, z: 0}
   isFacingRight: 0
+  gameUI: {fileID: 0}
   moveSpeed: 8
   canMove: 1
   isMoving: 0
@@ -12722,7 +12731,14 @@ MonoBehaviour:
   dashCooldown: 3
   isDashing: 0
   isDashCooldown: 0
+  isDashingButtonDown: 0
   isFalling: 0
+  isSlow: 0
+  slowTimer: 0
+  isSlide: 0
+  aimPoint: {fileID: 0}
+  throwPoint: {fileID: 0}
+  throwDistance: 20
   cam2D: {fileID: 0}
   playerAnim: {fileID: 407786497}
   characterCode: P04
