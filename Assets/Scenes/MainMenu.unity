@@ -1327,7 +1327,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Network: Connecting...'
+  m_text: 'Network: Connecting..'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: df616d9bb00151044897898441f5e2ce, type: 2}
   m_sharedMaterial: {fileID: -5442417487350576617, guid: df616d9bb00151044897898441f5e2ce, type: 2}
@@ -63122,6 +63122,8 @@ MonoBehaviour:
   findGameAutoStart: 0
   maxPolicePerGame: 0
   maxRobberPerGame: 0
+  isFindingGame: 0
+  autoStartCreateGame: 0
   isQueing: 0
   doneQueing: 0
   queingTimer: 0
