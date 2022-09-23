@@ -27,7 +27,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public float findGameTimeoutDuration, findGameAutoStart; // [Controlled by SO_GameSettings]
     [HideInInspector] public int maxPolicePerGame, maxRobberPerGame; // [Controlled by SO_GameSettings]
     byte maxPlayersPerRoom; // max player in a room (Addition of maxHumanPerGame & maxGhostPerGame)
-    bool isFindingGame, autoStartCreateGame; // Active when we are searching for games.
+    public bool isFindingGame, autoStartCreateGame; // Active when we are searching for games.
     public bool isQueing, doneQueing;
     public float queingTimer, queingCooldown = 5f;
 
@@ -447,7 +447,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Player newPlayer){ // When non host player enter a room. "Display / Update UI"
         UpdateTotalFindGame();
 
-        if(PhotonNetwork.IsMasterClient && isInTheRoom && PhotonNetwork.CurrentRoom.PlayerCount > 1 && PhotonNetwork.CurrentRoom.PlayerCount < (int)maxPlayersPerRoom){ //HOI
+        if(PhotonNetwork.IsMasterClient && isInTheRoom && PhotonNetwork.CurrentRoom.PlayerCount > 1 && PhotonNetwork.CurrentRoom.PlayerCount < (int)maxPlayersPerRoom && UIManager.instance.timeoutTimer > findGameAutoStart){ //HOI
             FindGameAutoStartAdder(3f);
         }
     } // end OnPlayerEnteredRoom
