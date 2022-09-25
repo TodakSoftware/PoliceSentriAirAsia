@@ -31,7 +31,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8583873062758588375}
+  - {fileID: 8831241522987302965}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -123,73 +123,101 @@ EdgeCollider2D:
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
---- !u!1001 &3108983917843088088
+--- !u!1001 &1909781989400004150
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 8707105524668193199}
     m_Modifications:
-    - target: {fileID: 5796960220364206953, guid: 0a7379c96141cf345afa9992a2572ae3, type: 3}
-      propertyPath: m_Size.y
-      value: 0.7159574
+    - target: {fileID: 6921531223591798274, guid: c5a64493d2456804fa05c0ea35626144, type: 3}
+      propertyPath: shapeType
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 5796960220364206953, guid: 0a7379c96141cf345afa9992a2572ae3, type: 3}
-      propertyPath: m_Offset.y
-      value: 0.10080874
-      objectReference: {fileID: 0}
-    - target: {fileID: 6630810980571258097, guid: 0a7379c96141cf345afa9992a2572ae3, type: 3}
-      propertyPath: m_Name
-      value: NavObstacle
-      objectReference: {fileID: 0}
-    - target: {fileID: 6630810980571258127, guid: 0a7379c96141cf345afa9992a2572ae3, type: 3}
+    - target: {fileID: 6921531223591798275, guid: c5a64493d2456804fa05c0ea35626144, type: 3}
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6630810980571258127, guid: 0a7379c96141cf345afa9992a2572ae3, type: 3}
+    - target: {fileID: 6921531223591798275, guid: c5a64493d2456804fa05c0ea35626144, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6630810980571258127, guid: 0a7379c96141cf345afa9992a2572ae3, type: 3}
+    - target: {fileID: 6921531223591798275, guid: c5a64493d2456804fa05c0ea35626144, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6630810980571258127, guid: 0a7379c96141cf345afa9992a2572ae3, type: 3}
+    - target: {fileID: 6921531223591798275, guid: c5a64493d2456804fa05c0ea35626144, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6630810980571258127, guid: 0a7379c96141cf345afa9992a2572ae3, type: 3}
+    - target: {fileID: 6921531223591798275, guid: c5a64493d2456804fa05c0ea35626144, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 6630810980571258127, guid: 0a7379c96141cf345afa9992a2572ae3, type: 3}
+    - target: {fileID: 6921531223591798275, guid: c5a64493d2456804fa05c0ea35626144, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6630810980571258127, guid: 0a7379c96141cf345afa9992a2572ae3, type: 3}
+    - target: {fileID: 6921531223591798275, guid: c5a64493d2456804fa05c0ea35626144, type: 3}
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6630810980571258127, guid: 0a7379c96141cf345afa9992a2572ae3, type: 3}
+    - target: {fileID: 6921531223591798275, guid: c5a64493d2456804fa05c0ea35626144, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6630810980571258127, guid: 0a7379c96141cf345afa9992a2572ae3, type: 3}
+    - target: {fileID: 6921531223591798275, guid: c5a64493d2456804fa05c0ea35626144, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6630810980571258127, guid: 0a7379c96141cf345afa9992a2572ae3, type: 3}
+    - target: {fileID: 6921531223591798275, guid: c5a64493d2456804fa05c0ea35626144, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6630810980571258127, guid: 0a7379c96141cf345afa9992a2572ae3, type: 3}
+    - target: {fileID: 6921531223591798275, guid: c5a64493d2456804fa05c0ea35626144, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 0a7379c96141cf345afa9992a2572ae3, type: 3}
---- !u!4 &8583873062758588375 stripped
+    - target: {fileID: 6921531223591798781, guid: c5a64493d2456804fa05c0ea35626144, type: 3}
+      propertyPath: m_Name
+      value: NavObstacle
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: -3085693165005825452, guid: c5a64493d2456804fa05c0ea35626144, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: c5a64493d2456804fa05c0ea35626144, type: 3}
+--- !u!4 &8831241522987302965 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 6630810980571258127, guid: 0a7379c96141cf345afa9992a2572ae3, type: 3}
-  m_PrefabInstance: {fileID: 3108983917843088088}
+  m_CorrespondingSourceObject: {fileID: 6921531223591798275, guid: c5a64493d2456804fa05c0ea35626144, type: 3}
+  m_PrefabInstance: {fileID: 1909781989400004150}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8831241522987303371 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6921531223591798781, guid: c5a64493d2456804fa05c0ea35626144, type: 3}
+  m_PrefabInstance: {fileID: 1909781989400004150}
+  m_PrefabAsset: {fileID: 0}
+--- !u!61 &6917617853488112630
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8831241522987303371}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
