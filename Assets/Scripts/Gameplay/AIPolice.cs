@@ -28,6 +28,7 @@ public class AIPolice : MonoBehaviourPunCallbacks
     public int caughtCount;
     [Header("Item Related")]
     public bool catStunned;
+    public bool pauseMovement;
 
     void Awake(){
         agent = GetComponent<PolyNavAgent>();
@@ -36,7 +37,7 @@ public class AIPolice : MonoBehaviourPunCallbacks
         GetComponent<Police>().isBot = true;
 
         // Set Bot Name
-        playerNameText.text = "Police#" + photonView.OwnerActorNr;
+        playerNameText.text = "Police" + photonView.OwnerActorNr;
 
         // Set PolyNav
         agent.map = GameObject.FindObjectOfType<PolyNav2D>();
@@ -77,7 +78,7 @@ public class AIPolice : MonoBehaviourPunCallbacks
             agent.SetDestination(target.position);
         }
 
-        if(isFalling){
+        if(isFalling || pauseMovement){
             agent.Stop();
         }
 
@@ -139,7 +140,7 @@ public class AIPolice : MonoBehaviourPunCallbacks
                     bestTarget = potentialTarget.transform;
                     return bestTarget;
                 }
-            }else{
+            }else if(team == "Police"){
                 Vector3 directionToTarget = potentialTarget.transform.position - currentPosition;
                 float dSqrToTarget = directionToTarget.sqrMagnitude;
                 if(dSqrToTarget < closestDistanceSqr)
@@ -261,7 +262,7 @@ public class AIPolice : MonoBehaviourPunCallbacks
         if(!catStunned){
             // Falling
             //playerController.gameObject.GetPhotonView().RPC("PlayerFall", RpcTarget.All, duration);
-            BotFalling(duration);
+            StartCoroutine(BotFalling(duration));
             // Spawn Love Emote
             var loveableEfx = PhotonNetwork.Instantiate(NetworkManager.GetPhotonPrefab("Particles", "Loveable"), (transform.position + new Vector3(0, 1f, 0)), Quaternion.identity);
             catStunned = true;
@@ -269,6 +270,12 @@ public class AIPolice : MonoBehaviourPunCallbacks
             print("What happen?");
         }
     }
+
+    public IEnumerator PauseMovement(float dur){
+        pauseMovement = true;
+        yield return new WaitForSeconds(dur);
+        pauseMovement = false;
+    } // end PauseMovement
 
 #endregion // end DASH RELATED
 }

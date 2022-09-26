@@ -15,6 +15,8 @@ public class Police : MonoBehaviourPunCallbacks
         if(!isBot){
             if(other.CompareTag("Robber") && GameManager.instance.gameStarted && !GameManager.instance.gameEnded && photonView.IsMine){
                 if(other.gameObject.GetComponent<Robber>().isCaught == false){ // if that robber is !caught, set him to HasBeenCaught
+                    StartCoroutine(GetComponent<PlayerController>().PauseMovement(.5f));
+
                     other.gameObject.GetComponent<Robber>().photonView.RPC("HasBeenCaught", other.gameObject.GetPhotonView().Owner, GetComponent<PlayerController>().playerNameText.text.ToString());
 
                     //Save Police Caught Count
@@ -32,6 +34,8 @@ public class Police : MonoBehaviourPunCallbacks
             } // end CompareTag
         }else{ // else if BOT
             if(other.CompareTag("Robber") && GameManager.instance.gameStarted && !GameManager.instance.gameEnded){
+                StartCoroutine(GetComponent<AIPolice>().PauseMovement(.5f));
+
                 other.gameObject.GetComponent<Robber>().photonView.RPC("HasBeenCaught", other.gameObject.GetPhotonView().Owner, GetComponent<AIPolice>().playerNameText.text.ToString());
 
                 GetComponent<AIPolice>().caughtCount += 1;

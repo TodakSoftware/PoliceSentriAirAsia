@@ -12655,7 +12655,7 @@ MonoBehaviour:
   decelerationRate: 7
   lookAheadDistance: 1
   avoidRadius: 0.3
-  centerOffset: {x: 0, y: 0.1}
+  centerOffset: {x: 0, y: 0.14}
   rotateTransform: 0
   rotateSpeed: 400
   repath: 1
@@ -12754,6 +12754,7 @@ MonoBehaviour:
   playerNameText: {fileID: 2386455948271624773}
   caughtCount: 0
   catStunned: 0
+  pauseMovement: 0
 --- !u!1 &7955344202809199671
 GameObject:
   m_ObjectHideFlags: 0
