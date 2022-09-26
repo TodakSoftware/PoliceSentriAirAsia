@@ -1644,7 +1644,7 @@ namespace Photon.Pun
                     continue;
                 }
 
-                if (blockedSendingGroups.Contains(view.Group))
+                if (view != null && blockedSendingGroups.Contains(view.Group))
                 {
                     continue; // Block sending on this group
                 }

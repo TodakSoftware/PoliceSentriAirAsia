@@ -68,26 +68,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         btnDash = gameUI.dashButton.gameObject;
 
         // Link Dash
-        if(GetComponent<BotController>() == null)
         btnDash.GetComponent<Button>().onClick.AddListener(delegate{StartCoroutine(PlayerDash(dashDuration));});
-
-        // Bot Setup
-        /*if(GetComponent<BotController>() != null){
-            switch(gameObject.tag){
-                case "Police":
-                    var randomPoliceSkin = Random.Range(0, SOManager.instance.animVariantPolice.animatorLists.Count);
-                    characterCode = SOManager.instance.animVariantPolice.animatorLists[randomPoliceSkin].code;
-
-                break;
-
-                case "Robber":
-                    var randomRobberSkin = Random.Range(0, SOManager.instance.animVariantRobber.animatorLists.Count);
-                    characterCode = SOManager.instance.animVariantRobber.animatorLists[randomRobberSkin].code;
-
-                    
-                break;
-            }
-        }*/
     }
 
     void Start(){

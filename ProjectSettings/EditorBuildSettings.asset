@@ -15,21 +15,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Map02.unity
     guid: ef79158e188a7e148846a1ae73f2d5b9
   - enabled: 1
-    path: Assets/Scenes/Map03.unity
-    guid: f296300ad26084341b4375629ad07169
-  - enabled: 1
-    path: Assets/Scenes/Map04.unity
-    guid: 97cbe2da01090d4479f13a17eae26d66
-  - enabled: 1
-    path: Assets/Scenes/Map05.unity
-    guid: 8755be1f6fbd4fd43ba3f0707897f4a6
-  - enabled: 1
-    path: Assets/Scenes/Map06.unity
-    guid: 92027f08ec8e0fb40a1665db235e63ea
-  - enabled: 1
-    path: Assets/Scenes/Map07.unity
-    guid: 39992dd4de9d23e42827aafcf983c2bf
-  - enabled: 1
     path: Assets/Scenes/Map_KualaLumpur_02.unity
     guid: 385e66df1b6af4cf4af9c5b4801c023e
   - enabled: 1

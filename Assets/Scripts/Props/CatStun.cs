@@ -156,14 +156,25 @@ public class CatStun : MonoBehaviourPunCallbacks, IPunObservable
 
         if(overlappedPlayers.Count > 0){
             foreach(var go in overlappedPlayers){
-                if(go.GetComponent<PlayerAbilities>().enabled && go.GetComponent<PlayerAbilities>() != null)
-                go.GetComponent<PlayerAbilities>().photonView.RPC("StunnedByCat", RpcTarget.All, 3f, transform.position);
+                if(go.CompareTag("Police") && !go.GetComponent<Police>().isBot){
+                    go.GetComponent<PlayerAbilities>().photonView.RPC("StunnedByCat", RpcTarget.All, 3f, transform.position);
+                    print("Police not bot");
+                }else if(go.CompareTag("Robber") && !go.GetComponent<Robber>().isBot){
+                    go.GetComponent<PlayerAbilities>().photonView.RPC("StunnedByCat", RpcTarget.All, 3f, transform.position);
+                    print("Robber not bot");
+                }else{
+                    if(go.CompareTag("Police")){
+                        go.GetComponent<AIPolice>().StunnedByCat(3f,transform.position);
+                    }else if(go.CompareTag("Robber")){
+                        go.GetComponent<AIRobber>().StunnedByCat(3f,transform.position);
+                    }
+                } 
             }
 
             GetComponent<BoxCollider2D>().enabled = false;
             GetComponent<CircleCollider2D>().enabled = false;
         }else{
-            print("not enought");
+            print("not enough");
         }
 
         if(gameObject != null)

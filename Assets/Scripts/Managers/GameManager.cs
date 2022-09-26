@@ -139,7 +139,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         if(currentStartGameCountdown <= 5 && !doneSpawnBots){
             // Fill Bots
-            if(GetAllPlayers().Count == (int)PhotonNetwork.CurrentRoom.CustomProperties["RealTotalPlayer"]){
+            if(GetAllPlayers().Count == (int)PhotonNetwork.CurrentRoom.CustomProperties["RealTotalPlayer"] && PhotonNetwork.CurrentRoom.CustomProperties["RealTotalPlayer"] != null){
                 if(fillWithBots && PhotonNetwork.InRoom){
                     if(PhotonNetwork.IsMasterClient){
                         StartCoroutine(SpawnBots());
@@ -198,14 +198,12 @@ public class GameManager : MonoBehaviourPunCallbacks
             if(polDif >= 1){
                 for(int i = 0; i < 1; i++){
                     yield return new WaitForSeconds(Random.Range(0f, 1f));
-                    GameObject player = PhotonNetwork.InstantiateRoomObject(NetworkManager.GetPhotonPrefab("Characters", "BotPolice"), GameManager.instance.waitingSpawnpoint.position + new Vector3(Random.Range(0,3f), Random.Range(0,3f), 0f), Quaternion.identity);
-                    player.GetComponent<BotController>().enabled = true;
+                    GameObject player = PhotonNetwork.InstantiateRoomObject(NetworkManager.GetPhotonPrefab("Characters", "AIPolice"), GameManager.instance.waitingSpawnpoint.position + new Vector3(Random.Range(0,3f), Random.Range(0,3f), 0f), Quaternion.identity);
 
-                    var randomPoliceSkin = Random.Range(0, SOManager.instance.animVariantPolice.animatorLists.Count);
-                    player.GetComponent<PlayerController>().characterCode = SOManager.instance.animVariantPolice.animatorLists[randomPoliceSkin].code;
+                    //var randomPoliceSkin = Random.Range(0, SOManager.instance.animVariantPolice.animatorLists.Count);
+                    //player.GetComponent<PlayerController>().characterCode = SOManager.instance.animVariantPolice.animatorLists[randomPoliceSkin].code;
 
-                    //player.GetComponent<PlayerController>().CreateAvatar();
-                    player.GetComponent<PlayerController>().SetupPlayerAnimator();
+                    //player.GetComponent<PlayerController>().SetupPlayerAnimator();
                 }
             }
             
@@ -219,14 +217,12 @@ public class GameManager : MonoBehaviourPunCallbacks
             if(robDif >= 1){
                 for(int i = 0; i < 1; i++){
                     yield return new WaitForSeconds(Random.Range(0f, 1f));
-                    GameObject player = PhotonNetwork.InstantiateRoomObject(NetworkManager.GetPhotonPrefab("Characters", "BotRobber"), GameManager.instance.waitingSpawnpoint.position + new Vector3(Random.Range(0,3f), Random.Range(0,3f), 0f), Quaternion.identity);
-                    player.GetComponent<BotController>().enabled = true;
+                    GameObject player = PhotonNetwork.InstantiateRoomObject(NetworkManager.GetPhotonPrefab("Characters", "AIRobber"), GameManager.instance.waitingSpawnpoint.position + new Vector3(Random.Range(0,3f), Random.Range(0,3f), 0f), Quaternion.identity);
                     
-                    var randomRobberSkin = Random.Range(0, SOManager.instance.animVariantRobber.animatorLists.Count);
-                    player.GetComponent<PlayerController>().characterCode = SOManager.instance.animVariantRobber.animatorLists[randomRobberSkin].code;
+                    //var randomRobberSkin = Random.Range(0, SOManager.instance.animVariantRobber.animatorLists.Count);
+                    //player.GetComponent<PlayerController>().characterCode = SOManager.instance.animVariantRobber.animatorLists[randomRobberSkin].code;
 
-                    //player.GetComponent<PlayerController>().CreateAvatar();
-                    player.GetComponent<PlayerController>().SetupPlayerAnimator();
+                    //player.GetComponent<PlayerController>().SetupPlayerAnimator();
                 }
             } 
         }
@@ -282,11 +278,17 @@ public class GameManager : MonoBehaviourPunCallbacks
                 var policePos = 0;
                 var robberPos = 0;
                 foreach(var g in GetAllPlayers()){
-                    if(g.GetComponent<PlayerController>().playerTeam == E_Team.POLICE){
+                    if(g.CompareTag("Police")){
                         g.transform.position = policeSpawnpoints[policePos].position;
+                        if(g.GetComponent<Police>().isBot){
+                            g.GetComponent<AIPolice>().InitBot();
+                        }
                         policePos++;
                     }else{ // else robber
                         g.transform.position = robberSpawnpoints[robberPos].position;
+                        if(g.GetComponent<Robber>().isBot){
+                            g.GetComponent<AIRobber>().InitBot();
+                        }
                         robberPos++;
                     }
                 } // end foreach
@@ -647,7 +649,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public void TellBotRobberToRescue(){
         foreach(var bot in GetAllPlayersRobber()){
-            if(bot.GetComponent<BotController>() != null && !bot.GetComponent<Robber>().isCaught){
+            if(bot.GetComponent<AIRobber>() != null && !bot.GetComponent<Robber>().isCaught){
                 //bot.GetComponent<BotController>().BotRobberSaveTeammate();
                 print("TellRobber to rescue");
             }

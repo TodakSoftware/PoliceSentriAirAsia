@@ -9,25 +9,36 @@ public class Police : MonoBehaviourPunCallbacks
     [Header("Caught Related")]
     public GameObject gotchaUI;
     public GameObject bustedUI;
+    public bool isBot;
     
     void OnTriggerEnter2D(Collider2D other){
-        if(other.CompareTag("Robber") && GameManager.instance.gameStarted && !GameManager.instance.gameEnded && photonView.IsMine){
-            if(other.gameObject.GetComponent<Robber>().isCaught == false){ // if that robber is !caught, set him to HasBeenCaught
-                other.gameObject.GetComponent<Robber>().photonView.RPC("HasBeenCaught", other.gameObject.GetPhotonView().Owner, GetComponent<PlayerController>().playerNameText.text.ToString());
+        if(!isBot){
+            if(other.CompareTag("Robber") && GameManager.instance.gameStarted && !GameManager.instance.gameEnded && photonView.IsMine){
+                if(other.gameObject.GetComponent<Robber>().isCaught == false){ // if that robber is !caught, set him to HasBeenCaught
+                    other.gameObject.GetComponent<Robber>().photonView.RPC("HasBeenCaught", other.gameObject.GetPhotonView().Owner, GetComponent<PlayerController>().playerNameText.text.ToString());
 
-                //Save Police Caught Count
-                if(photonView.IsMine){
-                    var _currentCaught = (int)photonView.Owner.CustomProperties["PoliceCaughtCount"] + 1;
+                    //Save Police Caught Count
+                    if(photonView.IsMine){
+                        var _currentCaught = (int)photonView.Owner.CustomProperties["PoliceCaughtCount"] + 1;
 
-                    Hashtable teamRole = new Hashtable();
-                    teamRole.Add("PoliceCaughtCount", _currentCaught);
-                    PhotonNetwork.LocalPlayer.SetCustomProperties(teamRole);
-                    print ("Total Police Caught :" + _currentCaught);
+                        Hashtable teamRole = new Hashtable();
+                        teamRole.Add("PoliceCaughtCount", _currentCaught);
+                        PhotonNetwork.LocalPlayer.SetCustomProperties(teamRole);
+                        print ("Total Police Caught :" + _currentCaught);
+                    }
+                    
+                    photonView.RPC("PopupGotchaBustedUI", RpcTarget.All, true);
                 }
-                
+            } // end CompareTag
+        }else{ // else if BOT
+            if(other.CompareTag("Robber") && GameManager.instance.gameStarted && !GameManager.instance.gameEnded){
+                other.gameObject.GetComponent<Robber>().photonView.RPC("HasBeenCaught", other.gameObject.GetPhotonView().Owner, GetComponent<AIPolice>().playerNameText.text.ToString());
+
+                GetComponent<AIPolice>().caughtCount += 1;
+
                 photonView.RPC("PopupGotchaBustedUI", RpcTarget.All, true);
             }
-        } // end CompareTag
+        } // end !isBot
     } // end OnTriggerEnter2D()
 
     [PunRPC] // only police needed for PopupBustedUI

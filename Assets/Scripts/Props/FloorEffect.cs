@@ -14,24 +14,31 @@ public class FloorEffect : MonoBehaviour
             randomSlide = Random.Range(0, 2);
             switch(type){
                 case E_FloorEffectType.SLIDE:
-                    if(other.GetComponent<PlayerController>().isFalling != false){
-                        other.GetComponent<PlayerController>().isSlide = true;
+                    if((other.CompareTag("Robber") && !other.GetComponent<Robber>().isBot) || (other.CompareTag("Police") && !other.GetComponent<Police>().isBot)){
+                        if(other.GetComponent<PlayerController>().isFalling != false){
+                            other.GetComponent<PlayerController>().isSlide = true;
+                        }else{
+                            other.GetComponent<PlayerController>().isSlide = false;
+                            other.GetComponent<Rigidbody2D>().gravityScale = 0f;
+                        }
                     }else{
-                        other.GetComponent<PlayerController>().isSlide = false;
-                        other.GetComponent<Rigidbody2D>().gravityScale = 0f;
+                        // bot slow movement
                     }
                 break;
 
                 case E_FloorEffectType.SLOW:
-                if(!other.GetComponent<PlayerController>().isSlow){
-                    if(other.CompareTag("Robber") && other.GetComponent<Robber>().isCaught){
-                        // Do Nothing
-                    }else{ // else if police
-                        other.GetComponent<PlayerController>().EnableSlowMovement();
-                        other.GetComponent<PlayerController>().isSlow = true;
+                    if((other.CompareTag("Robber") && !other.GetComponent<Robber>().isBot) || (other.CompareTag("Police") && !other.GetComponent<Police>().isBot)){
+                        if(!other.GetComponent<PlayerController>().isSlow){
+                            if(other.CompareTag("Robber") && other.GetComponent<Robber>().isCaught){
+                                // Do Nothing
+                            }else{ // else if police
+                                other.GetComponent<PlayerController>().EnableSlowMovement();
+                                other.GetComponent<PlayerController>().isSlow = true;
+                            }
+                        }
+                    }else{
+                        // bot slow movement
                     }
-                }
-                    
                 break;
 
                 case E_FloorEffectType.FALL:
@@ -45,15 +52,19 @@ public class FloorEffect : MonoBehaviour
         if(other.CompareTag("Robber") || other.CompareTag("Police")){
             switch(type){
                 case E_FloorEffectType.SLIDE:
-                    if(other.GetComponent<PlayerController>().isFalling == false){
-                        if(randomSlide == 0){
-                            other.GetComponent<Rigidbody2D>().gravityScale = 20f;
+                    if((other.CompareTag("Robber") && !other.GetComponent<Robber>().isBot) || (other.CompareTag("Police") && !other.GetComponent<Police>().isBot)){
+                        if(other.GetComponent<PlayerController>().isFalling == false){
+                            if(randomSlide == 0){
+                                other.GetComponent<Rigidbody2D>().gravityScale = 20f;
+                            }else{
+                                other.GetComponent<Rigidbody2D>().gravityScale = -20f;
+                            }
                         }else{
-                            other.GetComponent<Rigidbody2D>().gravityScale = -20f;
+                            other.GetComponent<PlayerController>().isSlide = false;
+                            other.GetComponent<Rigidbody2D>().gravityScale = 0f;
                         }
                     }else{
-                        other.GetComponent<PlayerController>().isSlide = false;
-                        other.GetComponent<Rigidbody2D>().gravityScale = 0f;
+                        // Bot related
                     }
                 break;
 
@@ -72,14 +83,22 @@ public class FloorEffect : MonoBehaviour
         if(other.CompareTag("Robber") || other.CompareTag("Police")){
             switch(type){
                 case E_FloorEffectType.SLIDE:
-                    other.GetComponent<PlayerController>().isSlide = false;
-                    other.GetComponent<Rigidbody2D>().gravityScale = 0f;
+                    if((other.CompareTag("Robber") && !other.GetComponent<Robber>().isBot) || (other.CompareTag("Police") && !other.GetComponent<Police>().isBot)){
+                        other.GetComponent<PlayerController>().isSlide = false;
+                        other.GetComponent<Rigidbody2D>().gravityScale = 0f;
+                    }else{
+                        // bot related
+                    }
                 break;
 
                 case E_FloorEffectType.SLOW:
-                if(other.GetComponent<PlayerController>().isSlow){
-                    other.GetComponent<PlayerController>().DisableSlowMovement();
-                    other.GetComponent<PlayerController>().isSlow = false;
+                if((other.CompareTag("Robber") && !other.GetComponent<Robber>().isBot) || (other.CompareTag("Police") && !other.GetComponent<Police>().isBot)){
+                    if(other.GetComponent<PlayerController>().isSlow){
+                        other.GetComponent<PlayerController>().DisableSlowMovement();
+                        other.GetComponent<PlayerController>().isSlow = false;
+                    }
+                }else{
+                    // bot related
                 }
                 break;
 

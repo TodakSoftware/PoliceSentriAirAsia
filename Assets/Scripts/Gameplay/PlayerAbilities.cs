@@ -64,7 +64,7 @@ public class PlayerAbilities : MonoBehaviourPunCallbacks
     {
         if(photonView.IsMine){
             if(Input.GetKeyDown(KeyCode.B)){
-                EnableItem("Invisible");
+                EnableItem("Cat Stun");
                 /* EnableItem("Cauliflower");
                 print("Enable Item"); */
             }

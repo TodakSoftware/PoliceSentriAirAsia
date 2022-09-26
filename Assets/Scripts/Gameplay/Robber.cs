@@ -26,20 +26,25 @@ public class Robber : MonoBehaviourPunCallbacks
     public GameObject bustedUI;
 
     public Player savior;
+    public bool isBot;
 
     void OnTriggerEnter2D(Collider2D other) {
-        // If we(are in jail), collide with other non caught robber, onRelease start
-        if(isCaught && other.gameObject.CompareTag("Robber")){
-            if(other.gameObject.GetComponent<Robber>().isCaught == false){ // our team mates who not caught
-                if(photonView.IsMine){
-                    photonView.RPC("SetIsReleasing", RpcTarget.All, true);
-                    photonView.RPC("SetTeammateName", RpcTarget.All, other.gameObject.GetPhotonView().Owner.NickName); 
-                    
-                    savior = other.gameObject.GetPhotonView().Controller;
-                    teammateGO = other.gameObject; // Set our saviour
+        if(!isBot){
+            // If we(are in jail), collide with other non caught robber, onRelease start
+            if(isCaught && other.gameObject.CompareTag("Robber")){
+                if(other.gameObject.GetComponent<Robber>().isCaught == false){ // our team mates who not caught
+                    if(photonView.IsMine){
+                        photonView.RPC("SetIsReleasing", RpcTarget.All, true);
+                        photonView.RPC("SetTeammateName", RpcTarget.All, other.gameObject.GetPhotonView().Owner.NickName); 
+                        
+                        savior = other.gameObject.GetPhotonView().Controller;
+                        teammateGO = other.gameObject; // Set our saviour
+                    }
                 }
             }
-        }
+        }else{
+            
+        } // end !isBot
     } // end OnTriggerEnter2D()
 
     [PunRPC]
@@ -48,12 +53,16 @@ public class Robber : MonoBehaviourPunCallbacks
     }
 
     void OnTriggerExit2D(Collider2D other) {
-        // If we are still isReleasing, but teammates go outside range, cancel
-        if(isCaught && isReleasing && other.gameObject.CompareTag("Robber")){
-            if(photonView.IsMine){
-                photonView.RPC("SetIsReleasing", RpcTarget.All, false);
-                teammateGO = null;
+        if(!isBot){
+            // If we are still isReleasing, but teammates go outside range, cancel
+            if(isCaught && isReleasing && other.gameObject.CompareTag("Robber")){
+                if(photonView.IsMine){
+                    photonView.RPC("SetIsReleasing", RpcTarget.All, false);
+                    teammateGO = null;
+                }
             }
+        }else{
+
         }
     } // end OnTriggerExit2D()
 
@@ -97,7 +106,11 @@ public class Robber : MonoBehaviourPunCallbacks
             }
 
             GameManager.instance.photonView.RPC("SetMoneybagOccupied", RpcTarget.All, true);
-            UIManager.instance.NotificationPickupMoneybag(GetComponent<PlayerController>().playerNameText.text);
+            if(!isBot){
+                UIManager.instance.NotificationPickupMoneybag(GetComponent<PlayerController>().playerNameText.text);
+            }else{
+                UIManager.instance.NotificationPickupMoneybag(GetComponent<AIRobber>().playerNameText.text);
+            }
             
         }else{
             moneybagDisplay.SetActive(false);
@@ -112,14 +125,22 @@ public class Robber : MonoBehaviourPunCallbacks
         if(!isCaught){
             AudioManager.instance.PlaySound("PS_UI_Caught");
             
-            photonView.RPC("SetIsCaught", RpcTarget.AllBuffered, true, policeName);
-            StartCoroutine(GetComponent<PlayerController>().PlayerFall(1.5f)); // Fall
-            photonView.RPC("DisableCollider", RpcTarget.All, true); // Disable Collider
-            // Popup Caugh Image
+            if(!isBot){
+                photonView.RPC("SetIsCaught", RpcTarget.AllBuffered, true, policeName);
+                StartCoroutine(GetComponent<PlayerController>().PlayerFall(1.5f)); // Fall
+                photonView.RPC("DisableCollider", RpcTarget.All, true); // Disable Collider
+                // Popup Caugh Image
 
-            Hashtable updateData = new Hashtable();
-            updateData.Add("PlayerCaught", true); // Set PlayerCaught -> TRUE
-            PhotonNetwork.LocalPlayer.SetCustomProperties(updateData);
+                Hashtable updateData = new Hashtable();
+                updateData.Add("PlayerCaught", true); // Set PlayerCaught -> TRUE
+                PhotonNetwork.LocalPlayer.SetCustomProperties(updateData);
+            }else{
+                photonView.RPC("SetIsCaught", RpcTarget.AllBuffered, true, policeName);
+                StartCoroutine(GetComponent<AIRobber>().BotFalling(1.5f)); // Fall
+                photonView.RPC("DisableCollider", RpcTarget.All, true); // Disable Collider
+                // Popup Caugh Image
+            }
+            
 
             // Redirect to jail with delay 2s
             print("Redirecting to jailed");
@@ -145,22 +166,37 @@ public class Robber : MonoBehaviourPunCallbacks
         if(caught){
             isCaught = true;
 
-            if(GetComponent<BotController>() != null){
-                GetComponent<PolyNavAgent>().Stop();
-                StartCoroutine(GetComponent<BotController>().PlayerFall(1.5f));
+            if(GetComponent<AIRobber>() != null){
+                StartCoroutine(GetComponent<AIRobber>().BotFalling(1.5f));
             }
 
-            GetComponent<PlayerController>().playerNameText.color = Color.red;
+            if(!isBot){
+                GetComponent<PlayerController>().playerNameText.color = Color.red;
+            }else{
+                GetComponent<AIRobber>().playerNameText.color = Color.red;
+            }
+            
             StartCoroutine(PopupGotchaBustedUI(false)); // popup busted UI
 
-            UIManager.instance.NotificationPoliceCapture(policeName, GetComponent<PlayerController>().playerNameText.text.ToString()); // Popup Notification that police caught ourself
-        
+            if(!isBot){
+                UIManager.instance.NotificationPoliceCapture(policeName, GetComponent<PlayerController>().playerNameText.text.ToString()); // Popup Notification that police caught ourself
+            }else{
+                UIManager.instance.NotificationPoliceCapture(policeName, GetComponent<AIRobber>().playerNameText.text.ToString()); // Popup Notification that police caught ourself
+            }
+
         }else{
             isCaught = false;
-            GetComponent<PlayerController>().playerNameText.color = Color.white;
+            if(!isBot){
+                GetComponent<PlayerController>().playerNameText.color = Color.white;
 
-            if(teammateName != null)
-            UIManager.instance.NotificationReleasedBy(GetComponent<PlayerController>().playerNameText.text.ToString(), teammateName); // Popup Notification that police caught ourself
+                if(teammateName != null)
+                UIManager.instance.NotificationReleasedBy(GetComponent<PlayerController>().playerNameText.text.ToString(), teammateName); // Popup Notification that police caught ourself
+            }else{
+                GetComponent<AIRobber>().playerNameText.color = Color.white;
+
+                if(teammateName != null)
+                UIManager.instance.NotificationReleasedBy(GetComponent<AIRobber>().playerNameText.text.ToString(), teammateName); // Popup Notification that police caught ourself
+            }
         }
     }
 
@@ -170,15 +206,14 @@ public class Robber : MonoBehaviourPunCallbacks
         isInPrison = true;
         readyToGoToEscape = true;
 
-        if(GetComponent<BotController>() != null){
+        if(GetComponent<AIRobber>() != null){
             if(isCaught && isInPrison && !done && readyToGoToEscape){
-                print("Can go to escape point");
-                if(GetComponent<BotController>() != null){
+                if(GetComponent<AIRobber>() != null){
                     //GetComponent<BotController>().BotRobberGotoEscapePoint();
                 }
             }
         }else{
-            GameManager.instance.TellBotRobberToRescue();
+            //GameManager.instance.TellBotRobberToRescue();
         }
 
         if(photonView.IsMine){

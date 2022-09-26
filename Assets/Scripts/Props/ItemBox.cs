@@ -26,33 +26,45 @@ public class ItemBox : MonoBehaviourPunCallbacks
             print("Pick it up");
             var random = Random.Range(0, robberItems.Count);
             
-            other.GetComponent<PlayerAbilities>().EnableItem(robberItems[random]);
+            if(!other.GetComponent<Robber>().isBot){
+                other.GetComponent<PlayerAbilities>().EnableItem(robberItems[random]);
 
-            if(photonView.IsMine){
-                HideAppearance();
                 if(photonView.IsMine){
-                    PhotonNetwork.Destroy(GetComponent<PhotonView>());
+                    HideAppearance();
+                    if(photonView.IsMine){
+                        PhotonNetwork.Destroy(GetComponent<PhotonView>());
+                    }
+                }else{
+                    HideAppearance();
+                    if(gameObject != null)
+                        Destroy(gameObject);
                 }
             }else{
-                HideAppearance();
                 if(gameObject != null)
                     Destroy(gameObject);
             }
 
             }else if(other.CompareTag("Police")){
                 var random = Random.Range(0, policeItems.Count);
-                other.GetComponent<PlayerAbilities>().EnableItem(policeItems[random]);
+                if(!other.GetComponent<Police>().isBot){
+                    other.GetComponent<PlayerAbilities>().EnableItem(policeItems[random]);
 
-                if(photonView.IsMine){
+                    if(photonView.IsMine){
                         HideAppearance();
                         if(photonView.IsMine){
                             PhotonNetwork.Destroy(GetComponent<PhotonView>());
                         }
+                    }else{
+                        HideAppearance();
+                        if(gameObject != null)
+                            Destroy(gameObject);
+                    }
                 }else{
-                    HideAppearance();
                     if(gameObject != null)
                         Destroy(gameObject);
                 }
+
+                
             }
             doneAdd = true;
         } // end doneAdd
