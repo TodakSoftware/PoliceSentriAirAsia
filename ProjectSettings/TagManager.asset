@@ -15,6 +15,7 @@ TagManager:
   - RobberJailCollider
   - Objects
   - Walls
+  - PolyNav
   layers:
   - Default
   - TransparentFX
