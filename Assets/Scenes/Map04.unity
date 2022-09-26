@@ -2013,6 +2013,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1936505662}
     - target: {fileID: 6075900687843676875, guid: c69b0b4d161fdaf4bb1423f3df2ec150, type: 3}
+      propertyPath: startGameCountdown
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6075900687843676875, guid: c69b0b4d161fdaf4bb1423f3df2ec150, type: 3}
       propertyPath: endScreenRedirectText
       value: 
       objectReference: {fileID: 2131079141}
@@ -35302,7 +35306,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7767857, y: 1}
+    m_SensorSize: {x: 1.7777778, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
