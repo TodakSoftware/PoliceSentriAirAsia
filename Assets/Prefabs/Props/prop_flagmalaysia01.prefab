@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 2096348285575333050}
   - component: {fileID: 2626487568273600178}
   - component: {fileID: 8425349303940110281}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: prop_flagmalaysia01
-  m_TagString: Untagged
+  m_TagString: Objects
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

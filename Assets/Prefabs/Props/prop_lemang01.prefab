@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1487071803922504047}
   m_Layer: 9
   m_Name: prop_lemang01
-  m_TagString: Untagged
+  m_TagString: Objects
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

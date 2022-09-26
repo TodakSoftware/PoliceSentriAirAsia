@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 3116926533841356056}
   - component: {fileID: -6879337244140193490}
   - component: {fileID: 123147403048245467}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: prop_marketisland_shoes01
-  m_TagString: Untagged
+  m_TagString: Objects
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -16,9 +16,9 @@ GameObject:
   - component: {fileID: -4831075440563442260}
   - component: {fileID: 3215905901757397292}
   - component: {fileID: 5528083770987990327}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: prop_flashbang_01_SP
-  m_TagString: Untagged
+  m_TagString: Objects
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

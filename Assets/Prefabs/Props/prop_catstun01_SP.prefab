@@ -4842,9 +4842,9 @@ GameObject:
   - component: {fileID: 1732539264588977347}
   - component: {fileID: 2219382937239592172}
   - component: {fileID: -5129195613704549182}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: prop_catstun01_SP
-  m_TagString: Untagged
+  m_TagString: Objects
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

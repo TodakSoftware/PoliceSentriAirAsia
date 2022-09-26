@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 6329057414697477829}
   - component: {fileID: -7372715033912232874}
   - component: {fileID: 7176588619734344484}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: prop_busstop01_wall01
-  m_TagString: Untagged
+  m_TagString: Objects
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

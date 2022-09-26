@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 274393904619699097}
   - component: {fileID: 309304877373151655}
   - component: {fileID: 4417148519144703534}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: prop_coffin01_horz02
-  m_TagString: Untagged
+  m_TagString: Objects
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

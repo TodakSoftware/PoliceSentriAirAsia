@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 5863906160886379359}
   - component: {fileID: 6643603355012134549}
   - component: {fileID: -4203967188560773878}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: prop_bush_medium03
-  m_TagString: Untagged
+  m_TagString: Objects
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

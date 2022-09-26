@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 8837864234222763226}
   - component: {fileID: 6639267545336128481}
   - component: {fileID: 8553795399262418946}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: prop_building_klcctower01
-  m_TagString: Untagged
+  m_TagString: Objects
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

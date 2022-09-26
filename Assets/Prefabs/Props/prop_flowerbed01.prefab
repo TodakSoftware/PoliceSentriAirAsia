@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 8969050380625696603}
   - component: {fileID: 596746901951470777}
   - component: {fileID: 25669869423111864}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: prop_flowerbed01
-  m_TagString: Untagged
+  m_TagString: Objects
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

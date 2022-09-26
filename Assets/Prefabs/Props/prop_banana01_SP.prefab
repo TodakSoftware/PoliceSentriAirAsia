@@ -15,9 +15,9 @@ GameObject:
   - component: {fileID: -6253930663657849596}
   - component: {fileID: -6210801940169020297}
   - component: {fileID: 3923001987781163654}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: prop_banana01_SP
-  m_TagString: Untagged
+  m_TagString: Objects
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

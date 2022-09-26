@@ -15,9 +15,9 @@ GameObject:
   - component: {fileID: -6957818368394731303}
   - component: {fileID: 4698071834385343525}
   - component: {fileID: 988300044131365491}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: prop_moneybag01
-  m_TagString: MoneyBag
+  m_TagString: Objects
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

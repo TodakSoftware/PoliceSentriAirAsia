@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 1802455428613517894}
   - component: {fileID: 1802455428613517893}
   - component: {fileID: 1802455428613517892}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: prop_bush_1x1_01
-  m_TagString: Untagged
+  m_TagString: Objects
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

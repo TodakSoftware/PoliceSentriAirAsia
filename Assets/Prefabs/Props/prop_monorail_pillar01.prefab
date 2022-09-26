@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 4505775652533180070}
   - component: {fileID: 2731145712397082520}
   - component: {fileID: 5333740103265457296}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: prop_monorail_pillar01
-  m_TagString: Untagged
+  m_TagString: Objects
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

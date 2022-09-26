@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 1654073080356977082}
   - component: {fileID: 4686409769545477708}
   - component: {fileID: 2645123113548932766}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: prop_coffeechair01_horz01
-  m_TagString: Untagged
+  m_TagString: Objects
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

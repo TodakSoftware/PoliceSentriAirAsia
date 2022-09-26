@@ -99,9 +99,9 @@ GameObject:
   - component: {fileID: -4834895281194068593}
   - component: {fileID: -7397815365829971550}
   - component: {fileID: 6820959529351180084}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: prop_pumpkin03
-  m_TagString: Untagged
+  m_TagString: Objects
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
