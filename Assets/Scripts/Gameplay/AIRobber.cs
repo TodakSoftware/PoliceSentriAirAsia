@@ -14,7 +14,7 @@ public class AIRobber : MonoBehaviourPunCallbacks
     public E_Team targetTagTeam;
     string targetTag = "";
     public float detectRange = 400f;
-    public bool isHitWall;
+    public bool isHitWall, isRescuing, rescueExecuted;
     List<Transform> randomGoToPositions = new List<Transform>();
 
     [Header("Animations")]
@@ -58,10 +58,6 @@ public class AIRobber : MonoBehaviourPunCallbacks
     }
 
     void Update(){
-        if(Input.GetKeyDown(KeyCode.C)){
-            //AvoidPoliceNearby();
-        }
-
         if(target != null){
             if(target.CompareTag("MoneyBag")){
                 if(!GameManager.instance.moneyBagOccupied){
@@ -73,7 +69,14 @@ public class AIRobber : MonoBehaviourPunCallbacks
             }else{
                 agent.SetDestination(target.position);
             }
-            
+        }
+
+        if(isRescuing && agent.botDestinationReach && !GetComponent<Robber>().isCaught){ // if we in rescue mode && arrived, 
+            // wait 5s then isRescuing = false
+            if(!rescueExecuted){
+                Invoke("ClearRescue", 5f);
+                rescueExecuted = true;
+            }
         }
 
         if(isFalling){
@@ -105,7 +108,7 @@ public class AIRobber : MonoBehaviourPunCallbacks
     }
 
     void UpdateRoaming(){
-        if(roamTarget == null && target == null){
+        if(roamTarget == null && target == null && !isRescuing && !GetComponent<Robber>().isCaught){
             Roaming();
         }else if(roamTarget != null && agent.botDestinationReach){ // if isroaming && 
             agent.botDestinationReach = false;
@@ -121,7 +124,7 @@ public class AIRobber : MonoBehaviourPunCallbacks
     }
 
     void CollectMoneybag(){
-        if(GetClosestMoneybag() != null && !GameManager.instance.moneyBagOccupied && GetClosestEnemy("Police") == null && !GetComponent<Robber>().isCaught){
+        if(GetClosestMoneybag() != null && !GameManager.instance.moneyBagOccupied && GetClosestEnemy("Police") == null && !GetComponent<Robber>().isCaught && !isRescuing){
             target = GetClosestMoneybag();
             ClearRoamTarget();
         }else{
@@ -136,6 +139,18 @@ public class AIRobber : MonoBehaviourPunCallbacks
 
     void ClearRoamTarget(){
         roamTarget = null;
+    }
+
+    void ClearRescue(){
+        print("Clear resuc");
+        isRescuing = false;
+        rescueExecuted = false;
+    }
+
+    public void RescueTeammate(){
+        isRescuing = true;
+        target = GetNearJailPosition();
+        ClearRoamTarget();
     }
 
     // ------------------------------------- GLOBAL ------------------------------------------
@@ -199,6 +214,11 @@ public class AIRobber : MonoBehaviourPunCallbacks
         
         return null;
     } // end GetClosestEnemy
+
+    Transform GetNearJailPosition(){
+        var randomIndex = Random.Range(0, GameManager.instance.botEscapeSpawnpoints.Count);
+        return GameManager.instance.botEscapeSpawnpoints[randomIndex].GetChild(0);
+    }
 
     Transform GetRoamRandomPosition(){
         var randomIndex = Random.Range(0, randomGoToPositions.Count);

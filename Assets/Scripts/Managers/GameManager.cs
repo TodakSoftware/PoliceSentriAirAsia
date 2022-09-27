@@ -557,6 +557,27 @@ public class GameManager : MonoBehaviourPunCallbacks
         return moneybag;
     } // end GetAllPlayersRobber
 
+    public void ChosenBotToRescue(){ // Select 1 bot who is !caught to rescue teammate
+        List<GameObject> botRobber = new List<GameObject>();
+        botRobber.Clear();
+
+        // Filter all robber who is bot, then added to botRobber list
+        if(GetAllPlayersRobber().Count > 0){
+            foreach(var r in GetAllPlayersRobber()){
+                if(r.GetComponent<Robber>().isBot){
+                    botRobber.Add(r);
+                }
+            }
+        }
+
+        if(botRobber.Count > 0){
+            var randomIndex = Random.Range(0, botRobber.Count);
+            if(!botRobber[randomIndex].GetComponent<Robber>().isCaught && !botRobber[randomIndex].GetComponent<AIRobber>().isRescuing){
+                botRobber[randomIndex].GetComponent<AIRobber>().RescueTeammate();
+            }
+        }
+    } // end GetAllPlayersRobber
+
     public static Sprite GetCharacterIconHead(string team, string code){ // Return character icon head sprite
        switch (team)
        {
@@ -630,11 +651,13 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public int NumberOfCaughtRobber(){
         int caughtCount = 0;
+        
         foreach(GameObject p in GetAllPlayersRobber()){
             if(p.GetComponent<Robber>().isCaught){
                 caughtCount += 1;
             }
         } // end foreach
+        ChosenBotToRescue();
         return caughtCount;
     }
 
