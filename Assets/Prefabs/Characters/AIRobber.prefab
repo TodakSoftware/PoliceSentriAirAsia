@@ -6914,6 +6914,9 @@ MonoBehaviour:
   roamTarget: {fileID: 0}
   targetTagTeam: 1
   detectRange: 100
+  isHitWall: 0
+  isRescuing: 0
+  rescueExecuted: 0
   anim: {fileID: 4873863652185589861}
   botSpriteRenderer: {fileID: 4873863652185589860}
   isDashing: 0
