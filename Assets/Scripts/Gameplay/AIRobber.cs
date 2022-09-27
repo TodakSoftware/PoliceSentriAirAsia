@@ -46,14 +46,12 @@ public class AIRobber : MonoBehaviourPunCallbacks
         foreach(var p in GameManager.instance.moneybagSpawnpoints){
             randomGoToPositions.Add(p);
         }
-
-        InitBot();
     }
 
     public void InitBot(){
-        InvokeRepeating("CollectMoneybag", 0f, 1f);
+        InvokeRepeating("CollectMoneybag", 0f, .5f);
         InvokeRepeating("AvoidPoliceNearby", 0f, .02f);
-        InvokeRepeating("UpdateRoaming", 0f, 1f);
+        InvokeRepeating("UpdateRoaming", 0f, .5f);
         InvokeRepeating("InvokeDash", 7f, 7f);
     }
 
@@ -88,6 +86,7 @@ public class AIRobber : MonoBehaviourPunCallbacks
 
     void AvoidPoliceNearby(){
         if(GetClosestEnemy("Police") != null && !GetComponent<Robber>().isCaught && !isHitWall){
+            ClearRescue();
             ClearTarget();
             ClearRoamTarget();
 
