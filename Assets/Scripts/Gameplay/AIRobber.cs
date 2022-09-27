@@ -72,7 +72,7 @@ public class AIRobber : MonoBehaviourPunCallbacks
         if(isRescuing && agent.botDestinationReach && !GetComponent<Robber>().isCaught){ // if we in rescue mode && arrived, 
             // wait 5s then isRescuing = false
             if(!rescueExecuted){
-                Invoke("ClearRescue", 5f);
+                Invoke("ClearRescue", 3f);
                 rescueExecuted = true;
             }
         }
