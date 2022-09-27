@@ -135,6 +135,10 @@ public class GameManager : MonoBehaviourPunCallbacks
                     StopCoroutine(deductMoneybagTimerCoroutine); // Stop timer countdown
                 }
             }
+
+            if(Input.GetKeyDown(KeyCode.C)){ // Debug ask for robber help
+                GameManager.instance.ChosenBotToRescue();
+            }
         } // end gameStarted
 
         if(currentStartGameCountdown <= 5 && !doneSpawnBots){
