@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public List<Transform> policeSpawnpoints = new List<Transform>();
     public List<Transform> robberSpawnpoints = new List<Transform>();
     public List<Transform> moneybagSpawnpoints = new List<Transform>();
-    [HideInInspector] public GameObject botEscapeGO;
+    public GameObject botEscapeGO;
     [HideInInspector] public List<Transform> botEscapeSpawnpoints = new List<Transform>();
 
     [Header("Moneybag Related")]

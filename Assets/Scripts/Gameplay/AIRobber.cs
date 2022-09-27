@@ -12,8 +12,9 @@ public class AIRobber : MonoBehaviourPunCallbacks
     public Transform target;
     public Transform roamTarget;
     public E_Team targetTagTeam;
-   string targetTag = "";
+    string targetTag = "";
     public float detectRange = 400f;
+    public bool isHitWall;
     List<Transform> randomGoToPositions = new List<Transform>();
 
     [Header("Animations")]
@@ -42,19 +43,18 @@ public class AIRobber : MonoBehaviourPunCallbacks
         agent.map = GameObject.FindObjectOfType<PolyNav2D>();
 
         // Add Random Location
-        /* foreach(var p in GameManager.instance.moneybagSpawnpoints){
+        foreach(var p in GameManager.instance.moneybagSpawnpoints){
             randomGoToPositions.Add(p);
         }
 
-        foreach(var r in GameManager.instance.robberSpawnpoints){
-            randomGoToPositions.Add(r);
-        } */
+        InitBot();
     }
 
     public void InitBot(){
         InvokeRepeating("CollectMoneybag", 0f, 1f);
         InvokeRepeating("AvoidPoliceNearby", 0f, .02f);
-        InvokeRepeating("InvokeDash", 3f, 7f);
+        InvokeRepeating("UpdateRoaming", 0f, 1f);
+        InvokeRepeating("InvokeDash", 7f, 7f);
     }
 
     void Update(){
@@ -84,21 +84,23 @@ public class AIRobber : MonoBehaviourPunCallbacks
     }
 
     void AvoidPoliceNearby(){
-        if(GetClosestEnemy("Police") != null && !GetComponent<Robber>().isCaught){
+        if(GetClosestEnemy("Police") != null && !GetComponent<Robber>().isCaught && !isHitWall){
             ClearTarget();
+            ClearRoamTarget();
 
             Vector3 dirToPlayer = (transform.position - GetClosestEnemy("Police").position).normalized;
 
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, dirToPlayer * 3.5f);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, dirToPlayer * 3f);
             if(hit.collider.gameObject.CompareTag("Walls") || hit.collider.gameObject.CompareTag("Objects")){
-                print("Correct");
-                agent.SetDestination(transform.position + (transform.position - (GetClosestEnemy("Police").position * 2f)).normalized * 3.5f);
-                Debug.DrawRay(transform.position, (transform.position - (GetClosestEnemy("Police").position * 2f)).normalized * 3.5f, Color.green);
+                //print("Hit Wall");  
+                isHitWall = true;
             }else{
-                agent.SetDestination(transform.position + dirToPlayer * 3.5f);
-                Debug.DrawRay(transform.position, dirToPlayer * 3.5f, Color.green);
+                isHitWall = false;
+                agent.SetDestination(transform.position + dirToPlayer * 3f);
+                Debug.DrawRay(transform.position, dirToPlayer * 3f, Color.green);
             }
-            
+        }else if(GetClosestEnemy("Police") == null && isHitWall && !GetComponent<Robber>().isCaught){
+            isHitWall = false;
         }
     }
 
