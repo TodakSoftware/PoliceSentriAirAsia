@@ -64,7 +64,17 @@ public class AIPolice : MonoBehaviourPunCallbacks
         foreach(var r in GameManager.instance.robberSpawnpoints){
             randomGoToPositions.Add(r);
         }
+
+        // Create Avatar
+        CreateAvatarUI();
         
+    }
+
+    void CreateAvatarUI(){
+        var policeAvatar = Instantiate(UIManager.instance.gameUI.avatarBtnPrefab);
+        policeAvatar.GetComponent<Btn_Avatar>().SetupButton("Police", playerNameText.text, "P01", this.gameObject);
+        policeAvatar.transform.SetParent(UIManager.instance.gameUI.avatarPoliceContent,false);
+        UIManager.instance.gameUI.avatarBtnList.Add(policeAvatar.GetComponent<Btn_Avatar>());
     }
 
     public void InitBot(){
@@ -279,7 +289,7 @@ public class AIPolice : MonoBehaviourPunCallbacks
 
     public void SlowMovement(bool isEnable){
         if(isEnable){
-            agent.maxSpeed = agent.maxSpeed / 2;
+            agent.maxSpeed = 4f;
         }else{
             agent.maxSpeed = 8f;
         }

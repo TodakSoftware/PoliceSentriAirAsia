@@ -394,9 +394,29 @@ public class GameManager : MonoBehaviourPunCallbacks
 #region MID GAME RELATED
     public void UpdateAvatarsUI(){
         foreach(var btn in UIManager.instance.gameUI.avatarBtnList){
-            foreach(Player player in GameManager.GetAllNetworkPlayers()){
+            /* foreach(Player player in GameManager.GetAllNetworkPlayers()){
                 if(btn.actorNumber == player.ActorNumber){
                     btn.UpdateButton(player.CustomProperties["NetworkTeam"].ToString(), player.CustomProperties["CharacterCode"].ToString(), (bool)player.CustomProperties["PlayerCaught"], (bool)player.CustomProperties["PlayerHoldMoneybag"]);
+                }
+            } */
+
+            foreach(GameObject player in GameManager.GetAllPlayers()){
+                if(btn.ownerOfThisAvatarGO == player){
+                    print("Owner btn : " + btn.ownerOfThisAvatarGO);
+                    if(btn.ownerOfThisAvatarGO.CompareTag("Robber") && btn.ownerOfThisAvatarGO.GetComponent<Robber>().isBot){
+                        btn.UpdateButton(btn.ownerOfThisAvatarGO.tag, "R01", btn.ownerOfThisAvatarGO.GetComponent<Robber>().isCaught, btn.ownerOfThisAvatarGO.GetComponent<Robber>().isHoldMoneybag);
+                    }else if(btn.ownerOfThisAvatarGO.CompareTag("Police") && btn.ownerOfThisAvatarGO.GetComponent<Police>().isBot){ // else police
+                        btn.UpdateButton(btn.ownerOfThisAvatarGO.tag, "P01", false, false);
+                    }else{
+                        if(btn.ownerOfThisAvatarGO.CompareTag("Robber") || btn.ownerOfThisAvatarGO.CompareTag("Police")){
+                            if(btn.ownerOfThisAvatarGO.GetPhotonView().Owner.CustomProperties["CharacterCode"] != null && btn.ownerOfThisAvatarGO.GetPhotonView().Owner.CustomProperties["PlayerCaught"] != null && btn.ownerOfThisAvatarGO.GetPhotonView().Owner.CustomProperties["PlayerHoldMoneybag"] != null){
+                                btn.UpdateButton(btn.ownerOfThisAvatarGO.tag, btn.ownerOfThisAvatarGO.GetPhotonView().Owner.CustomProperties["CharacterCode"].ToString(), (bool)btn.ownerOfThisAvatarGO.GetPhotonView().Owner.CustomProperties["PlayerCaught"], (bool)btn.ownerOfThisAvatarGO.GetPhotonView().Owner.CustomProperties["PlayerHoldMoneybag"]);
+                            }else{
+                                btn.UpdateButton(btn.ownerOfThisAvatarGO.tag, btn.ownerOfThisAvatarGO.GetComponent<PlayerController>().characterCode, false, false);
+                            }
+                            
+                        }
+                    }
                 }
             }
         }
@@ -522,7 +542,10 @@ public class GameManager : MonoBehaviourPunCallbacks
         base.OnPlayerPropertiesUpdate(targetPlayer, changedProps);
 
         UpdateTeamCount(); // Early game check for team count
-        UpdateAvatarsUI(); // Update avatars UI
+        if(GetAllPlayers().Count > 0){
+            UpdateAvatarsUI(); // Update avatars UI
+        }
+        
         if(gameStarted && !gameEnded){
             CheckWinningCondition();
         }

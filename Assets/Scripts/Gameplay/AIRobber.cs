@@ -47,7 +47,15 @@ public class AIRobber : MonoBehaviourPunCallbacks
             randomGoToPositions.Add(p);
         }
 
-        InitBot();
+        // Create Avatar UI
+        CreateAvatarUI();
+    }
+
+    void CreateAvatarUI(){
+        var robberAvatar = Instantiate(UIManager.instance.gameUI.avatarBtnPrefab);
+        robberAvatar.GetComponent<Btn_Avatar>().SetupButton("Robber", playerNameText.text, "R01", this.gameObject);
+        robberAvatar.transform.SetParent(UIManager.instance.gameUI.avatarRobberContent,false);
+        UIManager.instance.gameUI.avatarBtnList.Add(robberAvatar.GetComponent<Btn_Avatar>());
     }
 
     public void InitBot(){

@@ -432,7 +432,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         switch(playerTeam){
             case E_Team.POLICE:
                 var policeAvatar = Instantiate(UIManager.instance.gameUI.avatarBtnPrefab);
-                policeAvatar.GetComponent<Btn_Avatar>().SetupButton("Police", GetComponent<PhotonView>().Owner.NickName, characterCode, GetComponent<PhotonView>().Owner.ActorNumber);
+                policeAvatar.GetComponent<Btn_Avatar>().SetupButton("Police", GetComponent<PhotonView>().Owner.NickName, characterCode, this.gameObject);
                 policeAvatar.transform.SetParent(UIManager.instance.gameUI.avatarPoliceContent,false);
                 UIManager.instance.gameUI.avatarBtnList.Add(policeAvatar.GetComponent<Btn_Avatar>());
 
@@ -445,7 +445,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
             case E_Team.ROBBER:
                 var robberAvatar = Instantiate(UIManager.instance.gameUI.avatarBtnPrefab);
-                robberAvatar.GetComponent<Btn_Avatar>().SetupButton("Robber", GetComponent<PhotonView>().Owner.NickName, characterCode, GetComponent<PhotonView>().Owner.ActorNumber);
+                robberAvatar.GetComponent<Btn_Avatar>().SetupButton("Robber", GetComponent<PhotonView>().Owner.NickName, characterCode, this.gameObject);
                 robberAvatar.transform.SetParent(UIManager.instance.gameUI.avatarRobberContent,false);
                 UIManager.instance.gameUI.avatarBtnList.Add(robberAvatar.GetComponent<Btn_Avatar>());
 
