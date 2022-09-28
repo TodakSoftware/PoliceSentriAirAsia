@@ -22,7 +22,16 @@ public class FloorEffect : MonoBehaviour
                             other.GetComponent<Rigidbody2D>().gravityScale = 0f;
                         }
                     }else{
-                        // bot slow movement
+                        // bot Slide
+                        if(other.CompareTag("Robber") && other.GetComponent<Robber>().isBot){
+                            if(other.GetComponent<AIRobber>().isFalling){
+                                other.GetComponent<Rigidbody2D>().gravityScale = 0f;
+                            }
+                        }else if(other.CompareTag("Police") && other.GetComponent<Police>().isBot){
+                            if(other.GetComponent<AIPolice>().isFalling){
+                                other.GetComponent<Rigidbody2D>().gravityScale = 0f;
+                            }
+                        }
                     }
                 break;
 
@@ -38,6 +47,11 @@ public class FloorEffect : MonoBehaviour
                         }
                     }else{
                         // bot slow movement
+                        if(other.CompareTag("Robber") && other.GetComponent<Robber>().isBot){
+                            other.GetComponent<AIRobber>().SlowMovement(true);
+                        }else if(other.CompareTag("Police") && other.GetComponent<Police>().isBot){
+                            other.GetComponent<AIPolice>().SlowMovement(true);
+                        }
                     }
                 break;
 
@@ -65,6 +79,28 @@ public class FloorEffect : MonoBehaviour
                         }
                     }else{
                         // Bot related
+                        // bot Slide
+                        if(other.CompareTag("Robber") && other.GetComponent<Robber>().isBot){
+                            if(!other.GetComponent<AIRobber>().isFalling){
+                                if(randomSlide == 0){
+                                    other.GetComponent<Rigidbody2D>().gravityScale = 20f;
+                                }else{
+                                    other.GetComponent<Rigidbody2D>().gravityScale = -20f;
+                                }
+                            }else{
+                                other.GetComponent<Rigidbody2D>().gravityScale = 0f;
+                            }
+                        }else if(other.CompareTag("Police") && other.GetComponent<Police>().isBot){
+                            if(!other.GetComponent<AIPolice>().isFalling){
+                                if(randomSlide == 0){
+                                    other.GetComponent<Rigidbody2D>().gravityScale = 20f;
+                                }else{
+                                    other.GetComponent<Rigidbody2D>().gravityScale = -20f;
+                                }
+                            }else{
+                                other.GetComponent<Rigidbody2D>().gravityScale = 0f;
+                            }
+                        }
                     }
                 break;
 
@@ -88,6 +124,11 @@ public class FloorEffect : MonoBehaviour
                         other.GetComponent<Rigidbody2D>().gravityScale = 0f;
                     }else{
                         // bot related
+                        if(other.CompareTag("Robber") && other.GetComponent<Robber>().isBot){
+                            other.GetComponent<Rigidbody2D>().gravityScale = 0f;
+                        }else if(other.CompareTag("Police") && other.GetComponent<Police>().isBot){
+                            other.GetComponent<Rigidbody2D>().gravityScale = 0f;
+                        }
                     }
                 break;
 
@@ -99,6 +140,11 @@ public class FloorEffect : MonoBehaviour
                     }
                 }else{
                     // bot related
+                    if(other.GetComponent<Robber>().isBot){
+                        other.GetComponent<AIRobber>().SlowMovement(false);
+                    }else if(other.GetComponent<Police>().isBot){
+                        other.GetComponent<AIPolice>().SlowMovement(false);
+                    }
                 }
                 break;
 

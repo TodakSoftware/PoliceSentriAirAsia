@@ -12650,9 +12650,9 @@ MonoBehaviour:
   maxSpeed: 8
   mass: 20
   stoppingDistance: 1
-  slowingDistance: 1
-  accelerationRate: 7
-  decelerationRate: 7
+  slowingDistance: 0
+  accelerationRate: 10
+  decelerationRate: 10
   lookAheadDistance: 1
   avoidRadius: 0.3
   centerOffset: {x: 0, y: 0.14}

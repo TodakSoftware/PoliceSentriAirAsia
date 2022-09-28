@@ -277,5 +277,13 @@ public class AIPolice : MonoBehaviourPunCallbacks
         pauseMovement = false;
     } // end PauseMovement
 
+    public void SlowMovement(bool isEnable){
+        if(isEnable){
+            agent.maxSpeed = agent.maxSpeed / 2;
+        }else{
+            agent.maxSpeed = 8f;
+        }
+    } // end SlowMovement
+
 #endregion // end DASH RELATED
 }

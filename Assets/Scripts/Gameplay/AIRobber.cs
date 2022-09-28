@@ -46,13 +46,15 @@ public class AIRobber : MonoBehaviourPunCallbacks
         foreach(var p in GameManager.instance.moneybagSpawnpoints){
             randomGoToPositions.Add(p);
         }
+
+        InitBot();
     }
 
     public void InitBot(){
         InvokeRepeating("CollectMoneybag", 0f, .5f);
         InvokeRepeating("AvoidPoliceNearby", 0f, .02f);
-        InvokeRepeating("UpdateRoaming", 0f, .5f);
-        InvokeRepeating("InvokeDash", 7f, 7f);
+        InvokeRepeating("UpdateRoaming", 0f, .8f);
+        InvokeRepeating("InvokeDash", 4f, 7f);
     }
 
     void Update(){
@@ -358,4 +360,12 @@ public class AIRobber : MonoBehaviourPunCallbacks
     }
 
 #endregion // end DASH RELATED
+
+    public void SlowMovement(bool isEnable){
+        if(isEnable){
+            agent.maxSpeed = agent.maxSpeed / 2;
+        }else{
+            agent.maxSpeed = 8f;
+        }
+    } // end SlowMovement
 }
