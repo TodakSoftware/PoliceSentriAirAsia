@@ -77,6 +77,10 @@ public class AIRobber : MonoBehaviourPunCallbacks
             }
         }
 
+        /* if(Input.GetKeyDown(KeyCode.N) && GetComponent<Robber>().isCaught){
+            GoInsidePrison();
+        } */
+
         if(isFalling){
             agent.Stop();
         }
@@ -152,6 +156,13 @@ public class AIRobber : MonoBehaviourPunCallbacks
         ClearRoamTarget();
     }
 
+    public void GoInsidePrison(){ // go to specific location inside prison to be saved
+        if(GetComponent<Robber>().isCaught){
+            target = GetNearInsideJailPosition();
+            ClearRoamTarget();
+        }
+    }
+
     // ------------------------------------- GLOBAL ------------------------------------------
     public Transform GetClosestMoneybag()
     {
@@ -214,9 +225,14 @@ public class AIRobber : MonoBehaviourPunCallbacks
         return null;
     } // end GetClosestEnemy
 
-    Transform GetNearJailPosition(){
+    Transform GetNearJailPosition(){ // outside
         var randomIndex = Random.Range(0, GameManager.instance.botEscapeSpawnpoints.Count);
         return GameManager.instance.botEscapeSpawnpoints[randomIndex].GetChild(0);
+    }
+
+    Transform GetNearInsideJailPosition(){ // inside prison
+        var randomIndex = Random.Range(0, GameManager.instance.botEscapeSpawnpoints.Count);
+        return GameManager.instance.botEscapeSpawnpoints[randomIndex];
     }
 
     Transform GetRoamRandomPosition(){

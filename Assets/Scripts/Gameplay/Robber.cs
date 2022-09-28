@@ -29,22 +29,23 @@ public class Robber : MonoBehaviourPunCallbacks
     public bool isBot;
 
     void OnTriggerEnter2D(Collider2D other) {
-        if(!isBot){
             // If we(are in jail), collide with other non caught robber, onRelease start
             if(isCaught && other.gameObject.CompareTag("Robber")){
                 if(other.gameObject.GetComponent<Robber>().isCaught == false){ // our team mates who not caught
                     if(photonView.IsMine){
                         photonView.RPC("SetIsReleasing", RpcTarget.All, true);
-                        photonView.RPC("SetTeammateName", RpcTarget.All, other.gameObject.GetPhotonView().Owner.NickName); 
+                        if(!other.gameObject.GetComponent<Robber>().isBot){
+                            photonView.RPC("SetTeammateName", RpcTarget.All, other.gameObject.GetComponent<PlayerController>().playerNameText.text); 
+                        }else{
+                            photonView.RPC("SetTeammateName", RpcTarget.All, other.gameObject.GetComponent<AIRobber>().playerNameText.text); 
+                        }
+                        
                         
                         savior = other.gameObject.GetPhotonView().Controller;
                         teammateGO = other.gameObject; // Set our saviour
                     }
                 }
             }
-        }else{
-            
-        } // end !isBot
     } // end OnTriggerEnter2D()
 
     [PunRPC]
@@ -53,7 +54,7 @@ public class Robber : MonoBehaviourPunCallbacks
     }
 
     void OnTriggerExit2D(Collider2D other) {
-        if(!isBot){
+        //if(!isBot){
             // If we are still isReleasing, but teammates go outside range, cancel
             if(isCaught && isReleasing && other.gameObject.CompareTag("Robber")){
                 if(photonView.IsMine){
@@ -61,9 +62,7 @@ public class Robber : MonoBehaviourPunCallbacks
                     teammateGO = null;
                 }
             }
-        }else{
-
-        }
+        //}
     } // end OnTriggerExit2D()
 
     void Update(){
@@ -152,12 +151,16 @@ public class Robber : MonoBehaviourPunCallbacks
     public void AddReleasedCount(int value)
     {
         //Save Police Caught Count
-       
+       if(!isBot){
             var _currentReleased = (int)photonView.Controller.CustomProperties["RobberReleasedCount"] + value;
 
             Hashtable teamRole = new Hashtable();
             teamRole.Add("RobberReleasedCount", _currentReleased);
             PhotonNetwork.LocalPlayer.SetCustomProperties(teamRole);
+       }else{
+            GetComponent<AIRobber>().releaseCount += 1;
+       }
+        
        
     }
 
@@ -206,14 +209,8 @@ public class Robber : MonoBehaviourPunCallbacks
         isInPrison = true;
         readyToGoToEscape = true;
 
-        if(GetComponent<AIRobber>() != null){
-            if(isCaught && isInPrison && !done && readyToGoToEscape){
-                if(GetComponent<AIRobber>() != null){
-                    //GetComponent<BotController>().BotRobberGotoEscapePoint();
-                }
-            }
-        }else{
-            //GameManager.instance.TellBotRobberToRescue();
+        if(isBot){
+            GetComponent<AIRobber>().GoInsidePrison();
         }
 
         if(photonView.IsMine){
@@ -249,34 +246,33 @@ public class Robber : MonoBehaviourPunCallbacks
 
     [PunRPC]
     public void HasBeenReleased(){
-        if(photonView.IsMine && isCaught){
-            photonView.RPC("SetIsCaught", RpcTarget.AllBuffered, false, ""); // Passing empty "" because dont need
-            photonView.RPC("SetIsReleasing", RpcTarget.AllBuffered, false);
-            // Popup Caugh Image
+        
+            if(photonView.IsMine && isCaught){
+                photonView.RPC("SetIsCaught", RpcTarget.AllBuffered, false, ""); // Passing empty "" because dont need
+                photonView.RPC("SetIsReleasing", RpcTarget.AllBuffered, false);
+                // Popup Caugh Image
 
-            Hashtable updateData = new Hashtable();
-            updateData.Add("PlayerCaught", false); // Set PlayerCaught -> FALSE
-            PhotonNetwork.LocalPlayer.SetCustomProperties(updateData);
+                if(!isBot){
+                    Hashtable updateData = new Hashtable();
+                    updateData.Add("PlayerCaught", false); // Set PlayerCaught -> FALSE
+                    PhotonNetwork.LocalPlayer.SetCustomProperties(updateData);
+                }
 
-            print("Get out of jailed");
-            
-            GetOutOfJailed(teammateGO.transform.position);
-            teammateGO = null; // Clear existing saviour
+                print("Get out of jailed");
+                
+                GetOutOfJailed(teammateGO.transform.position);
+                teammateGO = null; // Clear existing saviour
 
-            isInPrison = false;
-            done = false;
-            readyToGoToEscape = false;
+                isInPrison = false;
+                done = false;
+                readyToGoToEscape = false;
 
-            if (savior != null)
-            {
-                photonView.RPC("AddReleasedCount", savior, 1); 
-            } else 
-            {
-                print("NOT WORKING");
+                if (savior != null){
+                    photonView.RPC("AddReleasedCount", savior, 1); 
+                } else {
+                    print("NOT WORKING");
+                }
             }
-            
-            //GetComponent<BotController>().escapePointTarget = null;
-        }
         
     } // end HasBeenReleased()
 
