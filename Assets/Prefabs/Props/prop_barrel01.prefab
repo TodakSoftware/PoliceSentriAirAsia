@@ -140,7 +140,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6921531223591798274, guid: c5a64493d2456804fa05c0ea35626144, type: 3}
       propertyPath: shapeType
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6921531223591798275, guid: c5a64493d2456804fa05c0ea35626144, type: 3}
       propertyPath: m_RootOrder
@@ -203,8 +203,8 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6921531223591798781, guid: c5a64493d2456804fa05c0ea35626144, type: 3}
   m_PrefabInstance: {fileID: 4758472130763022435}
   m_PrefabAsset: {fileID: 0}
---- !u!60 &403925366405211250
-PolygonCollider2D:
+--- !u!61 &2133335412645083572
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -216,7 +216,7 @@ PolygonCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.0022089481, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -226,10 +226,6 @@ PolygonCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0, y: 1}
-      - {x: -0.95105654, y: 0.30901697}
-      - {x: -0.5877852, y: -0.80901706}
-      - {x: 0.58778536, y: -0.80901694}
-      - {x: 0.9510565, y: 0.30901712}
+  serializedVersion: 2
+  m_Size: {x: 1.790793, y: 1}
+  m_EdgeRadius: 0
