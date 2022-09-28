@@ -63,6 +63,7 @@ public class SimpleObjectWaypoint : MonoBehaviourPunCallbacks
     void LateUpdate()
     {
         if(canMove && !GameManager.instance.gameEnded && GameManager.instance.gameStarted){
+        //if(canMove){
             if(waypoints.Length != 0){
                 if(randomMove){
                     transform.position = Vector2.MoveTowards(transform.position, waypoints[randomWaypointIndex].position, moveSpeed * Time.deltaTime);
@@ -76,11 +77,11 @@ public class SimpleObjectWaypoint : MonoBehaviourPunCallbacks
                             waitTime = pauseMove;
 
                             if((waypoints[randomWaypointIndex].position.x - transform.position.x) > 0f){
-                                //GetComponent<SpriteRenderer>().flipX = true;
-                                photonView.RPC("FlipRight", RpcTarget.All);
+                                GetComponent<SpriteRenderer>().flipX = true;
+                                //photonView.RPC("FlipRight", RpcTarget.All);
                             }else{
-                                //GetComponent<SpriteRenderer>().flipX = false;
-                                photonView.RPC("FlipLeft", RpcTarget.All);
+                                GetComponent<SpriteRenderer>().flipX = false;
+                                //photonView.RPC("FlipLeft", RpcTarget.All);
                             }
 
                             if(ownerAnimator != null && playRunAnim){
@@ -108,11 +109,11 @@ public class SimpleObjectWaypoint : MonoBehaviourPunCallbacks
                             waitTime = pauseMove;
 
                             if((waypoints[currentWaypointIndex].position.x - transform.position.x) > 0f){
-                                //GetComponent<SpriteRenderer>().flipX = true;
-                                photonView.RPC("FlipRight", RpcTarget.All);
+                                GetComponent<SpriteRenderer>().flipX = true;
+                                //photonView.RPC("FlipRight", RpcTarget.All);
                             }else{
-                                //GetComponent<SpriteRenderer>().flipX = false;
-                                photonView.RPC("FlipLeft", RpcTarget.All);
+                                GetComponent<SpriteRenderer>().flipX = false;
+                                //photonView.RPC("FlipLeft", RpcTarget.All);
                             }
 
                             if(ownerAnimator != null && !playRunAnim){
