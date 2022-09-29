@@ -6926,6 +6926,30 @@ MonoBehaviour:
   playerNameText: {fileID: 926082661805428206}
   releaseCount: 0
   catStunned: 0
+  nameLists:
+  - Aang
+  - Kenji
+  - Mayur
+  - Naoko
+  - Amit
+  - Chao
+  - Kenta
+  - Neeraj
+  - Shivali
+  - Sameer
+  - Usman
+  - Anima
+  - Ling
+  - Cahaya
+  - Elora
+  - Cinta
+  - Zhen
+  - Vesper
+  - Annisa
+  - Agus
+  - Dilbert
+  - Bruno
+  - Shania
 --- !u!1 &4873863652798532647
 GameObject:
   m_ObjectHideFlags: 0

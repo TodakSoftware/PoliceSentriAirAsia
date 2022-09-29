@@ -12755,6 +12755,23 @@ MonoBehaviour:
   caughtCount: 0
   catStunned: 0
   pauseMovement: 0
+  nameLists:
+  - Putra
+  - Putri
+  - Ichiro
+  - Yuuna
+  - Burhan
+  - Anisa
+  - Azhar
+  - Yuu
+  - Hiraku
+  - Samira
+  - Aparna
+  - Rachana
+  - Yuki
+  - Nikhil
+  - Bipin
+  - Prem
 --- !u!1 &7955344202809199671
 GameObject:
   m_ObjectHideFlags: 0

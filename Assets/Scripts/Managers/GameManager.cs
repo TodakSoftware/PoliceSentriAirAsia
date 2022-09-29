@@ -207,11 +207,6 @@ public class GameManager : MonoBehaviourPunCallbacks
                 for(int i = 0; i < 1; i++){
                     yield return new WaitForSeconds(Random.Range(0f, 1f));
                     GameObject player = PhotonNetwork.Instantiate(NetworkManager.GetPhotonPrefab("Characters", "AIPolice"), GameManager.instance.waitingSpawnpoint.position + new Vector3(Random.Range(0,3f), Random.Range(0,3f), 0f), Quaternion.identity);
-
-                    //var randomPoliceSkin = Random.Range(0, SOManager.instance.animVariantPolice.animatorLists.Count);
-                    //player.GetComponent<PlayerController>().characterCode = SOManager.instance.animVariantPolice.animatorLists[randomPoliceSkin].code;
-
-                    //player.GetComponent<PlayerController>().SetupPlayerAnimator();
                 }
             }
             
@@ -227,10 +222,6 @@ public class GameManager : MonoBehaviourPunCallbacks
                     yield return new WaitForSeconds(Random.Range(0f, 1f));
                     GameObject player = PhotonNetwork.InstantiateRoomObject(NetworkManager.GetPhotonPrefab("Characters", "AIRobber"), GameManager.instance.waitingSpawnpoint.position + new Vector3(Random.Range(0,3f), Random.Range(0,3f), 0f), Quaternion.identity);
                     
-                    //var randomRobberSkin = Random.Range(0, SOManager.instance.animVariantRobber.animatorLists.Count);
-                    //player.GetComponent<PlayerController>().characterCode = SOManager.instance.animVariantRobber.animatorLists[randomRobberSkin].code;
-
-                    //player.GetComponent<PlayerController>().SetupPlayerAnimator();
                 }
             } 
         }
@@ -310,9 +301,9 @@ public class GameManager : MonoBehaviourPunCallbacks
 
                 CheckWinningCondition();
 
-                gameStarted = true;
-
                 print("Redirect Everybody To Their Position");
+                yield return new WaitForSeconds(1f); // delay gameStart = true
+                gameStarted = true;
             } // end if(currentStartGameCountdown <= 0)
         }
         
@@ -427,6 +418,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public void CheckWinningCondition(){
         if(!gameEnded){
+            UpdateAvatarsUI();
             // if total police ingame <= 0, ROBBER WINS
             if(GetAllPlayersPolice().Count <= 0){
                 PoliceWinning(false);

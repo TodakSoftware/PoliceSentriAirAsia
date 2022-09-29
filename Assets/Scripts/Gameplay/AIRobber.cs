@@ -29,6 +29,7 @@ public class AIRobber : MonoBehaviourPunCallbacks
     public int releaseCount;
     [Header("Item Related")]
     public bool catStunned;
+    public List<string> nameLists = new List<string>();
 
     void Awake(){
         agent = GetComponent<PolyNavAgent>();
@@ -37,7 +38,13 @@ public class AIRobber : MonoBehaviourPunCallbacks
         GetComponent<Robber>().isBot = true;
 
         // Set Bot Name
-        playerNameText.text = "Robber" + photonView.OwnerActorNr;
+        if(nameLists.Count > 0){
+            var ran = Random.Range(0, nameLists.Count);
+            playerNameText.text = nameLists[ran];
+        }else{
+            playerNameText.text = "Robber" + photonView.OwnerActorNr;
+        }
+        
 
         // Set PolyNav
         agent.map = GameObject.FindObjectOfType<PolyNav2D>();

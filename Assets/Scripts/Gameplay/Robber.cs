@@ -211,9 +211,18 @@ public class Robber : MonoBehaviourPunCallbacks
 
         if(isBot){
             GetComponent<AIRobber>().GoInsidePrison();
+
+            if(isHoldMoneybag){ // if we are holding moneybag
+                GameManager.instance.photonView.RPC("SpawnAllMoneybag", RpcTarget.MasterClient); 
+                GameManager.instance.photonView.RPC("SetMoneybagOccupied", RpcTarget.All, false);
+            }
+
+            photonView.RPC("DisplayMoneybag", RpcTarget.All, false); // Hide moneybag
+            photonView.RPC("DisableCollider", RpcTarget.All, false); // Enable Collider
+            photonView.RPC("EnableJailCollider", RpcTarget.All, true); // Enable Jail COllider for released
         }
 
-        if(photonView.IsMine){
+        if(photonView.IsMine && !isBot){
             Hashtable updateData = new Hashtable();
             if(isHoldMoneybag){ // if we are holding moneybag
                 updateData.Add("PlayerHoldMoneybag", false); // Set PlayerHoldMoneybag -> FALSE *will auto respawn new moneybag

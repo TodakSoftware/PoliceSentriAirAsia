@@ -29,6 +29,7 @@ public class AIPolice : MonoBehaviourPunCallbacks
     [Header("Item Related")]
     public bool catStunned;
     public bool pauseMovement;
+    public List<string> nameLists = new List<string>();
 
     void Awake(){
         agent = GetComponent<PolyNavAgent>();
@@ -37,7 +38,13 @@ public class AIPolice : MonoBehaviourPunCallbacks
         GetComponent<Police>().isBot = true;
 
         // Set Bot Name
-        playerNameText.text = "Police" + photonView.OwnerActorNr;
+        
+        if(nameLists.Count > 0){
+            var ran = Random.Range(0, nameLists.Count);
+            playerNameText.text = nameLists[ran];
+        }else{
+            playerNameText.text = "Police" + photonView.OwnerActorNr;
+        }
 
         // Set PolyNav
         agent.map = GameObject.FindObjectOfType<PolyNav2D>();
