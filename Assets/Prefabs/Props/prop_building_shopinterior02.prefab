@@ -199,7 +199,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6921531223591798781, guid: c5a64493d2456804fa05c0ea35626144, type: 3}
   m_PrefabInstance: {fileID: 4787265396648766363}
   m_PrefabAsset: {fileID: 0}
---- !u!61 &1091579778890855699
+--- !u!61 &8207771422291740999
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -212,7 +212,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0017054081, y: 1.2769823}
+  m_Offset: {x: 0, y: 1.2675438}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -223,7 +223,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 7.1840024, y: 3.5539646}
+  m_Size: {x: 7.163539, y: 3.5350876}
   m_EdgeRadius: 0
 --- !u!4 &2477542171615571352 stripped
 Transform:

@@ -189,6 +189,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: NavObstacle
       objectReference: {fileID: 0}
+    - target: {fileID: 6921531223591798781, guid: c5a64493d2456804fa05c0ea35626144, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: -3085693165005825452, guid: c5a64493d2456804fa05c0ea35626144, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c5a64493d2456804fa05c0ea35626144, type: 3}
