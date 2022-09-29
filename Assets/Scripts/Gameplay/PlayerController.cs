@@ -313,7 +313,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
 #region DASH RELATED
     public IEnumerator PlayerDash(float duration){
-        if(!isDashing && !isDashCooldown && !isFalling){
+        if(!isDashing && !isDashCooldown && !isFalling && !isSlow){
             AudioManager.instance.PlaySound("PS_UI_Dash");
 
             btnDash.GetComponent<ButtonCooldown>().StartCooldown(dashCooldown);

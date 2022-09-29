@@ -16,10 +16,12 @@ public class Vehicle : MonoBehaviourPunCallbacks
                     //cannotStun = true;
                     //Invoke("DelayReset", 4f);
                 }else{ // its bot
-                    if(other.gameObject.GetComponent<AIPolice>() != null){
-                        other.gameObject.GetComponent<AIPolice>().BotFalling(3f);
-                    }else if(other.gameObject.GetComponent<AIRobber>() != null){
-                        other.gameObject.GetComponent<AIRobber>().BotFalling(3f);
+                    if(other.gameObject.CompareTag("Police") && other.gameObject.GetComponent<Police>().isBot && !other.gameObject.GetComponent<AIPolice>().isFalling){
+                        //other.gameObject.GetComponent<AIPolice>().BotFalling(3f);
+                        other.gameObject.GetComponent<AIPolice>().photonView.RPC("BotFalling", RpcTarget.All, 3f);
+                    }else if(other.gameObject.CompareTag("Robber") && other.gameObject.GetComponent<Robber>().isBot && !other.gameObject.GetComponent<AIRobber>().isFalling){
+                        //other.gameObject.GetComponent<AIRobber>().BotFalling(3f);
+                        other.gameObject.GetComponent<AIRobber>().photonView.RPC("BotFalling", RpcTarget.All, 3f);
                     }
                 }
             }

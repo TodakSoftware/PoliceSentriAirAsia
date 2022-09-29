@@ -85,6 +85,9 @@ public class AIPolice : MonoBehaviourPunCallbacks
 
     void Update(){
         if(target != null){
+            if(target.CompareTag("Robber") && target.GetComponent<Robber>().isCaught){
+                target = null;
+            }
             agent.SetDestination(target.position);
         }
 
@@ -100,11 +103,13 @@ public class AIPolice : MonoBehaviourPunCallbacks
     }
 
     void UpdateRoaming(){
-        if(roamTarget == null && target == null){
-            Roaming();
-        }else if(roamTarget != null && agent.botDestinationReach){ // if isroaming && 
-            agent.botDestinationReach = false;
-            ClearRoamTarget();
+        if(GameManager.instance.gameStarted && !GameManager.instance.gameEnded){
+            if(roamTarget == null && target == null){
+                Roaming();
+            }else if(roamTarget != null && agent.botDestinationReach){ // if isroaming && 
+                agent.botDestinationReach = false;
+                ClearRoamTarget();
+            }
         }
     }
 
@@ -116,11 +121,13 @@ public class AIPolice : MonoBehaviourPunCallbacks
     }
 
     void ChaseRobber(){
-        if(GetClosestEnemy(targetTag) != null){
-            target = GetClosestEnemy(targetTag);
-            ClearRoamTarget();
-        }else{
-            ClearTarget();
+        if(GameManager.instance.gameStarted && !GameManager.instance.gameEnded){
+            if(GetClosestEnemy(targetTag) != null){
+                target = GetClosestEnemy(targetTag);
+                ClearRoamTarget();
+            }else{
+                ClearTarget();
+            }
         }
     }
 
@@ -151,13 +158,15 @@ public class AIPolice : MonoBehaviourPunCallbacks
                     return bestTarget;
                 }
             }else if(team == "Police"){
-                Vector3 directionToTarget = potentialTarget.transform.position - currentPosition;
-                float dSqrToTarget = directionToTarget.sqrMagnitude;
-                if(dSqrToTarget < closestDistanceSqr)
-                {
-                    closestDistanceSqr = dSqrToTarget;
-                    bestTarget = potentialTarget.transform;
-                    return bestTarget;
+                if(!potentialTarget.GetComponent<Robber>().isCaught){ // only search non caught
+                    Vector3 directionToTarget = potentialTarget.transform.position - currentPosition;
+                    float dSqrToTarget = directionToTarget.sqrMagnitude;
+                    if(dSqrToTarget < closestDistanceSqr)
+                    {
+                        closestDistanceSqr = dSqrToTarget;
+                        bestTarget = potentialTarget.transform;
+                        return bestTarget;
+                    }
                 }
             }
         }
@@ -171,6 +180,7 @@ public class AIPolice : MonoBehaviourPunCallbacks
         return randomGoToPositions[randomIndex];
     }
 
+    [PunRPC]
     public IEnumerator BotFalling(float dur){
         isFalling = true;
         isDashing = false;
@@ -187,25 +197,22 @@ public class AIPolice : MonoBehaviourPunCallbacks
     }
 
     public void HandleBotAnimation(){
-        if(agent.currentSpeed > 0){
+        if(agent.currentSpeed != 0){
             if(!isDashing){
                 PlayAnimation("Run");
-
-                if(agent.botFacingRight){
-                    transform.localScale = new Vector3(-1f,1f,1f);
-
-                    nameCanvas.localScale = new Vector3(-0.01f,0.01f,0.01f);
-                    barCanvas.localScale = new Vector3(-0.01f,0.01f,0.01f);
-                }else{
-                    transform.localScale = new Vector3(1f,1f,1f);
-
-                    nameCanvas.localScale = new Vector3(0.01f,0.01f,0.01f);
-                    barCanvas.localScale = new Vector3(0.01f,0.01f,0.01f);
-                }
-
-                
             }else{
                 PlayAnimation("Dash");
+            }
+
+            if(agent.movingDirection.x > 0){
+                if(transform.localScale.x != -1f && photonView.IsMine){
+                    photonView.RPC("FlipRight", RpcTarget.All, true);
+                }
+                
+            }else if(agent.movingDirection.x < 0){
+                if(transform.localScale.x != 1f && photonView.IsMine){
+                    photonView.RPC("FlipRight", RpcTarget.All, false);
+                }
             }
         }else{
             if(!isDashing){
@@ -217,6 +224,21 @@ public class AIPolice : MonoBehaviourPunCallbacks
             PlayAnimation("Fall");
         }
     } // end HandleBotAnimation
+
+    [PunRPC]
+    void FlipRight(bool rights){
+        if(rights){
+            transform.localScale = new Vector3(-1f,1f,1f);
+
+            nameCanvas.localScale = new Vector3(-0.01f,0.01f,0.01f);
+            barCanvas.localScale = new Vector3(-0.01f,0.01f,0.01f);
+        }else{
+            transform.localScale = new Vector3(1f,1f,1f);
+
+            nameCanvas.localScale = new Vector3(0.01f,0.01f,0.01f);
+            barCanvas.localScale = new Vector3(0.01f,0.01f,0.01f);
+        }
+    }
 
     public void PlayAnimation(string animName){
         switch(animName){
@@ -248,7 +270,9 @@ public class AIPolice : MonoBehaviourPunCallbacks
 
     #region DASH RELATED
     void InvokeDash(){
-        StartCoroutine(BotDash(.2f));
+        if(GameManager.instance.gameStarted && !GameManager.instance.gameEnded){
+            StartCoroutine(BotDash(.2f));
+        }
     }
 
     public IEnumerator BotDash(float duration){

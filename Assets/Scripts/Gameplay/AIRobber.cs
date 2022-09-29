@@ -99,33 +99,37 @@ public class AIRobber : MonoBehaviourPunCallbacks
     }
 
     void AvoidPoliceNearby(){
-        if(GetClosestEnemy("Police") != null && !GetComponent<Robber>().isCaught && !isHitWall){
-            ClearRescue();
-            ClearTarget();
-            ClearRoamTarget();
+        if(GameManager.instance.gameStarted && !GameManager.instance.gameEnded){
+            if(GetClosestEnemy("Police") != null && !GetComponent<Robber>().isCaught && !isHitWall){
+                ClearRescue();
+                ClearTarget();
+                ClearRoamTarget();
 
-            Vector3 dirToPlayer = (transform.position - GetClosestEnemy("Police").position).normalized;
+                Vector3 dirToPlayer = (transform.position - GetClosestEnemy("Police").position).normalized;
 
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, dirToPlayer * 3f);
-            if(hit.collider.gameObject.CompareTag("Walls") || hit.collider.gameObject.CompareTag("Objects")){
-                //print("Hit Wall");  
-                isHitWall = true;
-            }else{
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, dirToPlayer * 3f);
+                if(hit.collider.gameObject.CompareTag("Walls") || hit.collider.gameObject.CompareTag("Objects")){
+                    //print("Hit Wall");  
+                    isHitWall = true;
+                }else{
+                    isHitWall = false;
+                    agent.SetDestination(transform.position + dirToPlayer * 3f);
+                    Debug.DrawRay(transform.position, dirToPlayer * 3f, Color.green);
+                }
+            }else if(GetClosestEnemy("Police") == null && isHitWall && !GetComponent<Robber>().isCaught){
                 isHitWall = false;
-                agent.SetDestination(transform.position + dirToPlayer * 3f);
-                Debug.DrawRay(transform.position, dirToPlayer * 3f, Color.green);
             }
-        }else if(GetClosestEnemy("Police") == null && isHitWall && !GetComponent<Robber>().isCaught){
-            isHitWall = false;
         }
     }
 
     void UpdateRoaming(){
-        if(roamTarget == null && target == null && !isRescuing && !GetComponent<Robber>().isCaught){
-            Roaming();
-        }else if(roamTarget != null && agent.botDestinationReach){ // if isroaming && 
-            agent.botDestinationReach = false;
-            ClearRoamTarget();
+        if(GameManager.instance.gameStarted && !GameManager.instance.gameEnded){
+            if(roamTarget == null && target == null && !isRescuing && !GetComponent<Robber>().isCaught){
+                Roaming();
+            }else if(roamTarget != null && agent.botDestinationReach){ // if isroaming && 
+                agent.botDestinationReach = false;
+                ClearRoamTarget();
+            }
         }
     }
 
@@ -137,12 +141,14 @@ public class AIRobber : MonoBehaviourPunCallbacks
     }
 
     void CollectMoneybag(){
-        if(GetClosestMoneybag() != null && !GameManager.instance.moneyBagOccupied && GetClosestEnemy("Police") == null && !GetComponent<Robber>().isCaught && !isRescuing){
-            target = GetClosestMoneybag();
-            ClearRoamTarget();
-        }else{
-            //print("No Moneybag");
-            ClearTarget();
+        if(GameManager.instance.gameStarted && !GameManager.instance.gameEnded){
+            if(GetClosestMoneybag() != null && !GameManager.instance.moneyBagOccupied && GetClosestEnemy("Police") == null && !GetComponent<Robber>().isCaught && !isRescuing){
+                target = GetClosestMoneybag();
+                ClearRoamTarget();
+            }else{
+                //print("No Moneybag");
+                ClearTarget();
+            }
         }
     }
 
@@ -250,6 +256,7 @@ public class AIRobber : MonoBehaviourPunCallbacks
         return randomGoToPositions[randomIndex];
     }
 
+    [PunRPC]
     public IEnumerator BotFalling(float dur){
         isFalling = true;
         isDashing = false;
@@ -270,25 +277,22 @@ public class AIRobber : MonoBehaviourPunCallbacks
     }
 
     public void HandleBotAnimation(){
-        if(agent.currentSpeed > 0){
+        if(agent.currentSpeed != 0){
             if(!isDashing){
                 PlayAnimation("Run");
-
-                if(agent.botFacingRight){
-                    transform.localScale = new Vector3(-1f,1f,1f);
-
-                    nameCanvas.localScale = new Vector3(-0.01f,0.01f,0.01f);
-                    barCanvas.localScale = new Vector3(-0.01f,0.01f,0.01f);
-                }else{
-                    transform.localScale = new Vector3(1f,1f,1f);
-
-                    nameCanvas.localScale = new Vector3(0.01f,0.01f,0.01f);
-                    barCanvas.localScale = new Vector3(0.01f,0.01f,0.01f);
-                }
-
-                
             }else{
                 PlayAnimation("Dash");
+            }
+
+            if(agent.movingDirection.x > 0){
+                if(transform.localScale.x != -1f && photonView.IsMine){
+                    photonView.RPC("FlipRight", RpcTarget.All, true);
+                }
+                
+            }else if(agent.movingDirection.x < 0){
+                if(transform.localScale.x != 1f && photonView.IsMine){
+                    photonView.RPC("FlipRight", RpcTarget.All, false);
+                }
             }
         }else{
             if(!isDashing){
@@ -300,6 +304,21 @@ public class AIRobber : MonoBehaviourPunCallbacks
             PlayAnimation("Fall");
         }
     } // end HandleBotAnimation
+
+    [PunRPC]
+    void FlipRight(bool rights){
+        if(rights){
+            transform.localScale = new Vector3(-1f,1f,1f);
+
+            nameCanvas.localScale = new Vector3(-0.01f,0.01f,0.01f);
+            barCanvas.localScale = new Vector3(-0.01f,0.01f,0.01f);
+        }else{
+            transform.localScale = new Vector3(1f,1f,1f);
+
+            nameCanvas.localScale = new Vector3(0.01f,0.01f,0.01f);
+            barCanvas.localScale = new Vector3(0.01f,0.01f,0.01f);
+        }
+    }
 
     public void PlayAnimation(string animName){
         switch(animName){
@@ -331,8 +350,10 @@ public class AIRobber : MonoBehaviourPunCallbacks
 
     #region DASH RELATED
     void InvokeDash(){
-        if(!GetComponent<Robber>().isCaught){
-            StartCoroutine(BotDash(.2f));
+        if(GameManager.instance.gameStarted && !GameManager.instance.gameEnded){
+            if(!GetComponent<Robber>().isCaught){
+                StartCoroutine(BotDash(.2f));
+            }
         }
     }
 

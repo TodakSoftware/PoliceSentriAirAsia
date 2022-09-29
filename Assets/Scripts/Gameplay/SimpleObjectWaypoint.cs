@@ -77,11 +77,11 @@ public class SimpleObjectWaypoint : MonoBehaviourPunCallbacks
                             waitTime = pauseMove;
 
                             if((waypoints[randomWaypointIndex].position.x - transform.position.x) > 0f){
-                                GetComponent<SpriteRenderer>().flipX = true;
-                                //photonView.RPC("FlipRight", RpcTarget.All);
+                                //GetComponent<SpriteRenderer>().flipX = true;
+                                photonView.RPC("FlipRight", RpcTarget.All);
                             }else{
                                 GetComponent<SpriteRenderer>().flipX = false;
-                                //photonView.RPC("FlipLeft", RpcTarget.All);
+                                photonView.RPC("FlipLeft", RpcTarget.All);
                             }
 
                             if(ownerAnimator != null && playRunAnim){
@@ -109,11 +109,11 @@ public class SimpleObjectWaypoint : MonoBehaviourPunCallbacks
                             waitTime = pauseMove;
 
                             if((waypoints[currentWaypointIndex].position.x - transform.position.x) > 0f){
-                                GetComponent<SpriteRenderer>().flipX = true;
-                                //photonView.RPC("FlipRight", RpcTarget.All);
+                                //GetComponent<SpriteRenderer>().flipX = true;
+                                photonView.RPC("FlipRight", RpcTarget.All);
                             }else{
-                                GetComponent<SpriteRenderer>().flipX = false;
-                                //photonView.RPC("FlipLeft", RpcTarget.All);
+                                //GetComponent<SpriteRenderer>().flipX = false;
+                                photonView.RPC("FlipLeft", RpcTarget.All);
                             }
 
                             if(ownerAnimator != null && !playRunAnim){

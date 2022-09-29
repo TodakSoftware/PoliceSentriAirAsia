@@ -28,8 +28,12 @@ public class Flashbang : MonoBehaviourPunCallbacks, IPunObservable
             explodeTimer = 0;
             if(overlappedPlayers.Count > 0){
                 foreach(var go in overlappedPlayers){
-                    if(go.GetComponent<PlayerAbilities>().enabled || go.GetComponent<PlayerAbilities>() != null)
-                    go.GetComponent<PlayerAbilities>().photonView.RPC("BlindByFlashbang", RpcTarget.All);
+                    if(go.CompareTag("Police") && !go.GetComponent<Police>().isBot){
+                        go.GetComponent<PlayerAbilities>().photonView.RPC("BlindByFlashbang", RpcTarget.All);
+                    }else if(go.CompareTag("Robber") && !go.GetComponent<Robber>().isBot){
+                        go.GetComponent<PlayerAbilities>().photonView.RPC("BlindByFlashbang", RpcTarget.All);
+                    }
+                    
                 }
             }
             if(photonView.IsMine)

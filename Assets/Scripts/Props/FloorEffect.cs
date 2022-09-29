@@ -41,8 +41,10 @@ public class FloorEffect : MonoBehaviour
                             if(other.CompareTag("Robber") && other.GetComponent<Robber>().isCaught){
                                 // Do Nothing
                             }else{ // else if police
-                                other.GetComponent<PlayerController>().EnableSlowMovement();
-                                other.GetComponent<PlayerController>().isSlow = true;
+                                if(!other.GetComponent<PlayerController>().isDashing){
+                                    other.GetComponent<PlayerController>().EnableSlowMovement();
+                                    other.GetComponent<PlayerController>().isSlow = true;
+                                }
                             }
                         }
                     }else{
