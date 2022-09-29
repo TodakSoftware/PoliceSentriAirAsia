@@ -87,14 +87,6 @@ public class BotController : PlayerController
                 BotRobberSaveTeammate();
             }
 
-            if(Input.GetKeyDown(KeyCode.P)){
-                if(!GetComponent<Robber>().isCaught){
-                    BotRobberSaveTeammate();
-                    print("OK");
-                }else{
-                    BotRobberGotoEscapePoint();
-                }
-            }
 
             if(botAgent.botDestinationReach && isGoingToTarget){
                 isRoaming = false;
@@ -322,20 +314,6 @@ public class BotController : PlayerController
                 targetRescue = null;
             }*/
         }
-    }
-
-    //public IEnumerator BotRobberGotoEscapePoint(){
-    public void BotRobberGotoEscapePoint(){
-        var randomIndex = Random.Range(0, GameManager.instance.botEscapeSpawnpoints.Count);
-        
-        if(GetComponent<Robber>() != null && GetComponent<Robber>().isCaught){ // Check robber is !caught
-            escapePointTarget = GameManager.instance.botEscapeSpawnpoints[randomIndex];
-            GoToTarget(escapePointTarget);
-            GameManager.instance.TellBotRobberToRescue();
-            isRoaming = false;
-            GetComponent<Robber>().done = true;
-        }
-        //yield return new WaitForSeconds(0);
     }
 
     public void BotFindRandomGoToPoint(){

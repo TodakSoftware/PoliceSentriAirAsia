@@ -23,7 +23,7 @@ public class FloorEffect : MonoBehaviour
                         }
                     }else{
                         // bot Slide
-                        if(other.CompareTag("Robber") && other.GetComponent<Robber>().isBot){
+                        /* if(other.CompareTag("Robber") && other.GetComponent<Robber>().isBot){
                             if(other.GetComponent<AIRobber>().isFalling){
                                 other.GetComponent<Rigidbody2D>().gravityScale = 0f;
                             }
@@ -31,7 +31,7 @@ public class FloorEffect : MonoBehaviour
                             if(other.GetComponent<AIPolice>().isFalling){
                                 other.GetComponent<Rigidbody2D>().gravityScale = 0f;
                             }
-                        }
+                        } */
                     }
                 break;
 
@@ -82,7 +82,7 @@ public class FloorEffect : MonoBehaviour
                     }else{
                         // Bot related
                         // bot Slide
-                        if(other.CompareTag("Robber") && other.GetComponent<Robber>().isBot){
+                        /* if(other.CompareTag("Robber") && other.GetComponent<Robber>().isBot){
                             if(!other.GetComponent<AIRobber>().isFalling){
                                 if(randomSlide == 0){
                                     other.GetComponent<Rigidbody2D>().gravityScale = 20f;
@@ -102,7 +102,7 @@ public class FloorEffect : MonoBehaviour
                             }else{
                                 other.GetComponent<Rigidbody2D>().gravityScale = 0f;
                             }
-                        }
+                        } */
                     }
                 break;
 
@@ -125,12 +125,12 @@ public class FloorEffect : MonoBehaviour
                         other.GetComponent<PlayerController>().isSlide = false;
                         other.GetComponent<Rigidbody2D>().gravityScale = 0f;
                     }else{
-                        // bot related
+                        /* // bot related
                         if(other.CompareTag("Robber") && other.GetComponent<Robber>().isBot){
                             other.GetComponent<Rigidbody2D>().gravityScale = 0f;
                         }else if(other.CompareTag("Police") && other.GetComponent<Police>().isBot){
                             other.GetComponent<Rigidbody2D>().gravityScale = 0f;
-                        }
+                        } */
                     }
                 break;
 

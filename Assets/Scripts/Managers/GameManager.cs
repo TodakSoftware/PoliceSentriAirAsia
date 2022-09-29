@@ -109,6 +109,10 @@ public class GameManager : MonoBehaviourPunCallbacks
         UpdateTeamCount(); // Update Manual Select Role on 1st load
 
         SpawnAllMoneybag(); // Spawn moneybag
+
+        if(PhotonNetwork.IsMasterClient){
+            InvokeRepeating("ChosenBotToRescue", 0f, 30f);
+        }
         
     } // end Start
 
@@ -136,9 +140,9 @@ public class GameManager : MonoBehaviourPunCallbacks
                 }
             }
 
-            if(Input.GetKeyDown(KeyCode.C)){ // Debug ask for robber help
+           /*  if(Input.GetKeyDown(KeyCode.C)){ // Debug ask for robber help
                 GameManager.instance.ChosenBotToRescue();
-            }
+            } */
         } // end gameStarted
 
         if(currentStartGameCountdown <= 5 && !doneSpawnBots){
@@ -274,11 +278,6 @@ public class GameManager : MonoBehaviourPunCallbacks
 
                 UIManager.instance.gameUI.redirectCountdownText.text = "START!";
                 
-                
-                gameStarted = true;
-
-                print("Redirect Everybody To Their Position");
-                //StartCoroutine(GameManager.instance.AskForHelp());
                 var policePos = 0;
                 var robberPos = 0;
                 foreach(var g in GetAllPlayers()){
@@ -310,6 +309,10 @@ public class GameManager : MonoBehaviourPunCallbacks
                 UIManager.instance.gameUI.redirectCountdownText.text = "";
 
                 CheckWinningCondition();
+
+                gameStarted = true;
+
+                print("Redirect Everybody To Their Position");
             } // end if(currentStartGameCountdown <= 0)
         }
         
@@ -585,24 +588,28 @@ public class GameManager : MonoBehaviourPunCallbacks
     } // end GetAllPlayersRobber
 
     public void ChosenBotToRescue(){ // Select 1 bot who is !caught to rescue teammate
-        List<GameObject> botRobber = new List<GameObject>();
-        botRobber.Clear();
+    
+        if(GameManager.instance.gameStarted && GameManager.instance.gameEnded){
+            List<GameObject> botRobber = new List<GameObject>();
+            botRobber.Clear();
 
-        // Filter all robber who is bot, then added to botRobber list
-        if(GetAllPlayersRobber().Count > 0){
-            foreach(var r in GetAllPlayersRobber()){
-                if(r.GetComponent<Robber>().isBot){
-                    botRobber.Add(r);
+            // Filter all robber who is bot, then added to botRobber list
+            if(GetAllPlayersRobber().Count > 0){
+                foreach(var r in GetAllPlayersRobber()){
+                    if(r.GetComponent<Robber>().isBot){
+                        botRobber.Add(r);
+                    }
+                }
+            }
+
+            if(botRobber.Count > 0){
+                var randomIndex = Random.Range(0, botRobber.Count);
+                if(!botRobber[randomIndex].GetComponent<Robber>().isCaught && !botRobber[randomIndex].GetComponent<AIRobber>().isRescuing && NumberOfCaughtRobber() > 0){
+                    botRobber[randomIndex].GetComponent<AIRobber>().RescueTeammate();
                 }
             }
         }
-
-        if(botRobber.Count > 0){
-            var randomIndex = Random.Range(0, botRobber.Count);
-            if(!botRobber[randomIndex].GetComponent<Robber>().isCaught && !botRobber[randomIndex].GetComponent<AIRobber>().isRescuing){
-                botRobber[randomIndex].GetComponent<AIRobber>().RescueTeammate();
-            }
-        }
+        
     } // end GetAllPlayersRobber
 
     public static Sprite GetCharacterIconHead(string team, string code){ // Return character icon head sprite
@@ -694,15 +701,6 @@ public class GameManager : MonoBehaviourPunCallbacks
             moneyBagOccupied = true;
         }else{
             moneyBagOccupied = false;
-        }
-    }
-
-    public void TellBotRobberToRescue(){
-        foreach(var bot in GetAllPlayersRobber()){
-            if(bot.GetComponent<AIRobber>() != null && !bot.GetComponent<Robber>().isCaught){
-                //bot.GetComponent<BotController>().BotRobberSaveTeammate();
-                print("TellRobber to rescue");
-            }
         }
     }
 
