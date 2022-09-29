@@ -8,6 +8,7 @@ public class Modal_Username : MonoBehaviour
 {
     public Button confirmBtn;
     public TMP_InputField usernameInput;
+    //public Button closeBtn;
 
     void OnEnable(){
         if(PlayerPrefs.HasKey("Username")){
@@ -18,8 +19,10 @@ public class Modal_Username : MonoBehaviour
     void Update(){
         if(usernameInput.text.Length >= 3){
             confirmBtn.interactable = true;
+            //closeBtn.interactable = true;
         }else{
             confirmBtn.interactable = false;
+            //closeBtn.interactable = false;
         }
     }
 

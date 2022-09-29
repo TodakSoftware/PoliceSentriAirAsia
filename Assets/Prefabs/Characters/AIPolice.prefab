@@ -12475,7 +12475,6 @@ GameObject:
   - component: {fileID: 7955344202334445016}
   - component: {fileID: 7955344202334445018}
   - component: {fileID: 1090073656761589282}
-  - component: {fileID: 281718576190557907}
   - component: {fileID: 7289153599975524437}
   - component: {fileID: 6630326361857483945}
   - component: {fileID: 6986744180735014056}
@@ -12550,57 +12549,6 @@ MonoBehaviour:
   m_SynchronizeAngularVelocity: 0
   m_TeleportEnabled: 1
   m_TeleportIfDistanceGreaterThan: 3
---- !u!114 &281718576190557907
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7955344202334445017}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8069ffa6ab7df7340ad5ce0c3da47526, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interpolationBackTime: 0.12
-  extrapolationMode: 1
-  useExtrapolationTimeLimit: 1
-  extrapolationTimeLimit: 5
-  useExtrapolationDistanceLimit: 0
-  extrapolationDistanceLimit: 20
-  sendPositionThreshold: 0
-  sendRotationThreshold: 0
-  sendScaleThreshold: 0
-  sendVelocityThreshold: 0
-  sendAngularVelocityThreshold: 0
-  receivedPositionThreshold: 0
-  receivedRotationThreshold: 0
-  snapPositionThreshold: 0
-  snapRotationThreshold: 0
-  snapScaleThreshold: 0
-  positionLerpSpeed: 0.85
-  rotationLerpSpeed: 0.85
-  scaleLerpSpeed: 0.85
-  timeCorrectionSpeed: 0.1
-  snapTimeThreshold: 0.3
-  syncPosition: 0
-  syncRotation: 7
-  syncScale: 7
-  syncVelocity: 0
-  syncAngularVelocity: 7
-  isPositionCompressed: 1
-  isRotationCompressed: 0
-  isScaleCompressed: 0
-  isVelocityCompressed: 1
-  isAngularVelocityCompressed: 0
-  automaticallyResetTime: 1
-  isSmoothingAuthorityChanges: 0
-  whenToUpdateTransform: 1
-  setVelocityInsteadOfPositionOnNonOwners: 0
-  useLocalTransformOnly: 0
-  maxPositionDifferenceForVelocitySyncing: 10
-  ownerChangeIndicator: 1
-  receivedStatesCounter: 0
 --- !u!114 &7289153599975524437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12616,6 +12564,7 @@ MonoBehaviour:
   gotchaUI: {fileID: 2880043797953944703}
   bustedUI: {fileID: 5611402075128784072}
   isBot: 0
+  doneDeactive: 0
 --- !u!114 &6630326361857483945
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12682,7 +12631,6 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 1090073656761589282}
-  - {fileID: 281718576190557907}
   - {fileID: 6630326361857483945}
   sceneViewId: 0
   InstantiationId: 0
@@ -12752,26 +12700,10 @@ MonoBehaviour:
   nameCanvas: {fileID: 8654863776338880908}
   barCanvas: {fileID: 6264994456555490015}
   playerNameText: {fileID: 2386455948271624773}
+  givenName: 
   caughtCount: 0
   catStunned: 0
   pauseMovement: 0
-  nameLists:
-  - Putra
-  - Putri
-  - Ichiro
-  - Yuuna
-  - Burhan
-  - Anisa
-  - Azhar
-  - Yuu
-  - Hiraku
-  - Samira
-  - Aparna
-  - Rachana
-  - Yuki
-  - Nikhil
-  - Bipin
-  - Prem
 --- !u!1 &7955344202809199671
 GameObject:
   m_ObjectHideFlags: 0

@@ -142,9 +142,9 @@ public class FloorEffect : MonoBehaviour
                     }
                 }else{
                     // bot related
-                    if(other.GetComponent<Robber>().isBot){
+                    if(other.CompareTag("Robber") && other.GetComponent<Robber>().isBot){
                         other.GetComponent<AIRobber>().SlowMovement(false);
-                    }else if(other.GetComponent<Police>().isBot){
+                    }else if(other.CompareTag("Police") && other.GetComponent<Police>().isBot){
                         other.GetComponent<AIPolice>().SlowMovement(false);
                     }
                 }

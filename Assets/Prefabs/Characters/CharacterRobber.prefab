@@ -6903,6 +6903,8 @@ MonoBehaviour:
   gotchaUI: {fileID: 545568405973904666}
   bustedUI: {fileID: 5379399102363120631}
   isBot: 0
+  doneDeactive: 0
+  isInvulnerable: 0
 --- !u!114 &6236526815953773368
 MonoBehaviour:
   m_ObjectHideFlags: 0

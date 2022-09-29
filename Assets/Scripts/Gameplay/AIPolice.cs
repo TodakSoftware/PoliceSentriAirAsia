@@ -24,27 +24,19 @@ public class AIPolice : MonoBehaviourPunCallbacks
     public Transform nameCanvas;
     public Transform barCanvas;
     public TextMeshProUGUI playerNameText;
+    public string givenName;
+
     [Header("Statistic")]
     public int caughtCount;
     [Header("Item Related")]
     public bool catStunned;
     public bool pauseMovement;
-    public List<string> nameLists = new List<string>();
 
     void Awake(){
         agent = GetComponent<PolyNavAgent>();
 
         // Set isBot
         GetComponent<Police>().isBot = true;
-
-        // Set Bot Name
-        
-        if(nameLists.Count > 0){
-            var ran = Random.Range(0, nameLists.Count);
-            playerNameText.text = nameLists[ran];
-        }else{
-            playerNameText.text = "Police" + photonView.OwnerActorNr;
-        }
 
         // Set PolyNav
         agent.map = GameObject.FindObjectOfType<PolyNav2D>();
@@ -71,15 +63,19 @@ public class AIPolice : MonoBehaviourPunCallbacks
         foreach(var r in GameManager.instance.robberSpawnpoints){
             randomGoToPositions.Add(r);
         }
+    }
 
+    void Start(){
         // Create Avatar
         CreateAvatarUI();
-        
     }
 
     void CreateAvatarUI(){
+        givenName = photonView.Owner.NickName;
+
+        playerNameText.text = photonView.Owner.NickName;
         var policeAvatar = Instantiate(UIManager.instance.gameUI.avatarBtnPrefab);
-        policeAvatar.GetComponent<Btn_Avatar>().SetupButton("Police", playerNameText.text, "P01", this.gameObject);
+        policeAvatar.GetComponent<Btn_Avatar>().SetupButton("Police", givenName, "P01", this.gameObject);
         policeAvatar.transform.SetParent(UIManager.instance.gameUI.avatarPoliceContent,false);
         UIManager.instance.gameUI.avatarBtnList.Add(policeAvatar.GetComponent<Btn_Avatar>());
     }
@@ -91,21 +87,21 @@ public class AIPolice : MonoBehaviourPunCallbacks
     }
 
     void Update(){
-        if(target != null){
-            if(target.CompareTag("Robber") && target.GetComponent<Robber>().isCaught){
-                target = null;
-            }
-            agent.SetDestination(target.position);
-        }
-
         if(isFalling || pauseMovement){
             agent.Stop();
         }
 
         HandleBotAnimation();
+    }
 
-        if(Input.GetKeyDown(KeyCode.K)){
-            StartCoroutine(BotFalling(3f));
+    void HandleTarget(){
+        if(target != null){
+            if(target.CompareTag("Robber") && target.GetComponent<Robber>().isCaught){
+                ClearTarget();
+            }else{
+                agent.SetDestination(target.position);
+            }
+            
         }
     }
 
@@ -131,6 +127,7 @@ public class AIPolice : MonoBehaviourPunCallbacks
         if(GameManager.instance.gameStarted && !GameManager.instance.gameEnded){
             if(GetClosestEnemy(targetTag) != null){
                 target = GetClosestEnemy(targetTag);
+                HandleTarget();
                 ClearRoamTarget();
             }else{
                 ClearTarget();

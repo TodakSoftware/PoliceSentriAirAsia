@@ -12768,6 +12768,7 @@ MonoBehaviour:
   gotchaUI: {fileID: 2880043797953944703}
   bustedUI: {fileID: 5611402075128784072}
   isBot: 0
+  doneDeactive: 0
 --- !u!114 &6630326361857483945
 MonoBehaviour:
   m_ObjectHideFlags: 0

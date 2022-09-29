@@ -50,6 +50,9 @@ public class GameManager : MonoBehaviourPunCallbacks
     public int playAgainCount;
     bool askForHelpActivated;
     bool doneSpawnBots;
+    [Header("Bot Related")]
+    public List<string> policeNames = new List<string>();
+    public List<string> robberNames = new List<string>();
 
 
     void Awake(){
@@ -109,10 +112,6 @@ public class GameManager : MonoBehaviourPunCallbacks
         UpdateTeamCount(); // Update Manual Select Role on 1st load
 
         SpawnAllMoneybag(); // Spawn moneybag
-
-        if(PhotonNetwork.IsMasterClient){
-            InvokeRepeating("ChosenBotToRescue", 0f, 30f);
-        }
         
     } // end Start
 
@@ -145,14 +144,12 @@ public class GameManager : MonoBehaviourPunCallbacks
             } */
         } // end gameStarted
 
-        if(currentStartGameCountdown <= 5 && !doneSpawnBots){
+        if(!gameEnded && currentStartGameCountdown <= 5 && !doneSpawnBots && GetAllPlayers().Count == (int)PhotonNetwork.CurrentRoom.CustomProperties["RealTotalPlayer"] && PhotonNetwork.CurrentRoom.CustomProperties["RealTotalPlayer"] != null){
             // Fill Bots
-            if(GetAllPlayers().Count == (int)PhotonNetwork.CurrentRoom.CustomProperties["RealTotalPlayer"] && PhotonNetwork.CurrentRoom.CustomProperties["RealTotalPlayer"] != null){
-                if(fillWithBots && PhotonNetwork.InRoom){
-                    if(PhotonNetwork.IsMasterClient){
-                        StartCoroutine(SpawnBots());
-                        doneSpawnBots = true;
-                    }
+            if(fillWithBots && PhotonNetwork.InRoom){
+                if(PhotonNetwork.IsMasterClient){
+                    StartCoroutine(SpawnBots());
+                    doneSpawnBots = true;
                 }
             }
         }
@@ -206,7 +203,16 @@ public class GameManager : MonoBehaviourPunCallbacks
             if(polDif >= 1){
                 for(int i = 0; i < 1; i++){
                     yield return new WaitForSeconds(Random.Range(0f, 1f));
-                    GameObject player = PhotonNetwork.Instantiate(NetworkManager.GetPhotonPrefab("Characters", "AIPolice"), GameManager.instance.waitingSpawnpoint.position + new Vector3(Random.Range(0,3f), Random.Range(0,3f), 0f), Quaternion.identity);
+                    GameObject player = PhotonNetwork.InstantiateRoomObject(NetworkManager.GetPhotonPrefab("Characters", "AIPolice"), GameManager.instance.waitingSpawnpoint.position + new Vector3(Random.Range(0,3f), Random.Range(0,3f), 0f), Quaternion.identity);
+                    
+                    if(policeNames.Count > 0){
+                        var ran = Random.Range(0, policeNames.Count);
+                        player.GetPhotonView().Owner.NickName = policeNames[ran];
+                        /* player.GetComponent<AIPolice>().givenName = policeNames[ran];
+                        player.GetComponent<AIPolice>().playerNameText.text = policeNames[ran]; */
+                    }else{
+                        player.GetComponent<AIPolice>().playerNameText.text = "Police" + photonView.OwnerActorNr;
+                    }
                 }
             }
             
@@ -222,6 +228,14 @@ public class GameManager : MonoBehaviourPunCallbacks
                     yield return new WaitForSeconds(Random.Range(0f, 1f));
                     GameObject player = PhotonNetwork.InstantiateRoomObject(NetworkManager.GetPhotonPrefab("Characters", "AIRobber"), GameManager.instance.waitingSpawnpoint.position + new Vector3(Random.Range(0,3f), Random.Range(0,3f), 0f), Quaternion.identity);
                     
+                    if(robberNames.Count > 0){
+                        var ran = Random.Range(0, robberNames.Count);
+                        player.GetPhotonView().Owner.NickName = policeNames[ran];/* 
+                        player.GetComponent<AIRobber>().givenName = robberNames[ran];
+                        player.GetComponent<AIRobber>().playerNameText.text = robberNames[ran]; */
+                    }else{
+                        player.GetComponent<AIRobber>().playerNameText.text = "Robber" + photonView.OwnerActorNr;
+                    }
                 }
             } 
         }
@@ -304,6 +318,12 @@ public class GameManager : MonoBehaviourPunCallbacks
                 print("Redirect Everybody To Their Position");
                 yield return new WaitForSeconds(1f); // delay gameStart = true
                 gameStarted = true;
+                
+                if(PhotonNetwork.IsMasterClient){ 
+                    InvokeRepeating("ChosenBotToRescue", 0f, 15f);
+
+                    PhotonNetwork.CurrentRoom.IsOpen = false;
+                }
             } // end if(currentStartGameCountdown <= 0)
         }
         
@@ -386,6 +406,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 #endregion //end START GAME RELATED
 
 #region MID GAME RELATED
+    [PunRPC]
     public void UpdateAvatarsUI(){
         foreach(var btn in UIManager.instance.gameUI.avatarBtnList){
             /* foreach(Player player in GameManager.GetAllNetworkPlayers()){
@@ -416,6 +437,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
     } // end UpdateAvatarsUI()
 
+    [PunRPC]
     public void CheckWinningCondition(){
         if(!gameEnded){
             UpdateAvatarsUI();
@@ -440,17 +462,17 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         if(!donePopupWinUI){
             if(policeWin){
-                if(ownedPlayerGO.GetComponent<PlayerController>().playerTeam == E_Team.POLICE){
+                if(ownedPlayerGO != null && ownedPlayerGO.GetComponent<PlayerController>().playerTeam == E_Team.POLICE){
                     StartCoroutine(UIManager.instance.PopupWinUI("Police"));
-                }else if(ownedPlayerGO.GetComponent<PlayerController>().playerTeam == E_Team.ROBBER){
+                }else if(ownedPlayerGO != null && ownedPlayerGO.GetComponent<PlayerController>().playerTeam == E_Team.ROBBER){
                     StartCoroutine(UIManager.instance.PopupLoseUI("Robber"));
                 }
 
                 UIManager.instance.gameUI.moneyTimerText.text = "<color=blue>Police Win!</color>";
             }else{
-                if(ownedPlayerGO.GetComponent<PlayerController>().playerTeam == E_Team.POLICE){
+                if(ownedPlayerGO != null && ownedPlayerGO.GetComponent<PlayerController>().playerTeam == E_Team.POLICE){
                     StartCoroutine(UIManager.instance.PopupLoseUI("Police"));
-                }else if(ownedPlayerGO.GetComponent<PlayerController>().playerTeam == E_Team.ROBBER){
+                }else if(ownedPlayerGO != null && ownedPlayerGO.GetComponent<PlayerController>().playerTeam == E_Team.ROBBER){
                     StartCoroutine(UIManager.instance.PopupWinUI("Robber"));
                 }
 
@@ -580,8 +602,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     } // end GetAllPlayersRobber
 
     public void ChosenBotToRescue(){ // Select 1 bot who is !caught to rescue teammate
-    
-        if(GameManager.instance.gameStarted && GameManager.instance.gameEnded){
+        print("Ask for teammate help!");
+        if(GameManager.instance.gameStarted && !GameManager.instance.gameEnded){
             List<GameObject> botRobber = new List<GameObject>();
             botRobber.Clear();
 
@@ -683,7 +705,7 @@ public class GameManager : MonoBehaviourPunCallbacks
                 caughtCount += 1;
             }
         } // end foreach
-        ChosenBotToRescue();
+        
         return caughtCount;
     }
 

@@ -25,25 +25,18 @@ public class AIRobber : MonoBehaviourPunCallbacks
     public Transform nameCanvas;
     public Transform barCanvas;
     public TextMeshProUGUI playerNameText;
+    public string givenName;
+
     [Header("Statistic")]
     public int releaseCount;
     [Header("Item Related")]
     public bool catStunned;
-    public List<string> nameLists = new List<string>();
 
     void Awake(){
         agent = GetComponent<PolyNavAgent>();
 
         // Set isBot
         GetComponent<Robber>().isBot = true;
-
-        // Set Bot Name
-        if(nameLists.Count > 0){
-            var ran = Random.Range(0, nameLists.Count);
-            playerNameText.text = nameLists[ran];
-        }else{
-            playerNameText.text = "Robber" + photonView.OwnerActorNr;
-        }
         
 
         // Set PolyNav
@@ -53,38 +46,32 @@ public class AIRobber : MonoBehaviourPunCallbacks
         foreach(var p in GameManager.instance.moneybagSpawnpoints){
             randomGoToPositions.Add(p);
         }
+    }
 
+    void Start(){
         // Create Avatar UI
         CreateAvatarUI();
     }
 
     void CreateAvatarUI(){
+        givenName = photonView.Owner.NickName;
+
+        playerNameText.text = photonView.Owner.NickName;
         var robberAvatar = Instantiate(UIManager.instance.gameUI.avatarBtnPrefab);
-        robberAvatar.GetComponent<Btn_Avatar>().SetupButton("Robber", playerNameText.text, "R01", this.gameObject);
+        robberAvatar.GetComponent<Btn_Avatar>().SetupButton("Robber", givenName, "R01", this.gameObject);
         robberAvatar.transform.SetParent(UIManager.instance.gameUI.avatarRobberContent,false);
         UIManager.instance.gameUI.avatarBtnList.Add(robberAvatar.GetComponent<Btn_Avatar>());
     }
 
     public void InitBot(){
-        InvokeRepeating("CollectMoneybag", 0f, .5f);
-        InvokeRepeating("AvoidPoliceNearby", 0f, .02f);
+        InvokeRepeating("CollectMoneybag", 0f, .8f);
+        InvokeRepeating("AvoidPoliceNearby", 0f, .8f);
         InvokeRepeating("UpdateRoaming", 0f, .8f);
         InvokeRepeating("InvokeDash", 4f, 7f);
     }
 
     void Update(){
-        if(target != null){
-            if(target.CompareTag("MoneyBag")){
-                if(!GameManager.instance.moneyBagOccupied){
-                    agent.SetDestination(target.position);
-                }else{
-                    agent.Stop();
-                    ClearTarget();
-                }
-            }else{
-                agent.SetDestination(target.position);
-            }
-        }
+        
 
         if(isRescuing && agent.botDestinationReach && !GetComponent<Robber>().isCaught){ // if we in rescue mode && arrived, 
             // wait 5s then isRescuing = false
@@ -147,10 +134,26 @@ public class AIRobber : MonoBehaviourPunCallbacks
         }
     }
 
+    void HandleTarget(){
+        if(target != null){
+            if(target.CompareTag("MoneyBag")){
+                if(!GameManager.instance.moneyBagOccupied){
+                    agent.SetDestination(target.position);
+                }else{
+                    agent.Stop();
+                    ClearTarget();
+                }
+            }else{
+                agent.SetDestination(target.position);
+            }
+        }
+    }
+
     void CollectMoneybag(){
         if(GameManager.instance.gameStarted && !GameManager.instance.gameEnded){
             if(GetClosestMoneybag() != null && !GameManager.instance.moneyBagOccupied && GetClosestEnemy("Police") == null && !GetComponent<Robber>().isCaught && !isRescuing){
                 target = GetClosestMoneybag();
+                HandleTarget();
                 ClearRoamTarget();
             }else{
                 //print("No Moneybag");
@@ -176,12 +179,14 @@ public class AIRobber : MonoBehaviourPunCallbacks
     public void RescueTeammate(){
         isRescuing = true;
         target = GetNearJailPosition();
+        HandleTarget();
         ClearRoamTarget();
     }
 
     public void GoInsidePrison(){ // go to specific location inside prison to be saved
         if(GetComponent<Robber>().isCaught){
             target = GetNearInsideJailPosition();
+            HandleTarget();
             ClearRoamTarget();
         }
     }

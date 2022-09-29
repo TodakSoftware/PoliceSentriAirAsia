@@ -9,12 +9,23 @@ public class Police : MonoBehaviourPunCallbacks
     [Header("Caught Related")]
     public GameObject gotchaUI;
     public GameObject bustedUI;
-    public bool isBot;
+    public bool isBot, doneDeactive;
+
+    void Update(){
+        if(isBot && GameManager.instance.gameEnded && !doneDeactive){
+            Invoke("DisableWhenEndgame", 8f);
+            doneDeactive = true;
+        }  
+    }
+
+    void DisableWhenEndgame(){
+        this.gameObject.SetActive(false); // Deactive gameobject when end game
+    }
     
     void OnTriggerEnter2D(Collider2D other){
         if(!isBot){
             if(other.CompareTag("Robber") && GameManager.instance.gameStarted && !GameManager.instance.gameEnded && photonView.IsMine){
-                if(other.gameObject.GetComponent<Robber>().isCaught == false){ // if that robber is !caught, set him to HasBeenCaught
+                if(other.gameObject.GetComponent<Robber>().isCaught == false && !other.gameObject.GetComponent<Robber>().isInvulnerable){ // if that robber is !caught, set him to HasBeenCaught
                     StartCoroutine(GetComponent<PlayerController>().PauseMovement(.5f));
 
                     other.gameObject.GetComponent<Robber>().photonView.RPC("HasBeenCaught", other.gameObject.GetPhotonView().Owner, GetComponent<PlayerController>().playerNameText.text.ToString());

@@ -26,7 +26,8 @@ public class Robber : MonoBehaviourPunCallbacks
     public GameObject bustedUI;
 
     public Player savior;
-    public bool isBot;
+    public bool isBot, doneDeactive;
+    public bool isInvulnerable;
 
     void OnTriggerEnter2D(Collider2D other) {
             // If we(are in jail), collide with other non caught robber, onRelease start
@@ -78,8 +79,15 @@ public class Robber : MonoBehaviourPunCallbacks
             }
         }
 
-            
+        if(isBot && GameManager.instance.gameEnded && !doneDeactive){
+            Invoke("DisableWhenEndgame", 8f);
+            doneDeactive = true;
+        }   
     } // end Update()
+
+    void DisableWhenEndgame(){
+        this.gameObject.SetActive(false); // Deactive gameobject when end game
+    }
     
     public IEnumerator PopupGotchaBustedUI(bool gotcha){
         if(gotcha){
@@ -220,9 +228,14 @@ public class Robber : MonoBehaviourPunCallbacks
             photonView.RPC("DisplayMoneybag", RpcTarget.All, false); // Hide moneybag
             photonView.RPC("DisableCollider", RpcTarget.All, false); // Enable Collider
             photonView.RPC("EnableJailCollider", RpcTarget.All, true); // Enable Jail COllider for released
+
+            GameManager.instance.photonView.RPC("UpdateAvatarsUI", RpcTarget.AllBuffered);
+            GameManager.instance.photonView.RPC("CheckWinningCondition", RpcTarget.AllBuffered);
         }
 
         if(photonView.IsMine && !isBot){
+            GetComponent<PlayerAbilities>().ResetItem(); // Reset Item
+            
             Hashtable updateData = new Hashtable();
             if(isHoldMoneybag){ // if we are holding moneybag
                 updateData.Add("PlayerHoldMoneybag", false); // Set PlayerHoldMoneybag -> FALSE *will auto respawn new moneybag
@@ -289,7 +302,7 @@ public class Robber : MonoBehaviourPunCallbacks
         transform.position = teammatePosition;
         if(photonView.IsMine){
             photonView.RPC("EnableJailCollider", RpcTarget.All, false); // Enable Jail COllider for released
-            
+            photonView.RPC("InvulnerableEffect", RpcTarget.All, 3f);
         }
     } // end RedirectToJailed()
 
@@ -318,6 +331,7 @@ public class Robber : MonoBehaviourPunCallbacks
         PhotonNetwork.LocalPlayer.SetCustomProperties(updateData);
 
         print("Get out of jailed with lockpick");
+        
 
         switch(jailArea){
             case E_EscapeArea.TOP:
@@ -338,6 +352,7 @@ public class Robber : MonoBehaviourPunCallbacks
         }
 
         photonView.RPC("EnableJailCollider", RpcTarget.All, false); // Enable Jail COllider for released
+        photonView.RPC("InvulnerableEffect", RpcTarget.All, 3f);
         isInPrison = false;
         done = false;
         readyToGoToEscape = false;
@@ -370,6 +385,72 @@ public class Robber : MonoBehaviourPunCallbacks
             }
         }
     } // end DisableCollider()
+
+    [PunRPC]
+    public IEnumerator InvulnerableEffect(float duration){  // Used by robber against police
+        //if(photonView.IsMine){
+            var spriteTransparent = transform.GetChild(0).GetComponent<SpriteRenderer>().color;
+            isInvulnerable = true;
+            spriteTransparent.a = .5f;
+            transform.GetChild(0).GetComponent<SpriteRenderer>().color = spriteTransparent;
+            IgnorePlayerCollision(true);
+
+            yield return new WaitForSeconds(duration); // wait before reset
+
+            isInvulnerable = false;
+            IgnorePlayerCollision(false);
+            spriteTransparent.a = 1f;
+            transform.GetChild(0).GetComponent<SpriteRenderer>().color = spriteTransparent;
+        //}
+    } // End Invulnerable
+
+    [PunRPC]
+    public void EnableInvulnerable(string condition){
+        if(condition == "Prop Undercover"){
+            var spriteTransparent = GetComponent<PlayerAbilities>().propUndercoverGO.GetComponent<SpriteRenderer>().color;
+            isInvulnerable = true;
+            spriteTransparent.a = .5f;
+            GetComponent<PlayerAbilities>().propUndercoverGO.GetComponent<SpriteRenderer>().color = spriteTransparent;
+            IgnorePlayerCollision(true);
+            //print("E Dari Prop");
+        }else{
+            var spriteTransparent = transform.GetChild(0).GetComponent<SpriteRenderer>().color;
+            isInvulnerable = true;
+            spriteTransparent.a = .5f;
+            transform.GetChild(0).GetComponent<SpriteRenderer>().color = spriteTransparent;
+            IgnorePlayerCollision(true);
+            //print("E Dari Player");
+        }
+    }
+
+    [PunRPC]
+    public void DisableInvulnerable(string condition){
+        if(condition == "Prop Undercover"){
+            var spriteTransparent = GetComponent<PlayerAbilities>().propUndercoverGO.GetComponent<SpriteRenderer>().color;
+            isInvulnerable = false;
+            IgnorePlayerCollision(false);
+            spriteTransparent.a = 1f;
+            GetComponent<PlayerAbilities>().propUndercoverGO.GetComponent<SpriteRenderer>().color = spriteTransparent;
+            //print("D Dari Prop");
+        }else{
+            var spriteTransparent = transform.GetChild(0).GetComponent<SpriteRenderer>().color;
+            isInvulnerable = false;
+            IgnorePlayerCollision(false);
+            spriteTransparent.a = 1f;
+            transform.GetChild(0).GetComponent<SpriteRenderer>().color = spriteTransparent;
+            //print("D Dari Player");
+        }
+    }
+
+    [PunRPC]
+    public void IgnorePlayerCollision(bool ignore){
+        if(photonView.IsMine){
+            if(ignore)
+                Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Robber"), LayerMask.NameToLayer("Police"), true);
+            else
+                Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Robber"), LayerMask.NameToLayer("Police"), false);
+        } // end isMine
+    }
 #endregion // end region COLLIDER RELATED
 
 }

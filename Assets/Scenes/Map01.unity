@@ -29113,7 +29113,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7777778, y: 1}
+    m_SensorSize: {x: 1.6, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -90595,6 +90595,170 @@ PrefabInstance:
       propertyPath: endScreenRedirectText
       value: 
       objectReference: {fileID: 88109619}
+    - target: {fileID: 6075900687843676875, guid: c69b0b4d161fdaf4bb1423f3df2ec150, type: 3}
+      propertyPath: policeNames.Array.size
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 6075900687843676875, guid: c69b0b4d161fdaf4bb1423f3df2ec150, type: 3}
+      propertyPath: robberNames.Array.size
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 6075900687843676875, guid: c69b0b4d161fdaf4bb1423f3df2ec150, type: 3}
+      propertyPath: policeNames.Array.data[0]
+      value: Putra
+      objectReference: {fileID: 0}
+    - target: {fileID: 6075900687843676875, guid: c69b0b4d161fdaf4bb1423f3df2ec150, type: 3}
+      propertyPath: policeNames.Array.data[1]
+      value: Putri
+      objectReference: {fileID: 0}
+    - target: {fileID: 6075900687843676875, guid: c69b0b4d161fdaf4bb1423f3df2ec150, type: 3}
+      propertyPath: policeNames.Array.data[2]
+      value: Ichiro
+      objectReference: {fileID: 0}
+    - target: {fileID: 6075900687843676875, guid: c69b0b4d161fdaf4bb1423f3df2ec150, type: 3}
+      propertyPath: policeNames.Array.data[3]
+      value: Yuuna
+      objectReference: {fileID: 0}
+    - target: {fileID: 6075900687843676875, guid: c69b0b4d161fdaf4bb1423f3df2ec150, type: 3}
+      propertyPath: policeNames.Array.data[4]
+      value: Burhan
+      objectReference: {fileID: 0}
+    - target: {fileID: 6075900687843676875, guid: c69b0b4d161fdaf4bb1423f3df2ec150, type: 3}
+      propertyPath: policeNames.Array.data[5]
+      value: Anisa
+      objectReference: {fileID: 0}
+    - target: {fileID: 6075900687843676875, guid: c69b0b4d161fdaf4bb1423f3df2ec150, type: 3}
+      propertyPath: policeNames.Array.data[6]
+      value: Azhar
+      objectReference: {fileID: 0}
+    - target: {fileID: 6075900687843676875, guid: c69b0b4d161fdaf4bb1423f3df2ec150, type: 3}
+      propertyPath: policeNames.Array.data[7]
+      value: Yuu
+      objectReference: {fileID: 0}
+    - target: {fileID: 6075900687843676875, guid: c69b0b4d161fdaf4bb1423f3df2ec150, type: 3}
+      propertyPath: policeNames.Array.data[8]
+      value: Hiraku
+      objectReference: {fileID: 0}
+    - target: {fileID: 6075900687843676875, guid: c69b0b4d161fdaf4bb1423f3df2ec150, type: 3}
+      propertyPath: policeNames.Array.data[9]
+      value: Samira
+      objectReference: {fileID: 0}
+    - target: {fileID: 6075900687843676875, guid: c69b0b4d161fdaf4bb1423f3df2ec150, type: 3}
+      propertyPath: robberNames.Array.data[0]
+      value: Aang
+      objectReference: {fileID: 0}
+    - target: {fileID: 6075900687843676875, guid: c69b0b4d161fdaf4bb1423f3df2ec150, type: 3}
+      propertyPath: robberNames.Array.data[1]
+      value: Kenji
+      objectReference: {fileID: 0}
+    - target: {fileID: 6075900687843676875, guid: c69b0b4d161fdaf4bb1423f3df2ec150, type: 3}
+      propertyPath: robberNames.Array.data[2]
+      value: Mayur
+      objectReference: {fileID: 0}
+    - target: {fileID: 6075900687843676875, guid: c69b0b4d161fdaf4bb1423f3df2ec150, type: 3}
+      propertyPath: robberNames.Array.data[3]
+      value: Naoko
+      objectReference: {fileID: 0}
+    - target: {fileID: 6075900687843676875, guid: c69b0b4d161fdaf4bb1423f3df2ec150, type: 3}
+      propertyPath: robberNames.Array.data[4]
+      value: Amit
+      objectReference: {fileID: 0}
+    - target: {fileID: 6075900687843676875, guid: c69b0b4d161fdaf4bb1423f3df2ec150, type: 3}
+      propertyPath: robberNames.Array.data[5]
+      value: Chao
+      objectReference: {fileID: 0}
+    - target: {fileID: 6075900687843676875, guid: c69b0b4d161fdaf4bb1423f3df2ec150, type: 3}
+      propertyPath: robberNames.Array.data[6]
+      value: Kenta
+      objectReference: {fileID: 0}
+    - target: {fileID: 6075900687843676875, guid: c69b0b4d161fdaf4bb1423f3df2ec150, type: 3}
+      propertyPath: robberNames.Array.data[7]
+      value: Neeraj
+      objectReference: {fileID: 0}
+    - target: {fileID: 6075900687843676875, guid: c69b0b4d161fdaf4bb1423f3df2ec150, type: 3}
+      propertyPath: robberNames.Array.data[8]
+      value: Shivali
+      objectReference: {fileID: 0}
+    - target: {fileID: 6075900687843676875, guid: c69b0b4d161fdaf4bb1423f3df2ec150, type: 3}
+      propertyPath: robberNames.Array.data[9]
+      value: Sameer
+      objectReference: {fileID: 0}
+    - target: {fileID: 6075900687843676875, guid: c69b0b4d161fdaf4bb1423f3df2ec150, type: 3}
+      propertyPath: policeNames.Array.data[10]
+      value: Aparna
+      objectReference: {fileID: 0}
+    - target: {fileID: 6075900687843676875, guid: c69b0b4d161fdaf4bb1423f3df2ec150, type: 3}
+      propertyPath: policeNames.Array.data[11]
+      value: Rachana
+      objectReference: {fileID: 0}
+    - target: {fileID: 6075900687843676875, guid: c69b0b4d161fdaf4bb1423f3df2ec150, type: 3}
+      propertyPath: policeNames.Array.data[12]
+      value: Yuki
+      objectReference: {fileID: 0}
+    - target: {fileID: 6075900687843676875, guid: c69b0b4d161fdaf4bb1423f3df2ec150, type: 3}
+      propertyPath: policeNames.Array.data[13]
+      value: Nikhil
+      objectReference: {fileID: 0}
+    - target: {fileID: 6075900687843676875, guid: c69b0b4d161fdaf4bb1423f3df2ec150, type: 3}
+      propertyPath: policeNames.Array.data[14]
+      value: Bipin
+      objectReference: {fileID: 0}
+    - target: {fileID: 6075900687843676875, guid: c69b0b4d161fdaf4bb1423f3df2ec150, type: 3}
+      propertyPath: policeNames.Array.data[15]
+      value: Prem
+      objectReference: {fileID: 0}
+    - target: {fileID: 6075900687843676875, guid: c69b0b4d161fdaf4bb1423f3df2ec150, type: 3}
+      propertyPath: robberNames.Array.data[10]
+      value: Usman
+      objectReference: {fileID: 0}
+    - target: {fileID: 6075900687843676875, guid: c69b0b4d161fdaf4bb1423f3df2ec150, type: 3}
+      propertyPath: robberNames.Array.data[11]
+      value: Anima
+      objectReference: {fileID: 0}
+    - target: {fileID: 6075900687843676875, guid: c69b0b4d161fdaf4bb1423f3df2ec150, type: 3}
+      propertyPath: robberNames.Array.data[12]
+      value: Ling
+      objectReference: {fileID: 0}
+    - target: {fileID: 6075900687843676875, guid: c69b0b4d161fdaf4bb1423f3df2ec150, type: 3}
+      propertyPath: robberNames.Array.data[13]
+      value: Cahaya
+      objectReference: {fileID: 0}
+    - target: {fileID: 6075900687843676875, guid: c69b0b4d161fdaf4bb1423f3df2ec150, type: 3}
+      propertyPath: robberNames.Array.data[14]
+      value: Elora
+      objectReference: {fileID: 0}
+    - target: {fileID: 6075900687843676875, guid: c69b0b4d161fdaf4bb1423f3df2ec150, type: 3}
+      propertyPath: robberNames.Array.data[15]
+      value: Cinta
+      objectReference: {fileID: 0}
+    - target: {fileID: 6075900687843676875, guid: c69b0b4d161fdaf4bb1423f3df2ec150, type: 3}
+      propertyPath: robberNames.Array.data[16]
+      value: Zhen
+      objectReference: {fileID: 0}
+    - target: {fileID: 6075900687843676875, guid: c69b0b4d161fdaf4bb1423f3df2ec150, type: 3}
+      propertyPath: robberNames.Array.data[17]
+      value: Vesper
+      objectReference: {fileID: 0}
+    - target: {fileID: 6075900687843676875, guid: c69b0b4d161fdaf4bb1423f3df2ec150, type: 3}
+      propertyPath: robberNames.Array.data[18]
+      value: Annisa
+      objectReference: {fileID: 0}
+    - target: {fileID: 6075900687843676875, guid: c69b0b4d161fdaf4bb1423f3df2ec150, type: 3}
+      propertyPath: robberNames.Array.data[19]
+      value: Agus
+      objectReference: {fileID: 0}
+    - target: {fileID: 6075900687843676875, guid: c69b0b4d161fdaf4bb1423f3df2ec150, type: 3}
+      propertyPath: robberNames.Array.data[20]
+      value: Dilbert
+      objectReference: {fileID: 0}
+    - target: {fileID: 6075900687843676875, guid: c69b0b4d161fdaf4bb1423f3df2ec150, type: 3}
+      propertyPath: robberNames.Array.data[21]
+      value: Bruno
+      objectReference: {fileID: 0}
+    - target: {fileID: 6075900687843676875, guid: c69b0b4d161fdaf4bb1423f3df2ec150, type: 3}
+      propertyPath: robberNames.Array.data[22]
+      value: Shania
+      objectReference: {fileID: 0}
     - target: {fileID: 6075900687843676875, guid: c69b0b4d161fdaf4bb1423f3df2ec150, type: 3}
       propertyPath: policeSpawnpoints.Array.size
       value: 10

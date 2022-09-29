@@ -6633,12 +6633,11 @@ GameObject:
   - component: {fileID: 4873863652774326897}
   - component: {fileID: 5574523862193461057}
   - component: {fileID: 6557749845414040283}
-  - component: {fileID: 47573947206781100}
   - component: {fileID: 317128564149766855}
   - component: {fileID: 4147937179886122447}
   - component: {fileID: -700204878920868531}
   - component: {fileID: 1845321719}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: AIRobber
   m_TagString: Robber
   m_Icon: {fileID: 0}
@@ -6760,6 +6759,8 @@ MonoBehaviour:
   gotchaUI: {fileID: 545568405973904666}
   bustedUI: {fileID: 5379399102363120631}
   isBot: 0
+  doneDeactive: 0
+  isInvulnerable: 0
 --- !u!114 &6557749845414040283
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6776,57 +6777,6 @@ MonoBehaviour:
   m_SynchronizeAngularVelocity: 0
   m_TeleportEnabled: 1
   m_TeleportIfDistanceGreaterThan: 3
---- !u!114 &47573947206781100
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4873863652774326898}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8069ffa6ab7df7340ad5ce0c3da47526, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interpolationBackTime: 0.12
-  extrapolationMode: 1
-  useExtrapolationTimeLimit: 1
-  extrapolationTimeLimit: 5
-  useExtrapolationDistanceLimit: 0
-  extrapolationDistanceLimit: 20
-  sendPositionThreshold: 0
-  sendRotationThreshold: 0
-  sendScaleThreshold: 0
-  sendVelocityThreshold: 0
-  sendAngularVelocityThreshold: 0
-  receivedPositionThreshold: 0
-  receivedRotationThreshold: 0
-  snapPositionThreshold: 0
-  snapRotationThreshold: 0
-  snapScaleThreshold: 0
-  positionLerpSpeed: 0.85
-  rotationLerpSpeed: 0.85
-  scaleLerpSpeed: 0.85
-  timeCorrectionSpeed: 0.1
-  snapTimeThreshold: 0.3
-  syncPosition: 0
-  syncRotation: 7
-  syncScale: 7
-  syncVelocity: 0
-  syncAngularVelocity: 7
-  isPositionCompressed: 1
-  isRotationCompressed: 0
-  isScaleCompressed: 0
-  isVelocityCompressed: 1
-  isAngularVelocityCompressed: 0
-  automaticallyResetTime: 1
-  isSmoothingAuthorityChanges: 0
-  whenToUpdateTransform: 1
-  setVelocityInsteadOfPositionOnNonOwners: 0
-  useLocalTransformOnly: 0
-  maxPositionDifferenceForVelocitySyncing: 10
-  ownerChangeIndicator: 1
-  receivedStatesCounter: 0
 --- !u!114 &317128564149766855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6893,7 +6843,6 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 6557749845414040283}
-  - {fileID: 47573947206781100}
   - {fileID: 317128564149766855}
   sceneViewId: 0
   InstantiationId: 0
@@ -6924,32 +6873,9 @@ MonoBehaviour:
   nameCanvas: {fileID: 6185763303961495079}
   barCanvas: {fileID: 8878218910988412276}
   playerNameText: {fileID: 926082661805428206}
+  givenName: 
   releaseCount: 0
   catStunned: 0
-  nameLists:
-  - Aang
-  - Kenji
-  - Mayur
-  - Naoko
-  - Amit
-  - Chao
-  - Kenta
-  - Neeraj
-  - Shivali
-  - Sameer
-  - Usman
-  - Anima
-  - Ling
-  - Cahaya
-  - Elora
-  - Cinta
-  - Zhen
-  - Vesper
-  - Annisa
-  - Agus
-  - Dilbert
-  - Bruno
-  - Shania
 --- !u!1 &4873863652798532647
 GameObject:
   m_ObjectHideFlags: 0
