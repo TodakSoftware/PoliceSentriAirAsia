@@ -79,15 +79,17 @@ public class PlayerAbilities : MonoBehaviourPunCallbacks
                 }
             #endif
 
-            
+            if(gameObject.CompareTag("Robber") && hasItem && GetComponent<Robber>().isCaught){
+                ResetItem();
+            }
 
             //  -------------------------------- Item Radar START ------------------------------------------------
             if(radarActivated){
                 if(radarTimer <= 0){
                     radarTimer = 0;
-                    if(playerController.cam2D.m_Lens.OrthographicSize > 7f){
+                    if(playerController.cam2D.m_Lens.OrthographicSize > 9f){
                         playerController.cam2D.m_Lens.OrthographicSize -= Time.deltaTime * 20f;
-                    }else if(playerController.cam2D.m_Lens.OrthographicSize <= 7f){
+                    }else if(playerController.cam2D.m_Lens.OrthographicSize <= 9f){
                         radarActivated = false;
                     }
                 }else{
@@ -320,7 +322,7 @@ public class PlayerAbilities : MonoBehaviourPunCallbacks
             hasLockpick = false;
         }
 
-        //aimPoint.transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = false;
+        playerController.aimPoint.transform.GetChild(0).gameObject.SetActive(false);
         btnItem.SetActive(false);
     } // end RestItem
 #endregion

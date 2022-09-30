@@ -605,6 +605,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     } // end UpdateTotalFindGame
 
     public void PlayOnlineGame(){
+        findGameAutoStart = SOManager.instance.gameSettings.gameMode[gameModeIndex].findGameAutoStart;
         instantCreateFindGame = GetRandomBool();
         autoStartCreateGame = false;
 

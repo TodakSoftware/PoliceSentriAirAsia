@@ -49,10 +49,10 @@ public class FloorEffect : MonoBehaviour
                         }
                     }else{
                         // bot slow movement
-                        if(other.CompareTag("Robber") && other.GetComponent<Robber>().isBot){
-                            other.GetComponent<AIRobber>().SlowMovement(true);
-                        }else if(other.CompareTag("Police") && other.GetComponent<Police>().isBot){
-                            other.GetComponent<AIPolice>().SlowMovement(true);
+                        if(other.CompareTag("Robber") && other.GetComponent<Robber>().isBot && !other.GetComponent<AIRobber>().isSlow){
+                            StartCoroutine(other.GetComponent<AIRobber>().SlowMovement());
+                        }else if(other.CompareTag("Police") && other.GetComponent<Police>().isBot && !other.GetComponent<AIPolice>().isSlow){
+                            StartCoroutine(other.GetComponent<AIPolice>().SlowMovement());
                         }
                     }
                 break;
@@ -142,11 +142,7 @@ public class FloorEffect : MonoBehaviour
                     }
                 }else{
                     // bot related
-                    if(other.CompareTag("Robber") && other.GetComponent<Robber>().isBot){
-                        other.GetComponent<AIRobber>().SlowMovement(false);
-                    }else if(other.CompareTag("Police") && other.GetComponent<Police>().isBot){
-                        other.GetComponent<AIPolice>().SlowMovement(false);
-                    }
+                    
                 }
                 break;
 

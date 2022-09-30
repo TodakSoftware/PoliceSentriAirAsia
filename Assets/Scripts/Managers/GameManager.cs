@@ -144,7 +144,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             } */
         } // end gameStarted
 
-        if(!gameEnded && currentStartGameCountdown <= 5 && !doneSpawnBots && GetAllPlayers().Count == (int)PhotonNetwork.CurrentRoom.CustomProperties["RealTotalPlayer"] && PhotonNetwork.CurrentRoom.CustomProperties["RealTotalPlayer"] != null){
+        if(!gameEnded && currentStartGameCountdown <= 8 && !doneSpawnBots && GetAllPlayers().Count == (int)PhotonNetwork.CurrentRoom.CustomProperties["RealTotalPlayer"] && PhotonNetwork.CurrentRoom.CustomProperties["RealTotalPlayer"] != null){
             // Fill Bots
             if(fillWithBots && PhotonNetwork.InRoom){
                 if(PhotonNetwork.IsMasterClient){
@@ -208,8 +208,6 @@ public class GameManager : MonoBehaviourPunCallbacks
                     if(policeNames.Count > 0){
                         var ran = Random.Range(0, policeNames.Count);
                         player.GetPhotonView().Owner.NickName = policeNames[ran];
-                        /* player.GetComponent<AIPolice>().givenName = policeNames[ran];
-                        player.GetComponent<AIPolice>().playerNameText.text = policeNames[ran]; */
                     }else{
                         player.GetComponent<AIPolice>().playerNameText.text = "Police" + photonView.OwnerActorNr;
                     }
@@ -230,9 +228,7 @@ public class GameManager : MonoBehaviourPunCallbacks
                     
                     if(robberNames.Count > 0){
                         var ran = Random.Range(0, robberNames.Count);
-                        player.GetPhotonView().Owner.NickName = policeNames[ran];/* 
-                        player.GetComponent<AIRobber>().givenName = robberNames[ran];
-                        player.GetComponent<AIRobber>().playerNameText.text = robberNames[ran]; */
+                        player.GetPhotonView().Owner.NickName = robberNames[ran];
                     }else{
                         player.GetComponent<AIRobber>().playerNameText.text = "Robber" + photonView.OwnerActorNr;
                     }

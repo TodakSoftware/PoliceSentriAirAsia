@@ -352,6 +352,19 @@ public class PlayerController : MonoBehaviourPunCallbacks
             moveDir = Vector3.zero;
             rb.velocity = Vector2.zero;
             yield return new WaitForSeconds(fallDuration);
+            // If we prop undercover
+            if(GetComponent<PlayerAbilities>().propUndercover){
+                GetComponent<PlayerAbilities>().propUndercoverGO.GetComponent<PropUndercover>().photonView.RPC("PropsToNormal", RpcTarget.All);
+                GetComponent<PlayerAbilities>().propUndercover = false;
+            }
+
+            if(GetComponent<PlayerAbilities>().onUndercover){
+                GetComponent<PlayerAbilities>().undercoverTimer = 0;
+                GetComponent<PlayerAbilities>().onUndercover = false;
+                GetComponent<PlayerAbilities>().photonView.RPC("DisableUndercover", RpcTarget.All);
+                StartCoroutine(PauseMovement(.2f));
+            }
+
             canMove = true;
             isFalling = false;
         }

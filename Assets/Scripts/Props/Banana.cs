@@ -20,17 +20,22 @@ public class Banana : MonoBehaviourPunCallbacks
                 ownerGO.GetComponent<PlayerStatisticPhoton>().photonView.RPC("AddSlipHereSlipThereCount", RpcTarget.AllBuffered, 1);
             }*/
 
-            if(other.GetComponent<Robber>() != null && !other.GetComponent<Robber>().isCaught){
+            if(other.CompareTag("Robber") && !other.GetComponent<Robber>().isBot && !other.GetComponent<Robber>().isCaught){
                 //other.GetComponent<PlayerControllerPhoton>().PlayerFall(dur);
-                if(other.GetComponent<PlayerController>().enabled && other.GetComponent<PlayerController>() != null)
                 other.GetComponent<PlayerController>().photonView.RPC("PlayerFall", RpcTarget.AllBuffered, dur);
+                other.GetComponent<PlayerController>().FallSound("Banana");
+            }else if(other.CompareTag("Police") && !other.GetComponent<Police>().isBot){
+                //other.GetComponent<PlayerControllerPhoton>().PlayerFall(dur);
+                other.GetComponent<PlayerController>().photonView.RPC("PlayerFall", RpcTarget.AllBuffered, dur);
+                other.GetComponent<PlayerController>().FallSound("Banana");
             }else{
-                //other.GetComponent<PlayerControllerPhoton>().PlayerFall(dur);
-                if(other.GetComponent<PlayerController>().enabled && other.GetComponent<PlayerController>() != null)
-                other.GetComponent<PlayerController>().photonView.RPC("PlayerFall", RpcTarget.AllBuffered, dur);
+                if(other.CompareTag("Robber") && other.GetComponent<Robber>().isBot){
+                    other.GetComponent<AIRobber>().photonView.RPC("BotFalling", RpcTarget.AllBuffered, dur);
+                }else if(other.CompareTag("Police") && other.GetComponent<Police>().isBot){
+                    other.GetComponent<AIPolice>().photonView.RPC("BotFalling", RpcTarget.AllBuffered, dur);
+                }
             }
-            if(other.GetComponent<PlayerController>().enabled && other.GetComponent<PlayerController>() != null)
-            other.GetComponent<PlayerController>().FallSound("Banana");
+            
 
             if(photonView.IsMine){
                 PhotonNetwork.Destroy(this.gameObject);

@@ -30,7 +30,7 @@ public class AIRobber : MonoBehaviourPunCallbacks
     [Header("Statistic")]
     public int releaseCount;
     [Header("Item Related")]
-    public bool catStunned;
+    public bool catStunned, isSlow;
 
     void Awake(){
         agent = GetComponent<PolyNavAgent>();
@@ -79,6 +79,12 @@ public class AIRobber : MonoBehaviourPunCallbacks
                 Invoke("ClearRescue", 3f);
                 rescueExecuted = true;
             }
+        }
+
+        if(isSlow && agent.maxSpeed == 8){
+            agent.maxSpeed = 4;
+        }else if(!isSlow && agent.maxSpeed == 4){
+            agent.maxSpeed = 8;
         }
 
         /* if(Input.GetKeyDown(KeyCode.N) && GetComponent<Robber>().isCaught){
@@ -402,11 +408,9 @@ public class AIRobber : MonoBehaviourPunCallbacks
 
 #endregion // end DASH RELATED
 
-    public void SlowMovement(bool isEnable){
-        if(isEnable){
-            agent.maxSpeed = agent.maxSpeed / 2;
-        }else{
-            agent.maxSpeed = 8f;
-        }
+    public IEnumerator SlowMovement(){
+        isSlow = true;
+        yield return new WaitForSeconds(1.5f);
+        isSlow = false;
     } // end SlowMovement
 }

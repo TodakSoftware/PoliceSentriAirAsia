@@ -234,7 +234,6 @@ public class Robber : MonoBehaviourPunCallbacks
         }
 
         if(photonView.IsMine && !isBot){
-            GetComponent<PlayerAbilities>().ResetItem(); // Reset Item
             
             Hashtable updateData = new Hashtable();
             if(isHoldMoneybag){ // if we are holding moneybag

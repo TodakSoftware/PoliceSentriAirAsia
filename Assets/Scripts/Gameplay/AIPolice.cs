@@ -29,7 +29,7 @@ public class AIPolice : MonoBehaviourPunCallbacks
     [Header("Statistic")]
     public int caughtCount;
     [Header("Item Related")]
-    public bool catStunned;
+    public bool catStunned, isSlow;
     public bool pauseMovement;
 
     void Awake(){
@@ -89,6 +89,12 @@ public class AIPolice : MonoBehaviourPunCallbacks
     void Update(){
         if(isFalling || pauseMovement){
             agent.Stop();
+        }
+
+        if(isSlow && agent.maxSpeed == 8){
+            agent.maxSpeed = 4;
+        }else if(!isSlow && agent.maxSpeed == 4){
+            agent.maxSpeed = 8;
         }
 
         HandleBotAnimation();
@@ -315,12 +321,10 @@ public class AIPolice : MonoBehaviourPunCallbacks
         pauseMovement = false;
     } // end PauseMovement
 
-    public void SlowMovement(bool isEnable){
-        if(isEnable){
-            agent.maxSpeed = 4f;
-        }else{
-            agent.maxSpeed = 8f;
-        }
+    public IEnumerator SlowMovement(){
+        isSlow = true;
+        yield return new WaitForSeconds(1.5f);
+        isSlow = false;
     } // end SlowMovement
 
 #endregion // end DASH RELATED
