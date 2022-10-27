@@ -207,7 +207,7 @@ public class AIPolice : MonoBehaviourPunCallbacks
     }
 
     public void HandleBotAnimation(){
-        if(agent.currentSpeed != 0){
+        if(agent.movingDirection != Vector2.zero){
             if(!isDashing){
                 PlayAnimation("Run");
             }else{

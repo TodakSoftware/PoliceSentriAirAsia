@@ -74,25 +74,25 @@ MonoBehaviour:
     idlePose: {fileID: 21300000, guid: 662af060ee066a44caff3f5b3f46aa91, type: 3}
     runTimeAnimController: {fileID: 22100000, guid: 61d6b5bc428ac0846930e90985d13ccc, type: 2}
     temporaryDisable: 0
-  - name: Pilot Lady
+  - name: Amira
     code: P42
     iconHead: {fileID: 21300000, guid: cd8cfb98f85e14f019a7c6be8982f6b7, type: 3}
     idlePose: {fileID: 21300000, guid: 791e4552caa294b6896c49b225c408fc, type: 3}
     runTimeAnimController: {fileID: 22100000, guid: 8c455db8c81b1cb4dbafd7bddda80f60, type: 2}
     temporaryDisable: 0
-  - name: Air Steward
+  - name: Arman
     code: P43
     iconHead: {fileID: 21300000, guid: febd35c22053c49309b977b3e5fd088f, type: 3}
     idlePose: {fileID: 21300000, guid: 5fa4c5d3a20bf429488acd75cd8fa447, type: 3}
     runTimeAnimController: {fileID: 22100000, guid: 5b8f18d3d5736704bbafadd51c1fad8f, type: 2}
     temporaryDisable: 0
-  - name: Pilot Captain
+  - name: Bobby
     code: P44
     iconHead: {fileID: 21300000, guid: a97e07c187149415ea56aa70c7e5c9c5, type: 3}
     idlePose: {fileID: 21300000, guid: c87ccddfc2d0f4de18f6edda01e4834b, type: 3}
     runTimeAnimController: {fileID: 22100000, guid: 9e538e41668698b47a99f7b51d9d8d1c, type: 2}
     temporaryDisable: 0
-  - name: Air Stewardess
+  - name: Suhaila
     code: P45
     iconHead: {fileID: 21300000, guid: 7c814122a198d464d824679d076cc37e, type: 3}
     idlePose: {fileID: 21300000, guid: 6bfaa4ac65e1c48b8829c75a471e681f, type: 3}

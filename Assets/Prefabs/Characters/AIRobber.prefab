@@ -6876,6 +6876,7 @@ MonoBehaviour:
   givenName: 
   releaseCount: 0
   catStunned: 0
+  isSlow: 0
 --- !u!1 &4873863652798532647
 GameObject:
   m_ObjectHideFlags: 0

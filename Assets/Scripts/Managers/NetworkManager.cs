@@ -129,7 +129,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         }
 
         // Auto start if 1 minit passed
-        if(isInTheRoom && PhotonNetwork.CurrentRoom.PlayerCount > 1 && PhotonNetwork.CurrentRoom.PlayerCount < (int)maxPlayersPerRoom && UIManager.instance.timeoutTimer >= findGameAutoStart && !autoStartCreateGame){ // if we in room & timer find game >= autostart
+        if(isInTheRoom && PhotonNetwork.CurrentRoom.PlayerCount >= 1 && PhotonNetwork.CurrentRoom.PlayerCount < (int)maxPlayersPerRoom && UIManager.instance.timeoutTimer >= findGameAutoStart && !autoStartCreateGame){ // if we in room & timer find game >= autostart
             
             if(PhotonNetwork.IsMasterClient){
                 print("Auto Start Game With Current Players = " + PhotonNetwork.CurrentRoom.PlayerCount);

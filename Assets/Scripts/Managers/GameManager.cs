@@ -170,14 +170,14 @@ public class GameManager : MonoBehaviourPunCallbacks
         UIManager.instance.manualRoleSelect.StopCoroutine(UIManager.instance.manualRoleSelect.randomChooseCoroutine); // Stop Choose Random Coroutine
         switch(team){
             case "Police":
-                player = PhotonNetwork.Instantiate(NetworkManager.GetPhotonPrefab("Characters", "CharacterPolice"), GameManager.instance.waitingSpawnpoint.position + new Vector3(Random.Range(0,3f), Random.Range(0,3f), 0f), Quaternion.identity);
+                player = PhotonNetwork.Instantiate(NetworkManager.GetPhotonPrefab("Characters", "CharacterPolice"), waitingSpawnpoint.position + new Vector3(Random.Range(0,3f), Random.Range(0,3f), 0f), Quaternion.identity);
                 player.GetPhotonView().Owner.NickName = PlayerPrefs.GetString("Username");
                 player.GetComponent<PlayerController>().characterCode = "P01"; // Spawn default police
                 player.GetComponent<PlayerController>().photonView.RPC("CreateAvatar", RpcTarget.AllBuffered);
             break;
 
             case "Robber":
-                player = PhotonNetwork.Instantiate(NetworkManager.GetPhotonPrefab("Characters", "CharacterRobber"), GameManager.instance.waitingSpawnpoint.position + new Vector3(Random.Range(0,3f), Random.Range(0,3f), 0f), Quaternion.identity);
+                player = PhotonNetwork.Instantiate(NetworkManager.GetPhotonPrefab("Characters", "CharacterRobber"), waitingSpawnpoint.position + new Vector3(Random.Range(0,3f), Random.Range(0,3f), 0f), Quaternion.identity);
                 player.GetPhotonView().Owner.NickName = PlayerPrefs.GetString("Username");
                 player.GetComponent<PlayerController>().characterCode = "R01"; // Spawn default robber
                 player.GetComponent<PlayerController>().photonView.RPC("CreateAvatar", RpcTarget.AllBuffered);
@@ -195,7 +195,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     } // end SpawnSelectedCharacter
 
     public IEnumerator SpawnBots(){
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(.5f);
         // Fill in police 1st
         if(GameManager.GetAllPlayersPolice().Count < (int)PhotonNetwork.CurrentRoom.CustomProperties["RoomPolicePerGame"]){
             int polDif = (int)PhotonNetwork.CurrentRoom.CustomProperties["RoomPolicePerGame"] - GameManager.GetAllPlayersPolice().Count;
@@ -203,7 +203,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             if(polDif >= 1){
                 for(int i = 0; i < 1; i++){
                     yield return new WaitForSeconds(Random.Range(0f, 1f));
-                    GameObject player = PhotonNetwork.InstantiateRoomObject(NetworkManager.GetPhotonPrefab("Characters", "AIPolice"), GameManager.instance.waitingSpawnpoint.position + new Vector3(Random.Range(0,3f), Random.Range(0,3f), 0f), Quaternion.identity);
+                    GameObject player = PhotonNetwork.InstantiateRoomObject(NetworkManager.GetPhotonPrefab("Characters", "AIPolice"), waitingSpawnpoint.position + new Vector3(Random.Range(0,3f), Random.Range(0,3f), 0f), Quaternion.identity);
                     
                     if(policeNames.Count > 0){
                         var ran = Random.Range(0, policeNames.Count);
@@ -224,7 +224,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             if(robDif >= 1){
                 for(int i = 0; i < 1; i++){
                     yield return new WaitForSeconds(Random.Range(0f, 1f));
-                    GameObject player = PhotonNetwork.InstantiateRoomObject(NetworkManager.GetPhotonPrefab("Characters", "AIRobber"), GameManager.instance.waitingSpawnpoint.position + new Vector3(Random.Range(0,3f), Random.Range(0,3f), 0f), Quaternion.identity);
+                    GameObject player = PhotonNetwork.InstantiateRoomObject(NetworkManager.GetPhotonPrefab("Characters", "AIRobber"), waitingSpawnpoint.position + new Vector3(Random.Range(0,3f), Random.Range(0,3f), 0f), Quaternion.identity);
                     
                     if(robberNames.Count > 0){
                         var ran = Random.Range(0, robberNames.Count);
@@ -413,7 +413,6 @@ public class GameManager : MonoBehaviourPunCallbacks
 
             foreach(GameObject player in GameManager.GetAllPlayers()){
                 if(btn.ownerOfThisAvatarGO == player){
-                    print("Owner btn : " + btn.ownerOfThisAvatarGO);
                     if(btn.ownerOfThisAvatarGO.CompareTag("Robber") && btn.ownerOfThisAvatarGO.GetComponent<Robber>().isBot){
                         btn.UpdateButton(btn.ownerOfThisAvatarGO.tag, "R01", btn.ownerOfThisAvatarGO.GetComponent<Robber>().isCaught, btn.ownerOfThisAvatarGO.GetComponent<Robber>().isHoldMoneybag);
                     }else if(btn.ownerOfThisAvatarGO.CompareTag("Police") && btn.ownerOfThisAvatarGO.GetComponent<Police>().isBot){ // else police
