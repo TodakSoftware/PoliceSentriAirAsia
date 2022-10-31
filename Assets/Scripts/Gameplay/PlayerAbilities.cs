@@ -49,7 +49,7 @@ public class PlayerAbilities : MonoBehaviourPunCallbacks
     [Header("Cat Stun")]
     public bool catStunned;
 
-    void Awake()
+    void Start()
     {
         playerController = GetComponent<PlayerController>();
         btnItem = UIManager.instance.gameUI.itemButton.gameObject;

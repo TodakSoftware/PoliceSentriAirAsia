@@ -469,7 +469,25 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 }
             break;
         } // end switch
-    }
+    } // end create avatar
+
+    public void DisplayTutorial(string team){
+        switch(team){
+            case "Police":
+                if(photonView.IsMine){
+                    var popup = Instantiate(GameManager.instance.policeTutorialGO);
+                    popup.transform.SetParent(UIManager.instance.mainCanvas.transform, false);
+                }
+            break;
+
+            case "Robber":
+                if(photonView.IsMine){
+                    var popup = Instantiate(GameManager.instance.robberTutorialGO);
+                    popup.transform.SetParent(UIManager.instance.mainCanvas.transform, false);
+                }
+            break;
+        }
+    } // end DisplayTutorial
 #endregion
 
 #region PARTICLES RELATED

@@ -84,6 +84,7 @@ public class AIPolice : MonoBehaviourPunCallbacks
         InvokeRepeating("ChaseRobber", 0f, 1f);
         InvokeRepeating("UpdateRoaming", 0f, 1f);
         InvokeRepeating("InvokeDash", 3f, 5f);
+        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
     }
 
     void Update(){

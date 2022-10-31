@@ -68,6 +68,7 @@ public class AIRobber : MonoBehaviourPunCallbacks
         InvokeRepeating("AvoidPoliceNearby", 0f, .8f);
         InvokeRepeating("UpdateRoaming", 0f, .8f);
         InvokeRepeating("InvokeDash", 4f, 7f);
+        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
     }
 
     void Update(){

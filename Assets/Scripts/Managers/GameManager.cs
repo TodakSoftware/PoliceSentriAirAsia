@@ -53,6 +53,9 @@ public class GameManager : MonoBehaviourPunCallbacks
     [Header("Bot Related")]
     public List<string> policeNames = new List<string>();
     public List<string> robberNames = new List<string>();
+    [Header("UI Popup Related")]
+    public GameObject policeTutorialGO;
+    public GameObject robberTutorialGO;
 
 
     void Awake(){
@@ -285,13 +288,19 @@ public class GameManager : MonoBehaviourPunCallbacks
                     if(g.CompareTag("Police")){
                         g.transform.position = policeSpawnpoints[policePos].position;
                         if(g.GetComponent<Police>().isBot){
-                            g.GetComponent<AIPolice>().InitBot();
+                            //g.GetComponent<AIPolice>().InitBot();
+                            g.GetComponent<AIPolice>().Invoke("InitBot",4f);
+                        }else{
+                            g.GetComponent<PlayerController>().DisplayTutorial("Police");
                         }
                         policePos++;
                     }else{ // else robber
                         g.transform.position = robberSpawnpoints[robberPos].position;
                         if(g.GetComponent<Robber>().isBot){
-                            g.GetComponent<AIRobber>().InitBot();
+                            //g.GetComponent<AIRobber>().InitBot();
+                            g.GetComponent<AIRobber>().Invoke("InitBot",4f);
+                        }else{
+                            g.GetComponent<PlayerController>().DisplayTutorial("Robber");
                         }
                         robberPos++;
                     }
