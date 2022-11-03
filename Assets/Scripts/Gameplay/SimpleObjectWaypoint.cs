@@ -30,11 +30,18 @@ public class SimpleObjectWaypoint : MonoBehaviourPunCallbacks
 
     [Header("Special Case Airasia")]
     public bool isAirAsia;
+    public bool startRight;
     
     void Awake(){
         ownerObject = this.gameObject;
         if(ownerObject != null && ownerObject.GetComponent<Animator>() != null){
             ownerAnimator = ownerObject.GetComponent<Animator>();
+        }
+
+        if(startRight){
+            photonView.RPC("FlipRight", RpcTarget.All);
+        }else{
+            photonView.RPC("FlipLeft", RpcTarget.All);
         }
     }
 

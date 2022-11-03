@@ -5004,9 +5004,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowLayerWeightsInspector: 1
   ShowParameterInspector: 1
-  m_SynchronizeParameters: []
+  m_SynchronizeParameters:
+  - Type: 4
+    SynchronizeType: 1
+    Name: Run
+  - Type: 4
+    SynchronizeType: 1
+    Name: Left
   m_SynchronizeLayers:
-  - SynchronizeType: 0
+  - SynchronizeType: 1
     LayerIndex: 0
 --- !u!114 &6434507503978899116
 MonoBehaviour:
