@@ -27,6 +27,10 @@ public class SimpleObjectWaypoint : MonoBehaviourPunCallbacks
     public bool firstSpawnRandom;
     private int randomWaypointIndex;
     private bool playRunAnim;
+
+    [Header("Special Case Airasia")]
+    public bool changeSpriteOnFlip;
+    public Sprite leftSprite, rightSprite; // leftSprite if going to left, vice versa
     
     void Awake(){
         ownerObject = this.gameObject;
@@ -140,12 +144,20 @@ public class SimpleObjectWaypoint : MonoBehaviourPunCallbacks
 
     [PunRPC]
     public void FlipRight(){
-        GetComponent<SpriteRenderer>().flipX = true;
+        if(!changeSpriteOnFlip){
+            GetComponent<SpriteRenderer>().flipX = true;
+        }else{
+            GetComponent<SpriteRenderer>().sprite = rightSprite;
+        }
     }
 
     [PunRPC]
     public void FlipLeft(){
-        GetComponent<SpriteRenderer>().flipX = false;
+        if(!changeSpriteOnFlip){
+            GetComponent<SpriteRenderer>().flipX = false;
+        }else{
+            GetComponent<SpriteRenderer>().sprite = leftSprite;
+        }
     }
 
     void OnCollisionEnter2D(Collision2D other) {

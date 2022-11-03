@@ -13,4 +13,8 @@ public class ButtonCooldown : MonoBehaviour
         imageSlider.fillAmount = 1;
         imageSlider.DOFillAmount(0, duration).OnComplete(() => { GetComponent<Button>().interactable = true; });
     }
+
+    public void OnClickFunction(){
+        DebugNotifyManager.instance.PopupDebugText("Click successfully!");
+    }
 }

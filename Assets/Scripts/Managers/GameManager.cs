@@ -302,6 +302,8 @@ public class GameManager : MonoBehaviourPunCallbacks
                         }else{
                             g.GetComponent<PlayerController>().DisplayTutorial("Robber");
                         }
+                        
+                        g.GetComponent<Robber>().photonView.RPC("InvulnerableEffect", RpcTarget.All, 4f);
                         robberPos++;
                     }
                 } // end foreach
