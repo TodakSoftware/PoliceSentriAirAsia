@@ -29,8 +29,7 @@ public class SimpleObjectWaypoint : MonoBehaviourPunCallbacks
     private bool playRunAnim;
 
     [Header("Special Case Airasia")]
-    public bool changeSpriteOnFlip;
-    public Sprite leftSprite, rightSprite; // leftSprite if going to left, vice versa
+    public bool isAirAsia;
     
     void Awake(){
         ownerObject = this.gameObject;
@@ -144,19 +143,23 @@ public class SimpleObjectWaypoint : MonoBehaviourPunCallbacks
 
     [PunRPC]
     public void FlipRight(){
-        if(!changeSpriteOnFlip){
+        if(!isAirAsia){
             GetComponent<SpriteRenderer>().flipX = true;
         }else{
-            GetComponent<SpriteRenderer>().sprite = rightSprite;
+            if(ownerAnimator != null){
+                ownerAnimator.SetBool("Left", true);
+            }
         }
     }
 
     [PunRPC]
     public void FlipLeft(){
-        if(!changeSpriteOnFlip){
+        if(!isAirAsia){
             GetComponent<SpriteRenderer>().flipX = false;
         }else{
-            GetComponent<SpriteRenderer>().sprite = leftSprite;
+            if(ownerAnimator != null){
+                ownerAnimator.SetBool("Left", false);
+            }
         }
     }
 
