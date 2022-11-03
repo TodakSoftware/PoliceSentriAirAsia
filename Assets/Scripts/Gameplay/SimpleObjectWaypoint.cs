@@ -154,7 +154,7 @@ public class SimpleObjectWaypoint : MonoBehaviourPunCallbacks
             GetComponent<SpriteRenderer>().flipX = true;
         }else{
             if(ownerAnimator != null){
-                ownerAnimator.SetBool("Left", true);
+                ownerAnimator.SetBool("Left", false);
             }
         }
     }
@@ -165,7 +165,7 @@ public class SimpleObjectWaypoint : MonoBehaviourPunCallbacks
             GetComponent<SpriteRenderer>().flipX = false;
         }else{
             if(ownerAnimator != null){
-                ownerAnimator.SetBool("Left", false);
+                ownerAnimator.SetBool("Left", true);
             }
         }
     }
