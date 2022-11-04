@@ -203,8 +203,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         if(GameManager.GetAllPlayersPolice().Count < (int)PhotonNetwork.CurrentRoom.CustomProperties["RoomPolicePerGame"]){
             int polDif = (int)PhotonNetwork.CurrentRoom.CustomProperties["RoomPolicePerGame"] - GameManager.GetAllPlayersPolice().Count;
 
-            if(polDif >= 1){
-                for(int i = 0; i < 1; i++){
+            if(polDif > 0 || polDif <= 2){
+                for(int i = 0; i < 2; i++){
                     yield return new WaitForSeconds(Random.Range(0f, 1f));
                     GameObject player = PhotonNetwork.InstantiateRoomObject(NetworkManager.GetPhotonPrefab("Characters", "AIPolice"), waitingSpawnpoint.position + new Vector3(Random.Range(0,3f), Random.Range(0,3f), 0f), Quaternion.identity);
                     
@@ -224,8 +224,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         if(GameManager.GetAllPlayersRobber().Count < (int)PhotonNetwork.CurrentRoom.CustomProperties["RoomRobberPerGame"]){
             int robDif = (int)PhotonNetwork.CurrentRoom.CustomProperties["RoomRobberPerGame"] - GameManager.GetAllPlayersRobber().Count;
 
-            if(robDif >= 1){
-                for(int i = 0; i < 1; i++){
+            if(robDif > 0 || robDif <= 3){
+                for(int i = 0; i < 3; i++){
                     yield return new WaitForSeconds(Random.Range(0f, 1f));
                     GameObject player = PhotonNetwork.InstantiateRoomObject(NetworkManager.GetPhotonPrefab("Characters", "AIRobber"), waitingSpawnpoint.position + new Vector3(Random.Range(0,3f), Random.Range(0,3f), 0f), Quaternion.identity);
                     
@@ -292,6 +292,7 @@ public class GameManager : MonoBehaviourPunCallbacks
                             g.GetComponent<AIPolice>().Invoke("InitBot",4f);
                         }else{
                             g.GetComponent<PlayerController>().DisplayTutorial("Police");
+                            StartCoroutine(g.GetComponent<PlayerController>().PauseMovement(4f));
                         }
                         policePos++;
                     }else{ // else robber
@@ -301,6 +302,7 @@ public class GameManager : MonoBehaviourPunCallbacks
                             g.GetComponent<AIRobber>().Invoke("InitBot",4f);
                         }else{
                             g.GetComponent<PlayerController>().DisplayTutorial("Robber");
+                            StartCoroutine(g.GetComponent<PlayerController>().PauseMovement(4f));
                         }
                         
                         g.GetComponent<Robber>().photonView.RPC("InvulnerableEffect", RpcTarget.All, 4f);
@@ -322,7 +324,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
                 CheckWinningCondition();
 
-                print("Redirect Everybody To Their Position");
+                //print("Redirect Everybody To Their Position");
                 yield return new WaitForSeconds(1f); // delay gameStart = true
                 gameStarted = true;
                 
@@ -389,7 +391,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public void SpawnAllMoneybag(){
             if(PhotonNetwork.IsMasterClient){
                 moneybagList.Clear();
-                print("SpawnAllMoney");
+                //print("SpawnAllMoney");
                 foreach(var mb in moneybagSpawnpoints){
                     //var moneyBag = PhotonNetwork.InstantiateRoomObject(NetworkManager.GetPhotonPrefab("Props", "prop_moneybag01"), mb.position, Quaternion.identity);
                     var moneyBag = PhotonNetwork.InstantiateRoomObject(NetworkManager.GetPhotonPrefab("Props", "prop_moneybag01"), mb.position, Quaternion.identity);
@@ -608,7 +610,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     } // end GetAllPlayersRobber
 
     public void ChosenBotToRescue(){ // Select 1 bot who is !caught to rescue teammate
-        print("Ask for teammate help!");
+        //print("Ask for teammate help!");
         if(GameManager.instance.gameStarted && !GameManager.instance.gameEnded){
             List<GameObject> botRobber = new List<GameObject>();
             botRobber.Clear();

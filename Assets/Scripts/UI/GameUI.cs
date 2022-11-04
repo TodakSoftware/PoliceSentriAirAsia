@@ -26,10 +26,13 @@ public class GameUI : MonoBehaviourPunCallbacks
     public TextMeshProUGUI moneyTimerText;
     [Header("Notification")]
     public Transform feedsGroupContent;
+    [Header("Setting Menu")]
+    public Button settingLeaveBtn;
 
     void Start(){
         lobbyLeaveGame.onClick.AddListener(delegate{PhotonNetwork.LeaveRoom();});
         changeCharacterBtn.onClick.AddListener(delegate{UIManager.instance.PopupCharacterSelect();});
-        settingButton.onClick.AddListener(delegate{});
+        //settingButton.onClick.AddListener(delegate{});
+        settingLeaveBtn.onClick.AddListener(delegate{PhotonNetwork.LeaveRoom();});
     }
 }

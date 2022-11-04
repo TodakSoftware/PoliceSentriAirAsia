@@ -377,7 +377,7 @@ public class AIRobber : MonoBehaviourPunCallbacks
 
     public IEnumerator BotDash(float duration){
         if(!isDashing && !isFalling && !agent.botDestinationReach){
-            print("DASHH");
+            //print("DASHH");
             PlayAnimation("Dash"); // Play Dash Animation
             float _oldSpeed = agent.maxSpeed; // Store old speed
             agent.maxSpeed = agent.maxSpeed * 3f; // Multiple current movespeed to multiplier

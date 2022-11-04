@@ -150,7 +150,7 @@ public class Robber : MonoBehaviourPunCallbacks
             
 
             // Redirect to jail with delay 2s
-            print("Redirecting to jailed");
+            //print("Redirecting to jailed");
             StartCoroutine(RedirectToJailed(1.5f));
         }
     } // end HasBeenCaught()
@@ -247,6 +247,8 @@ public class Robber : MonoBehaviourPunCallbacks
             photonView.RPC("DisplayMoneybag", RpcTarget.All, false); // Hide moneybag
             photonView.RPC("DisableCollider", RpcTarget.All, false); // Enable Collider
             photonView.RPC("EnableJailCollider", RpcTarget.All, true); // Enable Jail COllider for released
+
+            GameManager.instance.photonView.RPC("UpdateAvatarsUI", RpcTarget.All); // Force Update AvatarsUI
         }
     } // end RedirectToJailed()
 #endregion // end region CAUGHT RELATED

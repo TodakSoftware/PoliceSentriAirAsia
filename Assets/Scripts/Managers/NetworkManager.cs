@@ -3,8 +3,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 using Photon.Pun;
 using Photon.Realtime;
 using Player = Photon.Realtime.Player;
@@ -132,7 +130,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         if(isInTheRoom && PhotonNetwork.CurrentRoom.PlayerCount >= 1 && PhotonNetwork.CurrentRoom.PlayerCount < (int)maxPlayersPerRoom && UIManager.instance.timeoutTimer >= findGameAutoStart && !autoStartCreateGame){ // if we in room & timer find game >= autostart
             
             if(PhotonNetwork.IsMasterClient){
-                print("Auto Start Game With Current Players = " + PhotonNetwork.CurrentRoom.PlayerCount);
+                //print("Auto Start Game With Current Players = " + PhotonNetwork.CurrentRoom.PlayerCount);
                 HostWithCustomPlayer(PhotonNetwork.CurrentRoom.PlayerCount);
 
                 PhotonNetwork.CurrentRoom.IsVisible = false; // Set Room IsVisible = false
@@ -258,6 +256,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedLobby(){
         PhotonNetwork.AutomaticallySyncScene = true; // Enable AutoSyncScene
+        if(!PhotonNetwork.IsMessageQueueRunning){
+            PhotonNetwork.IsMessageQueueRunning = true;
+        }
+        
         joinedLobby = true;
 
         if(UIManager.instance.p_MainMenu.statusText != null)
@@ -271,6 +273,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     
     public override void OnJoinedRoom(){ // Only host affected by this
         isInTheRoom = true;
+        if(!PhotonNetwork.IsMessageQueueRunning){
+            PhotonNetwork.IsMessageQueueRunning = true;
+        }
 
         UpdateTotalFindGame(); // Update total players in room
         if(!isInGame){
@@ -454,11 +459,17 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerLeftRoom(Player otherPlayer){ // When player cancel find game or after leave a room
         print("Player Left Room");
+        if(PhotonNetwork.IsMessageQueueRunning){
+            PhotonNetwork.IsMessageQueueRunning = false;
+        }
         UpdateTotalFindGame();
     } // end OnPlayerLeftRoom
 
     public override void OnLeftRoom(){ // When player successfully left the room
         print("Player Has Left The Room Completely");
+        if(PhotonNetwork.IsMessageQueueRunning){
+            PhotonNetwork.IsMessageQueueRunning = false;
+        }
         UpdateTotalFindGame(); // Update total players in room
 
         if(isInGame && GameManager.instance.gameStarted && !GameManager.instance.gameEnded){
@@ -693,7 +704,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public IEnumerator InGameLeaveRoom(){
         PhotonNetwork.LeaveRoom();
-        print("ingame leave");
+        
         yield return new WaitForSeconds(.5f);
         if(!PhotonNetwork.InRoom)
         StartCoroutine(ChangeScene("MainMenu"));

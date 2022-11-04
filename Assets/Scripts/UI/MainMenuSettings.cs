@@ -12,10 +12,19 @@ public class MainMenuSettings : MonoBehaviour
     public Slider sfxSlider, musicSlider;
     private AudioMixer audioMix;
     public TextMeshProUGUI versionText;
+    public GameObject leaveButton;
 
     void Awake(){
         audioMix = GameSettingsManager.instance.audioMix;
         versionText.text = "V"+ Application.version;
+    }
+
+    void OnEnable(){
+        if(!NetworkManager.instance.isInGame){
+            leaveButton.SetActive(false);
+        }else{
+            leaveButton.SetActive(true);
+        }
     }
 
     void Start(){
