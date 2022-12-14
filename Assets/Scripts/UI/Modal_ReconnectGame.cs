@@ -17,13 +17,13 @@ public class Modal_ReconnectGame : MonoBehaviourPunCallbacks
 
     void ReconnectButtonPressed(){
         reconnectText.text = "Reconnecting...";
-        NetworkManager.instance.ReconnectToGame();
+        PhotonNetworkManager.instance.ReconnectToGame();
     }
 
     void LeaveButtonPressed(){
         reconnectText.text = "Leaving room...";
         StartCoroutine(UIManager.instance.CloseReconnectGame(.3f)); // Close if not connected
-        NetworkManager.instance.CancelFindGameOrLeaveRoom();
+        PhotonNetworkManager.instance.CancelFindGameOrLeaveRoom();
         
     }
 }

@@ -56,9 +56,11 @@ public class GameManager : MonoBehaviourPunCallbacks
     [Header("UI Popup Related")]
     public GameObject policeTutorialGO;
     public GameObject robberTutorialGO;
+    private int spawnBotPoliceCount, spawnBotRobberCount;
 
 
     void Awake(){
+        Application.targetFrameRate = -1;
         if(instance == null){
             instance = this;
         }else{
@@ -110,12 +112,13 @@ public class GameManager : MonoBehaviourPunCallbacks
         currentStartGameCountdown = startGameCountdown;
         StartCoroutine(StartGameCountdown());
 
-        NetworkManager.instance.isInGame = true;
+        PhotonNetworkManager.instance.isInGame = true;
 
         UpdateTeamCount(); // Update Manual Select Role on 1st load
 
-        SpawnAllMoneybag(); // Spawn moneybag
-        
+        SpawnAllMoneybag(); // Spawn moneybag   
+
+        PhotonNetwork.IsMessageQueueRunning = true;
     } // end Start
 
     public void DelayMusic(){
@@ -147,12 +150,13 @@ public class GameManager : MonoBehaviourPunCallbacks
             } */
         } // end gameStarted
 
-        if(!gameEnded && currentStartGameCountdown <= 8 && !doneSpawnBots && GetAllPlayers().Count == (int)PhotonNetwork.CurrentRoom.CustomProperties["RealTotalPlayer"] && PhotonNetwork.CurrentRoom.CustomProperties["RealTotalPlayer"] != null){
+        //if(!gameEnded && currentStartGameCountdown <= 8 && !doneSpawnBots && GetAllPlayers().Count == (int)PhotonNetwork.CurrentRoom.CustomProperties["RealTotalPlayer"] && PhotonNetwork.CurrentRoom.CustomProperties["RealTotalPlayer"] != null){
+        if(!gameEnded && currentStartGameCountdown <= 8 && !doneSpawnBots){
             // Fill Bots
-            if(fillWithBots && PhotonNetwork.InRoom){
+            if(fillWithBots){
                 if(PhotonNetwork.IsMasterClient){
-                    StartCoroutine(SpawnBots());
-                    doneSpawnBots = true;
+                    //StartCoroutine(SpawnBots());
+                    photonView.RPC("SpawnBots", RpcTarget.AllBuffered);
                 }
             }
         }
@@ -173,14 +177,14 @@ public class GameManager : MonoBehaviourPunCallbacks
         UIManager.instance.manualRoleSelect.StopCoroutine(UIManager.instance.manualRoleSelect.randomChooseCoroutine); // Stop Choose Random Coroutine
         switch(team){
             case "Police":
-                player = PhotonNetwork.Instantiate(NetworkManager.GetPhotonPrefab("Characters", "CharacterPolice"), waitingSpawnpoint.position + new Vector3(Random.Range(0,3f), Random.Range(0,3f), 0f), Quaternion.identity);
+                player = PhotonNetwork.Instantiate(PhotonNetworkManager.GetPhotonPrefab("Characters", "CharacterPolice"), waitingSpawnpoint.position + new Vector3(Random.Range(0,3f), Random.Range(0,3f), 0f), Quaternion.identity);
                 player.GetPhotonView().Owner.NickName = PlayerPrefs.GetString("Username");
                 player.GetComponent<PlayerController>().characterCode = "P01"; // Spawn default police
                 player.GetComponent<PlayerController>().photonView.RPC("CreateAvatar", RpcTarget.AllBuffered);
             break;
 
             case "Robber":
-                player = PhotonNetwork.Instantiate(NetworkManager.GetPhotonPrefab("Characters", "CharacterRobber"), waitingSpawnpoint.position + new Vector3(Random.Range(0,3f), Random.Range(0,3f), 0f), Quaternion.identity);
+                player = PhotonNetwork.Instantiate(PhotonNetworkManager.GetPhotonPrefab("Characters", "CharacterRobber"), waitingSpawnpoint.position + new Vector3(Random.Range(0,3f), Random.Range(0,3f), 0f), Quaternion.identity);
                 player.GetPhotonView().Owner.NickName = PlayerPrefs.GetString("Username");
                 player.GetComponent<PlayerController>().characterCode = "R01"; // Spawn default robber
                 player.GetComponent<PlayerController>().photonView.RPC("CreateAvatar", RpcTarget.AllBuffered);
@@ -197,16 +201,44 @@ public class GameManager : MonoBehaviourPunCallbacks
         UIManager.instance.p_CharacterSelect.InitializeAllCharacters(team); // Initialize all available characters
     } // end SpawnSelectedCharacter
 
+    [PunRPC]
     public IEnumerator SpawnBots(){
+        doneSpawnBots = true;
         yield return new WaitForSeconds(.5f);
         // Fill in police 1st
         if(GameManager.GetAllPlayersPolice().Count < (int)PhotonNetwork.CurrentRoom.CustomProperties["RoomPolicePerGame"]){
             int polDif = (int)PhotonNetwork.CurrentRoom.CustomProperties["RoomPolicePerGame"] - GameManager.GetAllPlayersPolice().Count;
 
-            if(polDif > 0 || polDif <= 2){
-                for(int i = 0; i < 2; i++){
+            if(polDif > 0 && polDif <= 4){
+                switch(polDif){
+                    case 0:
+                        spawnBotPoliceCount = 0;
+                    break;
+
+                    case 1:
+                        spawnBotPoliceCount = 1;
+                    break;
+
+                    case 2:
+                        spawnBotPoliceCount = 1;
+                    break;
+
+                    case 3:
+                        spawnBotPoliceCount = 1;
+                    break;
+
+                    case 4:
+                        spawnBotPoliceCount = 2;
+                    break;
+
+                    default:
+                        spawnBotPoliceCount = 2;
+                    break;
+                }
+
+                for(int i = 0; i < spawnBotPoliceCount; i++){
                     yield return new WaitForSeconds(Random.Range(0f, 1f));
-                    GameObject player = PhotonNetwork.InstantiateRoomObject(NetworkManager.GetPhotonPrefab("Characters", "AIPolice"), waitingSpawnpoint.position + new Vector3(Random.Range(0,3f), Random.Range(0,3f), 0f), Quaternion.identity);
+                    GameObject player = PhotonNetwork.InstantiateRoomObject(PhotonNetworkManager.GetPhotonPrefab("Characters", "AIPolice"), waitingSpawnpoint.position + new Vector3(Random.Range(0,3f), Random.Range(0,3f), 0f), Quaternion.identity);
                     
                     if(policeNames.Count > 0){
                         var ran = Random.Range(0, policeNames.Count);
@@ -224,10 +256,44 @@ public class GameManager : MonoBehaviourPunCallbacks
         if(GameManager.GetAllPlayersRobber().Count < (int)PhotonNetwork.CurrentRoom.CustomProperties["RoomRobberPerGame"]){
             int robDif = (int)PhotonNetwork.CurrentRoom.CustomProperties["RoomRobberPerGame"] - GameManager.GetAllPlayersRobber().Count;
 
-            if(robDif > 0 || robDif <= 3){
-                for(int i = 0; i < 3; i++){
+            if(robDif > 0 && robDif <= 6){
+                switch(robDif){
+                    case 0:
+                        spawnBotRobberCount = 0;
+                    break;
+
+                    case 1:
+                        spawnBotRobberCount = 1;
+                    break;
+
+                    case 2:
+                        spawnBotRobberCount = 1;
+                    break;
+
+                    case 3:
+                        spawnBotRobberCount = 1;
+                    break;
+
+                    case 4:
+                        spawnBotRobberCount = 1;
+                    break;
+
+                    case 5:
+                        spawnBotRobberCount = 2;
+                    break;
+
+                    case 6:
+                        spawnBotRobberCount = 2;
+                    break;
+
+                    default:
+                        spawnBotRobberCount = 2;
+                    break;
+                }
+
+                for(int i = 0; i < spawnBotRobberCount; i++){
                     yield return new WaitForSeconds(Random.Range(0f, 1f));
-                    GameObject player = PhotonNetwork.InstantiateRoomObject(NetworkManager.GetPhotonPrefab("Characters", "AIRobber"), waitingSpawnpoint.position + new Vector3(Random.Range(0,3f), Random.Range(0,3f), 0f), Quaternion.identity);
+                    GameObject player = PhotonNetwork.InstantiateRoomObject(PhotonNetworkManager.GetPhotonPrefab("Characters", "AIRobber"), waitingSpawnpoint.position + new Vector3(Random.Range(0,3f), Random.Range(0,3f), 0f), Quaternion.identity);
                     
                     if(robberNames.Count > 0){
                         var ran = Random.Range(0, robberNames.Count);
@@ -394,7 +460,7 @@ public class GameManager : MonoBehaviourPunCallbacks
                 //print("SpawnAllMoney");
                 foreach(var mb in moneybagSpawnpoints){
                     //var moneyBag = PhotonNetwork.InstantiateRoomObject(NetworkManager.GetPhotonPrefab("Props", "prop_moneybag01"), mb.position, Quaternion.identity);
-                    var moneyBag = PhotonNetwork.InstantiateRoomObject(NetworkManager.GetPhotonPrefab("Props", "prop_moneybag01"), mb.position, Quaternion.identity);
+                    var moneyBag = PhotonNetwork.InstantiateRoomObject(PhotonNetworkManager.GetPhotonPrefab("Props", "prop_moneybag01"), mb.position, Quaternion.identity);
                     moneybagList.Add(moneyBag);
                 }
                 moneybagSpawned = true;
@@ -442,6 +508,11 @@ public class GameManager : MonoBehaviourPunCallbacks
                     }
                 }
             }
+        }
+
+        // Check if not moneybag
+        if(!moneyBagOccupied && PhotonNetwork.IsMasterClient && gameStarted && !gameEnded && !moneybagSpawned){
+            photonView.RPC("SpawnAllMoneybag", RpcTarget.All);
         }
     } // end UpdateAvatarsUI()
 
@@ -504,6 +575,10 @@ public class GameManager : MonoBehaviourPunCallbacks
         StartCoroutine(RedirectNewMap(5));
         AudioManager.instance.StopMusic();
         
+        if(PhotonNetwork.IsMessageQueueRunning){
+            PhotonNetwork.IsMessageQueueRunning = false;
+        }
+        
     } // end PopupEndScreen
 
     IEnumerator RedirectNewMap(float duration){
@@ -526,7 +601,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             PhotonNetwork.AutomaticallySyncScene = true;
             
             endScreenRedirectText.text = "Bye-bye";
-            StartCoroutine(NetworkManager.instance.InGameLeaveRoom());
+            StartCoroutine(PhotonNetworkManager.instance.InGameLeaveRoom());
             /*if(PhotonNetwork.IsMasterClient){
                 if(PhotonNetwork.CurrentRoom.PlayerCount > 1){
                     endScreenRedirectText.text = "Loading...";
@@ -548,7 +623,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     [PunRPC]
     public void Boom(){
-        StartCoroutine(NetworkManager.instance.ChangeScene(NetworkManager.instance.GetRandomMap()));// Host load level
+        StartCoroutine(PhotonNetworkManager.instance.ChangeScene(PhotonNetworkManager.instance.GetRandomMap()));// Host load level
     }
     /*
     public void AskHostToPlayAgain(){

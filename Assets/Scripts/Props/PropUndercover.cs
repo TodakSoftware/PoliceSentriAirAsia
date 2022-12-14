@@ -48,7 +48,7 @@ public class PropUndercover : MonoBehaviourPunCallbacks
         playerSprite.color = spriteTransparent;
         // Spawn Asap
         if(photonView.IsMine){ 
-        var smoke = PhotonNetwork.Instantiate(NetworkManager.GetPhotonPrefab("Particles", "PuffSmoke"), (transform.position + new Vector3(0, 1f, 0)), Quaternion.identity);
+        var smoke = PhotonNetwork.Instantiate(PhotonNetworkManager.GetPhotonPrefab("Particles", "PuffSmoke"), (transform.position + new Vector3(0, 1f, 0)), Quaternion.identity);
         }
         // set prop to sprite renderer
         GetComponent<SpriteRenderer>().sprite = propList[nmbr];
@@ -62,7 +62,7 @@ public class PropUndercover : MonoBehaviourPunCallbacks
         isActive = false;
         // spawn asap
         if(photonView.IsMine){
-        var smoke = PhotonNetwork.Instantiate(NetworkManager.GetPhotonPrefab("Particles", "PuffSmoke"), (transform.position + new Vector3(0, 1f, 0)), Quaternion.identity);
+        var smoke = PhotonNetwork.Instantiate(PhotonNetworkManager.GetPhotonPrefab("Particles", "PuffSmoke"), (transform.position + new Vector3(0, 1f, 0)), Quaternion.identity);
         }
         // humanoid sprite alpha 1
         if(transform.parent.gameObject.GetComponent<PlayerAbilities>().onCaughtImmune){

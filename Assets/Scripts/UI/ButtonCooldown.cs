@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.EventSystems;
 
-public class ButtonCooldown : MonoBehaviour, ISelectHandler// , IPointerEnterHandler
+public class ButtonCooldown : MonoBehaviour, ISelectHandler , IPointerEnterHandler
 {
     public Image imageSlider;
 
@@ -15,16 +15,12 @@ public class ButtonCooldown : MonoBehaviour, ISelectHandler// , IPointerEnterHan
         imageSlider.DOFillAmount(0, duration).OnComplete(() => { GetComponent<Button>().interactable = true; });
     }
 
-    public void OnClickFunction(){
-        DebugNotifyManager.instance.PopupDebugText("Click successfully!");
-    }
-
     // When highlighted with mouse.
-    /*  public void OnPointerEnter(PointerEventData eventData)
+     public void OnPointerEnter(PointerEventData eventData)
      {
         GetComponent<Button>().onClick.Invoke();
      }
-     // When selected. */
+     // When selected. 
      public void OnSelect(BaseEventData eventData)
      {
         GetComponent<Button>().onClick.Invoke();

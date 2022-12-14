@@ -39,7 +39,7 @@ public class ItemRandomSpawner : MonoBehaviourPunCallbacks
                 var spawnRdm = Random.Range(0, itemSpawnpoints.Count);
                 if(!randomSpawnIndex.Contains(spawnRdm)){ // if doesnt have yet, spawn normally
                     randomSpawnIndex.Add(spawnRdm);
-                    var props = PhotonNetwork.InstantiateRoomObject(NetworkManager.GetPhotonPrefab("Props", "ItemBox"), itemSpawnpoints[spawnRdm].position + new Vector3(Random.Range(-2,2f),Random.Range(-2,2f),0), Quaternion.identity);
+                    var props = PhotonNetwork.InstantiateRoomObject(PhotonNetworkManager.GetPhotonPrefab("Props", "ItemBox"), itemSpawnpoints[spawnRdm].position + new Vector3(Random.Range(-2,2f),Random.Range(-2,2f),0), Quaternion.identity);
                     
                     props.AddComponent<PropsAnimation>();
                     if(props.GetComponent<PropsAnimation>() != null){
@@ -49,7 +49,7 @@ public class ItemRandomSpawner : MonoBehaviourPunCallbacks
                     var newSpawnRdm = Random.Range(0, itemSpawnpoints.Count);
                     if(!randomSpawnIndex.Contains(newSpawnRdm)){
                         randomSpawnIndex.Add(newSpawnRdm);
-                        var props = PhotonNetwork.InstantiateRoomObject(NetworkManager.GetPhotonPrefab("Props", "ItemBox"), itemSpawnpoints[newSpawnRdm].position + new Vector3(Random.Range(-2,2f),Random.Range(-2,2f),0), Quaternion.identity);
+                        var props = PhotonNetwork.InstantiateRoomObject(PhotonNetworkManager.GetPhotonPrefab("Props", "ItemBox"), itemSpawnpoints[newSpawnRdm].position + new Vector3(Random.Range(-2,2f),Random.Range(-2,2f),0), Quaternion.identity);
                         
                         props.AddComponent<PropsAnimation>();
                         if(props.GetComponent<PropsAnimation>() != null){

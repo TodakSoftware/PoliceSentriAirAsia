@@ -91,7 +91,7 @@ public class UIManager : MonoBehaviour
     public IEnumerator CloseFindGame(float duration){
         if(p_MainMenu != null){
             yield return new WaitForSeconds(duration);
-            NetworkManager.instance.CancelFindGameOrLeaveRoom(); // tell networkmanager to close the finding
+            PhotonNetworkManager.instance.CancelFindGameOrLeaveRoom(); // tell networkmanager to close the finding
             p_MainMenu.findGameGO.SetActive(false);
         }
     }
@@ -105,7 +105,7 @@ public class UIManager : MonoBehaviour
     }
 
     public IEnumerator UpdateUI_FindgameTimeout(float duration){ // Called by NetworkManager. For timeout countdown display when find game
-        while(timeoutTimer <= duration && !NetworkManager.instance.isInGame)
+        while(timeoutTimer <= duration && !PhotonNetworkManager.instance.isInGame)
         {
             timeoutTimer += Time.deltaTime;
 
@@ -122,10 +122,10 @@ public class UIManager : MonoBehaviour
             yield return null;
         }
 
-        if(timeoutTimer >= duration && !NetworkManager.instance.isInGame){
+        if(timeoutTimer >= duration && !PhotonNetworkManager.instance.isInGame){
             if(p_MainMenu != null){
                 p_MainMenu.timeoutDurationText.text = "TIMEOUT!";
-                NetworkManager.instance.CancelFindGameOrLeaveRoom();
+                PhotonNetworkManager.instance.CancelFindGameOrLeaveRoom();
             }
             StartCoroutine(CloseFindGame(.3f)); // Close find game UI 
         }

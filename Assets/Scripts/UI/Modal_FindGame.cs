@@ -11,6 +11,6 @@ public class Modal_FindGame : MonoBehaviour
     public Coroutine coroutinefindRoomTimeout; // store coroutine for stopping timer
 
     void Start(){
-        cancelFindGameBtn.onClick.AddListener(delegate{NetworkManager.instance.CancelFindGameOrLeaveRoom();}); // Assign cancel find game function from networkManager into cancel button
+        cancelFindGameBtn.onClick.AddListener(delegate{PhotonNetworkManager.instance.CancelFindGameOrLeaveRoom();}); // Assign cancel find game function from networkManager into cancel button
     }
 }

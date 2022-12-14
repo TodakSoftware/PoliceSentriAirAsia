@@ -192,7 +192,7 @@ public class PlayerAbilities : MonoBehaviourPunCallbacks
                 }else{
                     stickyEnable = false;
                     canSpawnSticky = false;
-                    print("Done Spawning");
+                    //print("Done Spawning");
                 }
             }
             //  -------------------------------- Item Sticky Trail END ------------------------------------------------
@@ -392,9 +392,9 @@ public class PlayerAbilities : MonoBehaviourPunCallbacks
             AudioManager.instance.PlaySound("PS_UI_ThrowObject");
             GameObject ban = null;
             if(playerController.isFacingRight){
-                ban = PhotonNetwork.InstantiateRoomObject(NetworkManager.GetPhotonPrefab("Props", "prop_banana01_SP"), transform.position + new Vector3(-2f,0,0), Quaternion.identity);
+                ban = PhotonNetwork.InstantiateRoomObject(PhotonNetworkManager.GetPhotonPrefab("Props", "prop_banana01_SP"), transform.position + new Vector3(-2f,0,0), Quaternion.identity);
             }else{
-                ban = PhotonNetwork.InstantiateRoomObject(NetworkManager.GetPhotonPrefab("Props", "prop_banana01_SP"), transform.position + new Vector3(2f,0,0), Quaternion.identity);
+                ban = PhotonNetwork.InstantiateRoomObject(PhotonNetworkManager.GetPhotonPrefab("Props", "prop_banana01_SP"), transform.position + new Vector3(2f,0,0), Quaternion.identity);
             }   
             ban.GetComponent<Banana>().itemOwner = PhotonNetwork.LocalPlayer;
             ban.GetComponent<Banana>().ownerTeam = playerController.playerTeam;
@@ -564,13 +564,13 @@ public class PlayerAbilities : MonoBehaviourPunCallbacks
 
     IEnumerator SpawnStickyTrail(float dur){
         if(playerController.isFacingRight){
-            var ban = PhotonNetwork.Instantiate(NetworkManager.GetPhotonPrefab("Props", "floor_mud_small01_SP"), transform.position + new Vector3(-2f,0,0), Quaternion.identity);
+            var ban = PhotonNetwork.Instantiate(PhotonNetworkManager.GetPhotonPrefab("Props", "floor_mud_small01_SP"), transform.position + new Vector3(-2f,0,0), Quaternion.identity);
             ban.AddComponent<PropsAnimation>();
             if(ban.GetComponent<PropsAnimation>() != null){
                 ban.GetComponent<PropsAnimation>().duration = dur;
             }
         }else{
-            var ban = PhotonNetwork.Instantiate(NetworkManager.GetPhotonPrefab("Props", "floor_mud_small01_SP"), transform.position + new Vector3(2f,0,0), Quaternion.identity);
+            var ban = PhotonNetwork.Instantiate(PhotonNetworkManager.GetPhotonPrefab("Props", "floor_mud_small01_SP"), transform.position + new Vector3(2f,0,0), Quaternion.identity);
             ban.AddComponent<PropsAnimation>();
             if(ban.GetComponent<PropsAnimation>() != null){
                 ban.GetComponent<PropsAnimation>().duration = dur;
@@ -588,7 +588,7 @@ public class PlayerAbilities : MonoBehaviourPunCallbacks
         if(photonView.IsMine){
             AudioManager.instance.PlaySound("PS_UI_ThrowObject"); 
             
-            var cau = PhotonNetwork.Instantiate(NetworkManager.GetPhotonPrefab("Props", "prop_cauliflower01_SP"), playerController.aimPoint.transform.GetChild(0).position, Quaternion.identity);
+            var cau = PhotonNetwork.Instantiate(PhotonNetworkManager.GetPhotonPrefab("Props", "prop_cauliflower01_SP"), playerController.aimPoint.transform.GetChild(0).position, Quaternion.identity);
             Physics2D.IgnoreCollision(GetComponent<Collider2D>(), cau.GetComponent<Collider2D>());
             cau.GetComponent<Cauliflower>().teamOwner = gameObject.tag;
             cau.GetComponent<Cauliflower>().ownerGO = this.gameObject;
@@ -618,7 +618,7 @@ public class PlayerAbilities : MonoBehaviourPunCallbacks
         var throwSpeed = 28f; // adjust speed
         if(photonView.IsMine){
             AudioManager.instance.PlaySound("PS_UI_ThrowObject"); 
-            var cau = PhotonNetwork.Instantiate(NetworkManager.GetPhotonPrefab("Props", "prop_flashbang01_SP"), playerController.aimPoint.transform.GetChild(0).transform.position, Quaternion.identity);
+            var cau = PhotonNetwork.Instantiate(PhotonNetworkManager.GetPhotonPrefab("Props", "prop_flashbang01_SP"), playerController.aimPoint.transform.GetChild(0).transform.position, Quaternion.identity);
             cau.GetComponent<Flashbang>().explodeCountdown = duration;
             if(playerController.moveDir == Vector3.zero){
                 if(playerController.isFacingRight){
@@ -651,7 +651,7 @@ public class PlayerAbilities : MonoBehaviourPunCallbacks
         var throwSpeed = 20f; // adjust speed
         if(photonView.IsMine){
             AudioManager.instance.PlaySound("PS_UI_ThrowObject");
-            var cau = PhotonNetwork.Instantiate(NetworkManager.GetPhotonPrefab("Props", "prop_catstun01_SP"), playerController.aimPoint.transform.GetChild(0).transform.position, Quaternion.identity);
+            var cau = PhotonNetwork.Instantiate(PhotonNetworkManager.GetPhotonPrefab("Props", "prop_catstun01_SP"), playerController.aimPoint.transform.GetChild(0).transform.position, Quaternion.identity);
         
             if(playerController.isFacingRight){
                 cau.GetComponent<CatStun>().facingRight = true;
@@ -694,7 +694,7 @@ public class PlayerAbilities : MonoBehaviourPunCallbacks
             // Falling
             playerController.gameObject.GetPhotonView().RPC("PlayerFall", RpcTarget.All, duration);
             // Spawn Love Emote
-            var loveableEfx = PhotonNetwork.Instantiate(NetworkManager.GetPhotonPrefab("Particles", "Loveable"), (transform.position + new Vector3(0, 1f, 0)), Quaternion.identity);
+            var loveableEfx = PhotonNetwork.Instantiate(PhotonNetworkManager.GetPhotonPrefab("Particles", "Loveable"), (transform.position + new Vector3(0, 1f, 0)), Quaternion.identity);
             catStunned = true;
         }else{
             print("What happen?");

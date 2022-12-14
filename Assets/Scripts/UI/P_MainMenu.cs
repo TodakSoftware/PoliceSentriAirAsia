@@ -27,7 +27,7 @@ public class P_MainMenu : MonoBehaviour
         
         if(UIManager.instance.p_MainMenu == null){
             UIManager.instance.p_MainMenu = this;
-            NetworkManager.instance.isInGame = false;
+            PhotonNetworkManager.instance.isInGame = false;
         }
 
         if(PlayerPrefs.HasKey("Username")){
@@ -37,8 +37,8 @@ public class P_MainMenu : MonoBehaviour
             modalUsernameGO.SetActive(true);
         }
 
-        playButton.onClick.AddListener(delegate{  NetworkManager.instance.PlayOnlineGame(); }); // JoinTheGame(0)   Link playBtn with network manager join game
-        cancelFindGameBtn.onClick.AddListener(delegate{  NetworkManager.instance.CancelFindGameOrLeaveRoom(); }); // JoinTheGame(0)   Link playBtn with network manager join game
+        playButton.onClick.AddListener(delegate{  PhotonNetworkManager.instance.PlayOnlineGame(); }); // JoinTheGame(0)   Link playBtn with network manager join game
+        cancelFindGameBtn.onClick.AddListener(delegate{  PhotonNetworkManager.instance.CancelFindGameOrLeaveRoom(); }); // JoinTheGame(0)   Link playBtn with network manager join game
         //playWithBotButton.onClick.AddListener(delegate{ NetworkManager.instance.SetOffline(); }); // Link playWithBotBtn with network manager join game
     }
 }

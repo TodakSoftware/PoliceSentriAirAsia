@@ -13,7 +13,7 @@ public class P_EndScreen : MonoBehaviourPunCallbacks
     public GameObject scoreListPrefab, mvpPrefab, listContent;
 
     void Start(){
-        endScreenleaveBtn.onClick.AddListener(delegate{ StartCoroutine(NetworkManager.instance.InGameLeaveRoom());});
+        endScreenleaveBtn.onClick.AddListener(delegate{ StartCoroutine(PhotonNetworkManager.instance.InGameLeaveRoom());});
         playAgainBtn.onClick.AddListener(delegate{ PlayAgainButton();});
         ShowScoreList();
     }

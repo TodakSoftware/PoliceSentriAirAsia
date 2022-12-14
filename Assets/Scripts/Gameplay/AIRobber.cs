@@ -278,12 +278,15 @@ public class AIRobber : MonoBehaviourPunCallbacks
     public IEnumerator BotFalling(float dur){
         isFalling = true;
         isDashing = false;
+        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
 
         agent.Stop();
         ClearRoamTarget();
         ClearTarget();
 
         yield return new WaitForSeconds(dur);
+
+        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
 
         isFalling = false;
         agent.botDestinationReach = true;
@@ -399,7 +402,7 @@ public class AIRobber : MonoBehaviourPunCallbacks
             //playerController.gameObject.GetPhotonView().RPC("PlayerFall", RpcTarget.All, duration);
             StartCoroutine(BotFalling(duration));
             // Spawn Love Emote
-            var loveableEfx = PhotonNetwork.Instantiate(NetworkManager.GetPhotonPrefab("Particles", "Loveable"), (transform.position + new Vector3(0, 1f, 0)), Quaternion.identity);
+            var loveableEfx = PhotonNetwork.Instantiate(PhotonNetworkManager.GetPhotonPrefab("Particles", "Loveable"), (transform.position + new Vector3(0, 1f, 0)), Quaternion.identity);
             catStunned = true;
         }else{
             print("What happen?");

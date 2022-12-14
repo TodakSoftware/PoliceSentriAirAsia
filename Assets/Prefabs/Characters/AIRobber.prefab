@@ -6812,8 +6812,8 @@ MonoBehaviour:
   mass: 20
   stoppingDistance: 0.1
   slowingDistance: 0
-  accelerationRate: 10
-  decelerationRate: 10
+  accelerationRate: 100
+  decelerationRate: 100
   lookAheadDistance: 1
   avoidRadius: 0.3
   centerOffset: {x: 0, y: 0.14}
@@ -8200,7 +8200,7 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 24
   m_fontSizeMax: 40
-  m_fontStyle: 1
+  m_fontStyle: 17
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535

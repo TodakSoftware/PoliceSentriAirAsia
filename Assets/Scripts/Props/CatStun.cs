@@ -145,7 +145,7 @@ public class CatStun : MonoBehaviourPunCallbacks, IPunObservable
 
     void DelayExplode(){
         if(!alreadySpawnSmoke){
-            var smoke = PhotonNetwork.Instantiate(NetworkManager.GetPhotonPrefab("Particles", "PuffSmoke"), transform.position + new Vector3(0, .2f, 0), Quaternion.identity);
+            var smoke = PhotonNetwork.Instantiate(PhotonNetworkManager.GetPhotonPrefab("Particles", "PuffSmoke"), transform.position + new Vector3(0, .2f, 0), Quaternion.identity);
             
             if(photonView.IsMine){
                 photonView.RPC("Exploding", RpcTarget.All);

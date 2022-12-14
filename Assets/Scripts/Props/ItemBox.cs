@@ -23,7 +23,7 @@ public class ItemBox : MonoBehaviourPunCallbacks
         if(!doneAdd){
         //DOTween.KillAll(true);
         if(other.CompareTag("Robber")){
-            print("Pick it up");
+            //print("Pick it up");
             var random = Random.Range(0, robberItems.Count);
             
             if(!other.GetComponent<Robber>().isBot){

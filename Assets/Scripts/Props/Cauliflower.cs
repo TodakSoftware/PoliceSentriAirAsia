@@ -79,20 +79,20 @@ public class Cauliflower : MonoBehaviourPunCallbacks, IPunObservable
                         if(photonView.IsMine){
                             PhotonNetwork.Destroy(GetComponent<PhotonView>()); // 
                         }
-                        var explode = PhotonNetwork.Instantiate(NetworkManager.GetPhotonPrefab("Particles", "CauliflowerExplode"), transform.position, Quaternion.identity);
+                        var explode = PhotonNetwork.Instantiate(PhotonNetworkManager.GetPhotonPrefab("Particles", "CauliflowerExplode"), transform.position, Quaternion.identity);
                     }else if(other.CompareTag("Police") && other.gameObject != ownerGO){
                         other.GetComponent<PlayerController>().photonView.RPC("PlayerFall", RpcTarget.All, dur);
                         if(photonView.IsMine){
                             PhotonNetwork.Destroy(GetComponent<PhotonView>());
                         }
-                        var explode = PhotonNetwork.Instantiate(NetworkManager.GetPhotonPrefab("Particles", "CauliflowerExplode"), transform.position, Quaternion.identity);
+                        var explode = PhotonNetwork.Instantiate(PhotonNetworkManager.GetPhotonPrefab("Particles", "CauliflowerExplode"), transform.position, Quaternion.identity);
                     }else if(other.CompareTag("Police") && other.gameObject == ownerGO){
                         Physics2D.IgnoreCollision(GetComponent<Collider2D>(), other.GetComponent<Collider2D>());
                     }
 
                     hitted = true;
                 }else{
-                    var explode = PhotonNetwork.Instantiate(NetworkManager.GetPhotonPrefab("Particles", "CauliflowerExplode"), transform.position, Quaternion.identity);
+                    var explode = PhotonNetwork.Instantiate(PhotonNetworkManager.GetPhotonPrefab("Particles", "CauliflowerExplode"), transform.position, Quaternion.identity);
                     if(photonView.IsMine){
                         PhotonNetwork.Destroy(GetComponent<PhotonView>());
                     }

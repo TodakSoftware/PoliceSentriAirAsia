@@ -68,6 +68,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         btnDash = gameUI.dashButton.gameObject;
 
         // Link Dash
+        if(photonView.IsMine)
         btnDash.GetComponent<Button>().onClick.AddListener(delegate{StartCoroutine(PlayerDash(dashDuration));});
     }
 
@@ -138,7 +139,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         }
 
         // FPS Counter
-        if(NetworkManager.instance.hasInternet){
+        if(PhotonNetworkManager.instance.hasInternet){
             if(PhotonNetwork.GetPing() <= 100){
                 gameUI.fpsText.text = "<color=green>" + PhotonNetwork.GetPing() + "ms</color>";
             }else if(PhotonNetwork.GetPing() > 100 && PhotonNetwork.GetPing() < 200){
@@ -492,7 +493,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
 #region PARTICLES RELATED
     public void SpawnSmoke(){
-        var smoke = PhotonNetwork.Instantiate(NetworkManager.GetPhotonPrefab("Particles", "PuffSmoke"), (transform.position + new Vector3(0, 1f, 0)), Quaternion.identity);
+        var smoke = PhotonNetwork.Instantiate(PhotonNetworkManager.GetPhotonPrefab("Particles", "PuffSmoke"), (transform.position + new Vector3(0, 1f, 0)), Quaternion.identity);
     }
 
 #endregion // End particles related

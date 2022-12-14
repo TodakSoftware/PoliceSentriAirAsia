@@ -81,9 +81,9 @@ public class AIPolice : MonoBehaviourPunCallbacks
     }
 
     public void InitBot(){
-        InvokeRepeating("ChaseRobber", 0f, 1f);
+        InvokeRepeating("ChaseRobber", 0f, .3f);
         InvokeRepeating("UpdateRoaming", 0f, 1f);
-        InvokeRepeating("InvokeDash", 3f, 5f);
+        InvokeRepeating("InvokeDash", 3f, 6f);
         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
     }
 
@@ -195,12 +195,15 @@ public class AIPolice : MonoBehaviourPunCallbacks
     public IEnumerator BotFalling(float dur){
         isFalling = true;
         isDashing = false;
+        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
 
         agent.Stop();
         ClearRoamTarget();
         ClearTarget();
 
         yield return new WaitForSeconds(dur);
+
+        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
 
         isFalling = false;
         agent.botDestinationReach = true;
@@ -309,7 +312,7 @@ public class AIPolice : MonoBehaviourPunCallbacks
             //playerController.gameObject.GetPhotonView().RPC("PlayerFall", RpcTarget.All, duration);
             StartCoroutine(BotFalling(duration));
             // Spawn Love Emote
-            var loveableEfx = PhotonNetwork.Instantiate(NetworkManager.GetPhotonPrefab("Particles", "Loveable"), (transform.position + new Vector3(0, 1f, 0)), Quaternion.identity);
+            var loveableEfx = PhotonNetwork.Instantiate(PhotonNetworkManager.GetPhotonPrefab("Particles", "Loveable"), (transform.position + new Vector3(0, 1f, 0)), Quaternion.identity);
             catStunned = true;
         }else{
             print("What happen?");

@@ -146,6 +146,7 @@ MonoBehaviour:
   policeSlotBG: {fileID: 21300000, guid: e4b8cf17bd039b24c8707235ad65f7cd, type: 3}
   robberSlotBG: {fileID: 21300000, guid: ed1a47982165fa344af5bb1b401fc097, type: 3}
   actorNumber: 0
+  ownerOfThisAvatarGO: {fileID: 0}
 --- !u!1 &4345956245653628468
 GameObject:
   m_ObjectHideFlags: 0
@@ -473,7 +474,7 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 11
   m_fontSizeMax: 24
-  m_fontStyle: 0
+  m_fontStyle: 16
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535

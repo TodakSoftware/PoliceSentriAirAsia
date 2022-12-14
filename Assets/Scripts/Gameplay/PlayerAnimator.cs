@@ -98,31 +98,33 @@ public class PlayerAnimator : MonoBehaviourPunCallbacks
     } // end RevertAnimController
 
     public void PlayAnimation(string animName){
-        switch(animName){
-            case "Idle":
-                animator.SetBool("Run", false);
-                animator.SetBool("Dash", false);
-                animator.SetBool("Fall", false);
-            break;
+        if(photonView.IsMine){
+            switch(animName){
+                case "Idle":
+                    animator.SetBool("Run", false);
+                    animator.SetBool("Dash", false);
+                    animator.SetBool("Fall", false);
+                break;
 
-            case "Run":
-                animator.SetBool("Run", true);
-                animator.SetBool("Dash", false);
-                animator.SetBool("Fall", false);
-            break;
+                case "Run":
+                    animator.SetBool("Run", true);
+                    animator.SetBool("Dash", false);
+                    animator.SetBool("Fall", false);
+                break;
 
-            case "Dash":
-                animator.SetBool("Run", false);
-                animator.SetBool("Dash", true);
-                animator.SetBool("Fall", false);
-            break;
+                case "Dash":
+                    animator.SetBool("Run", false);
+                    animator.SetBool("Dash", true);
+                    animator.SetBool("Fall", false);
+                break;
 
-            case "Fall":
-                animator.SetBool("Run", false);
-                animator.SetBool("Dash", false);
-                animator.SetBool("Fall", true);
-            break;
-        } // end switch
+                case "Fall":
+                    animator.SetBool("Run", false);
+                    animator.SetBool("Dash", false);
+                    animator.SetBool("Fall", true);
+                break;
+            } // end switch
+        }
     } // end PlayAnim
 
 }

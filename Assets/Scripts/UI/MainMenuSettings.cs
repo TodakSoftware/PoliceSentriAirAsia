@@ -20,7 +20,7 @@ public class MainMenuSettings : MonoBehaviour
     }
 
     void OnEnable(){
-        if(!NetworkManager.instance.isInGame){
+        if(!PhotonNetworkManager.instance.isInGame){
             leaveButton.SetActive(false);
         }else{
             leaveButton.SetActive(true);
