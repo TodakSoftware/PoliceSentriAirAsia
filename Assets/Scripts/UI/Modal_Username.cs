@@ -8,6 +8,8 @@ public class Modal_Username : MonoBehaviour
 {
     public Button confirmBtn;
     public TMP_InputField usernameInput;
+    public TextMeshProUGUI profileAirasiaText;
+    public AirAsiaProfile aaProfile;
     //public Button closeBtn;
 
     void OnEnable(){
@@ -30,6 +32,8 @@ public class Modal_Username : MonoBehaviour
         PlayerPrefs.SetString("Username", usernameInput.text);
         UIManager.instance.p_MainMenu.usernameValue = usernameInput.text;
         UIManager.instance.p_MainMenu.usernameText.text = usernameInput.text;
+        profileAirasiaText.text = usernameInput.text;
+        aaProfile.FetchAirasiaData();
         PlayerPrefs.Save();
         gameObject.SetActive(false);
     }

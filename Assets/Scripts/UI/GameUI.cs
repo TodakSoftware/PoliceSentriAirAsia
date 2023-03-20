@@ -14,7 +14,12 @@ public class GameUI : MonoBehaviourPunCallbacks
     public TextMeshProUGUI fpsText, redirectCountdownText;
     [Header("Lobby Related")]
     public GameObject lobbyButtonGroup;
-    public Button lobbyLeaveGame, changeCharacterBtn;
+    public Button lobbyLeaveGame, changeCharacterBtn, startCountGameBtn, cancelCountGameBtn;
+    public bool hideRoomCode;
+    string roomCode;
+    public GameObject roomInfoGO;
+    public TextMeshProUGUI roomCodeText;
+    public GameObject copyCodeGO;
 
     [Header("Avatar Group")]
     public Transform avatarPoliceContent;
@@ -34,5 +39,28 @@ public class GameUI : MonoBehaviourPunCallbacks
         changeCharacterBtn.onClick.AddListener(delegate{UIManager.instance.PopupCharacterSelect();});
         //settingButton.onClick.AddListener(delegate{});
         settingLeaveBtn.onClick.AddListener(delegate{PhotonNetwork.LeaveRoom();});
+
+        roomCode = PhotonNetwork.CurrentRoom.Name;
+        roomCodeText.SetText(roomCode);
+        HideCode();
+    }
+
+    // Room Code related
+    public void HideCode(){
+        if(!hideRoomCode){
+            hideRoomCode = true;
+            roomCodeText.text = "-----";
+            copyCodeGO.SetActive(false);
+        }else{
+            hideRoomCode = false;
+            roomCodeText.text = roomCode;
+            copyCodeGO.SetActive(true);
+        }
+    }
+
+    // Copy Code
+    public void CopyCode(){
+        GUIUtility.systemCopyBuffer = roomCode;
+        NotificationManager.instance.PopupNotification("Room Code Copied!");
     }
 }

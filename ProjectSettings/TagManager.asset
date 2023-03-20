@@ -16,6 +16,23 @@ TagManager:
   - Objects
   - Walls
   - PolyNav
+  - c
+  - m
+  - z
+  - b
+  - n
+  - v
+  - x
+  - a
+  - k
+  - f
+  - j
+  - s
+  - h
+  - l
+  - g
+  - d
+  - P_MainMenu
   layers:
   - Default
   - TransparentFX

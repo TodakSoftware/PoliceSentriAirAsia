@@ -19,7 +19,7 @@ public class AudioManager : MonoBehaviour
 
     private float mvol; // Global music volume
     private float evol; // Global effects volume
-    public AudioSource bgmMusic;
+    [HideInInspector] public AudioSource bgmMusic;
 
     private void Start()
     {

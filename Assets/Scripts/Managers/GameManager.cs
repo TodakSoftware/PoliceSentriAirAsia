@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public bool gameEnded;
     public int startGameCountdown = 20; // Start Countdown Duration
     [SerializeField] int currentStartGameCountdown; // Start Countdown *NOT Moneybag countdown
+    Coroutine storedCurrentCountdown;
     [HideInInspector] public GameObject ownedPlayerGO; // The player who are currently owned the game manager (GameObject)
     public int currentIngamePolice, currentIngameRobber;
 
@@ -73,14 +74,17 @@ public class GameManager : MonoBehaviourPunCallbacks
     void Start(){
         Invoke("DelayMusic", 2f);
 
-        // Bot add escape points
-        if(botEscapeGO != null){
-            foreach(var child in botEscapeGO.GetComponentsInChildren<Transform>()){
-                if(child.CompareTag("BotEscape")){
-                    botEscapeSpawnpoints.Add(child);
+        if(PhotonNetwork.CurrentRoom.IsVisible){ // only if public
+            // Bot add escape points
+            if(botEscapeGO != null){
+                foreach(var child in botEscapeGO.GetComponentsInChildren<Transform>()){
+                    if(child.CompareTag("BotEscape")){
+                        botEscapeSpawnpoints.Add(child);
+                    }
                 }
             }
         }
+        
 
         UIManager.instance.RefreshMainCanvas(); // Make sure we have main canvas
         UIManager.instance.RefreshControllerGroup(); // Make sure we have reference the CanvasGroup
@@ -109,8 +113,54 @@ public class GameManager : MonoBehaviourPunCallbacks
         string formattedTimer = string.Format("{0:0}:{1:00}", minutes, seconds);
         UIManager.instance.gameUI.moneyTimerText.text = formattedTimer;
 
-        currentStartGameCountdown = startGameCountdown;
-        StartCoroutine(StartGameCountdown());
+        if((int)PhotonNetwork.CurrentRoom.CustomProperties["RoomPrivate"] == 0 || PhotonNetwork.OfflineMode){ // only if public
+            currentStartGameCountdown = startGameCountdown;
+            StartCoroutine(StartGameCountdown());
+            UIManager.instance.gameUI.startCountGameBtn.gameObject.SetActive(false);
+            UIManager.instance.gameUI.cancelCountGameBtn.gameObject.SetActive(false);
+            UIManager.instance.gameUI.roomInfoGO.gameObject.SetActive(false);
+        }else{
+            if(PhotonNetwork.IsMasterClient){
+                UIManager.instance.gameUI.startCountGameBtn.gameObject.SetActive(true);
+                UIManager.instance.gameUI.startCountGameBtn.onClick.AddListener(() => {
+                    AudioManager.instance.PlaySound("PS_UI_Button_Click");
+
+                    // SINI
+                    if(GetAllPlayersPolice().Count > 0 && GetAllPlayersRobber().Count > 0){
+                        UIManager.instance.gameUI.startCountGameBtn.gameObject.SetActive(false);
+                        UIManager.instance.gameUI.cancelCountGameBtn.gameObject.SetActive(true);
+
+                        photonView.RPC("StartCountdownRPC", RpcTarget.All);
+                    }else{
+                        NotificationManager.instance.PopupNotification("Atleast both team have player(s)");
+                    }
+                    
+
+                    // Disable 
+                });
+            }
+
+            if(PhotonNetwork.IsMasterClient){
+                UIManager.instance.gameUI.cancelCountGameBtn.onClick.AddListener(() => {
+                    if(storedCurrentCountdown != null){
+                        AudioManager.instance.PlaySound("PS_UI_Button_Click");
+                        photonView.RPC("StopCountdownRPC", RpcTarget.All);
+                        print("Cancelled");
+
+                        UIManager.instance.gameUI.startCountGameBtn.gameObject.SetActive(true);
+                        UIManager.instance.gameUI.cancelCountGameBtn.gameObject.SetActive(false);
+
+                        if(!UIManager.instance.gameUI.lobbyLeaveGame.interactable){
+                            UIManager.instance.gameUI.lobbyLeaveGame.interactable = true;
+                        }
+
+                        UIManager.instance.gameUI.redirectCountdownText.text = "";
+                    }
+                    // Disable 
+                });
+            }
+            //UIManager.instance.gameUI.cancelCountGameBtn.gameObject.SetActive(false);
+        }
 
         PhotonNetworkManager.instance.isInGame = true;
 
@@ -120,6 +170,20 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         PhotonNetwork.IsMessageQueueRunning = true;
     } // end Start
+
+    [PunRPC]
+    public void StartCountdownRPC(){
+        currentStartGameCountdown = 3;
+        storedCurrentCountdown = StartCoroutine(StartGameCountdown());
+    }
+
+    [PunRPC]
+    public void StopCountdownRPC(){
+        StopCoroutine(storedCurrentCountdown);
+        storedCurrentCountdown = null;
+
+        UIManager.instance.gameUI.redirectCountdownText.text = "";
+    }
 
     public void DelayMusic(){
          // Play Music
@@ -151,22 +215,16 @@ public class GameManager : MonoBehaviourPunCallbacks
         } // end gameStarted
 
         //if(!gameEnded && currentStartGameCountdown <= 8 && !doneSpawnBots && GetAllPlayers().Count == (int)PhotonNetwork.CurrentRoom.CustomProperties["RealTotalPlayer"] && PhotonNetwork.CurrentRoom.CustomProperties["RealTotalPlayer"] != null){
-        if(!gameEnded && currentStartGameCountdown <= 8 && !doneSpawnBots){
-            // Fill Bots
-            if(fillWithBots){
-                if(PhotonNetwork.IsMasterClient){
-                    //StartCoroutine(SpawnBots());
-                    photonView.RPC("SpawnBots", RpcTarget.AllBuffered);
+        if(PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("RoomPrivate") && (int)PhotonNetwork.CurrentRoom.CustomProperties["RoomPrivate"] == 0){ // only if public
+            if(!gameEnded && currentStartGameCountdown <= 8 && !doneSpawnBots){
+                // Fill Bots
+                if(fillWithBots){
+                    if(PhotonNetwork.IsMasterClient){
+                        //StartCoroutine(SpawnBots());
+                        photonView.RPC("SpawnBots", RpcTarget.AllBuffered);
+                    }
                 }
             }
-        }
-
-        if(Input.GetKeyDown(KeyCode.M)){
-            
-        }
-
-        if(Input.GetKeyDown(KeyCode.N)){
-            
         }
     }
 
@@ -331,6 +389,10 @@ public class GameManager : MonoBehaviourPunCallbacks
         while(currentStartGameCountdown != 0){
             if(currentStartGameCountdown > 0 && currentStartGameCountdown <= 3){
                 AudioManager.instance.PlaySound("PS_UI_Countdown");
+
+                if(UIManager.instance.gameUI.lobbyLeaveGame.interactable){
+                    UIManager.instance.gameUI.lobbyLeaveGame.interactable = false;
+                }
             }
             UIManager.instance.gameUI.redirectCountdownText.text = ""+currentStartGameCountdown;
             yield return new WaitForSeconds(1f);
@@ -381,6 +443,9 @@ public class GameManager : MonoBehaviourPunCallbacks
 
                 // Close Lobby Button Group
                 UIManager.instance.gameUI.lobbyButtonGroup.SetActive(false);
+
+                // CLose Room Code GO
+                UIManager.instance.gameUI.roomInfoGO.SetActive(false);
 
                 // Close Lobby Button Group
                 UIManager.instance.gameUI.moneybagTimerGroup.SetActive(true);

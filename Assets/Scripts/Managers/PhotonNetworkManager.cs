@@ -35,8 +35,10 @@ public class PhotonNetworkManager : MonoBehaviourPunCallbacks
     public bool isInGame, isInTheRoom, isCreatingRoom,dontConnectInternet, joinedLobby, playOfflineGame;
     public bool playAgainExecuted, instantCreateFindGame;
     private LoadBalancingClient loadBalancingClient;
+    public P_MainMenu cacheP_mainMenu;
 
     void Awake(){
+        cacheP_mainMenu = GameObject.FindGameObjectWithTag("P_MainMenu").GetComponent<P_MainMenu>();
         if(instance == null){
             instance = this;
 
@@ -102,7 +104,7 @@ public class PhotonNetworkManager : MonoBehaviourPunCallbacks
             Connectz();
         }
 
-        if(!isInGame){
+        /* if(!isInGame){
             if(PhotonNetwork.IsConnectedAndReady && hasInternet && joinedLobby && !dontConnectInternet && UIManager.instance.p_MainMenu != null){
                 if(UIManager.instance.p_MainMenu.playButton != null && !UIManager.instance.p_MainMenu.playButton.interactable)
                     UIManager.instance.p_MainMenu.playButton.interactable = true;
@@ -110,19 +112,7 @@ public class PhotonNetworkManager : MonoBehaviourPunCallbacks
                 if(UIManager.instance.p_MainMenu.playButton != null && UIManager.instance.p_MainMenu.playButton.interactable)
                     UIManager.instance.p_MainMenu.playButton.interactable = false;
             }
-        }
-
-        if(Input.GetKeyDown(KeyCode.H)){ // Temporary, just for debugging
-            
-        }
-
-        if(Input.GetKeyDown(KeyCode.J)){ // Temporary, just for debugging
-           
-        }
-
-        if(Input.GetKeyDown(KeyCode.Space)){ // Temporary, just for debugging
-           
-        }
+        } */
 
         if(isQueing && queingTimer < queingCooldown && !isInTheRoom && !doneQueing){
             StartCoroutine(QueingFindRoom());
@@ -130,7 +120,7 @@ public class PhotonNetworkManager : MonoBehaviourPunCallbacks
         }
 
         // Auto start if 1 minit passed
-        if(isInTheRoom && PhotonNetwork.CurrentRoom.PlayerCount >= 1 && PhotonNetwork.CurrentRoom.PlayerCount < (int)maxPlayersPerRoom && UIManager.instance.timeoutTimer >= findGameAutoStart && !autoStartCreateGame){ // if we in room & timer find game >= autostart
+        if(hasInternet && isInTheRoom && PhotonNetwork.CurrentRoom.PlayerCount >= 1 && PhotonNetwork.CurrentRoom.PlayerCount < (int)maxPlayersPerRoom && UIManager.instance.timeoutTimer >= findGameAutoStart && !autoStartCreateGame){ // if we in room & timer find game >= autostart
             
             if(PhotonNetwork.IsMasterClient){
                 //print("Auto Start Game With Current Players = " + PhotonNetwork.CurrentRoom.PlayerCount);
@@ -143,6 +133,7 @@ public class PhotonNetworkManager : MonoBehaviourPunCallbacks
 
                 autoStartCreateGame = true;
             }
+        }else{
         }
 
         // Play Again 
@@ -154,17 +145,36 @@ public class PhotonNetworkManager : MonoBehaviourPunCallbacks
     } // end Update
 
     public void Connectz(){
+        
         if(connectInUpdate && autoConnect && !PhotonNetwork.IsConnected && hasInternet){
             connectInUpdate = false; // run only once
-            if(UIManager.instance.p_MainMenu != null){
-                UIManager.instance.p_MainMenu.playButton.interactable = false;
-                UIManager.instance.p_MainMenu.playText.text = "CONNECTING...";
+            
+            if(cacheP_mainMenu != null){
+                /* cacheP_mainMenu.playButton.gameObject.SetActive(true);
+                cacheP_mainMenu.playWithBotButton.gameObject.SetActive(false); */
                 
-                if(UIManager.instance.p_MainMenu.statusText != null)
-                UIManager.instance.p_MainMenu.statusText.text = "Network: CONNECTING...";
+                cacheP_mainMenu.playButton.interactable = false;
+                cacheP_mainMenu.privateButton.interactable = false;
+                cacheP_mainMenu.playText.text = "CONNECTING...";
+                cacheP_mainMenu.playText.color = Color.white;
+                
+                if(cacheP_mainMenu.statusText != null)
+                cacheP_mainMenu.statusText.text = "Network: CONNECTING...";
             }
             
             PhotonNetwork.ConnectUsingSettings(); // Connect to master server using settings | Noted: ConnectUsingSettings("v0.0.1") <-- Also can
+        }else{
+            if(!hasInternet){
+                if(cacheP_mainMenu != null){
+                   /*  cacheP_mainMenu.playButton.gameObject.SetActive(false);
+                    cacheP_mainMenu.playWithBotButton.gameObject.SetActive(true); */
+                    cacheP_mainMenu.playText.text = "Internet Unavailable";
+                    cacheP_mainMenu.playText.color = Color.gray;
+                    
+                    if(cacheP_mainMenu.statusText != null)
+                    cacheP_mainMenu.statusText.text = "Network: OFFLINE";
+                }
+            }
         }
     }
 
@@ -243,8 +253,8 @@ public class PhotonNetworkManager : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster(){
         
         if(PhotonNetwork.IsConnected){
-            if(UIManager.instance.p_MainMenu.statusText != null)
-                UIManager.instance.p_MainMenu.statusText.text = "Network: <color=yellow>Initializing...</color>";
+            if(cacheP_mainMenu.statusText != null)
+                cacheP_mainMenu.statusText.text = "Network: <color=yellow>Initializing...</color>";
 
             PhotonNetwork.JoinLobby(TypedLobby.Default);
         }else{
@@ -261,12 +271,13 @@ public class PhotonNetworkManager : MonoBehaviourPunCallbacks
         loadBalancingClient.LoadBalancingPeer.MaximumTransferUnit = 520;
 
 
-        if(UIManager.instance.p_MainMenu.statusText != null)
-                UIManager.instance.p_MainMenu.statusText.text = "Network: <color=green>Connected</color>";
+        if(cacheP_mainMenu.statusText != null)
+                cacheP_mainMenu.statusText.text = "Network: <color=green>Connected</color>";
 
-        if(UIManager.instance.p_MainMenu != null){
-            UIManager.instance.p_MainMenu.playButton.interactable = true;
-            UIManager.instance.p_MainMenu.playText.text = "PLAY";
+        if(cacheP_mainMenu!= null){
+            cacheP_mainMenu.playButton.interactable = true;
+            cacheP_mainMenu.privateButton.interactable = true;
+            cacheP_mainMenu.playText.text = "PLAY";
         }
     } // end OnJoinedLobby
     
@@ -300,7 +311,7 @@ public class PhotonNetworkManager : MonoBehaviourPunCallbacks
         //print("Rejoin Called");
         Hashtable expectedRoomProperties = new Hashtable();
         expectedRoomProperties["RoomGamemodeIndex"] = 0;
-
+        expectedRoomProperties["RoomPrivate"] = 0;
         // Join Random Room With expected properties
         if(!PhotonNetwork.InRoom && hasInternet && queingTimer < queingCooldown && isQueing){
             PhotonNetwork.JoinRandomRoom(expectedRoomProperties, maxPlayersPerRoom);
@@ -316,8 +327,11 @@ public class PhotonNetworkManager : MonoBehaviourPunCallbacks
         //if(queingTimer >= queingCooldown){
             print("No available room found! Creating...");
             RoomOptions roomOptions = new RoomOptions();
+            roomOptions.IsVisible = true;
             roomOptions.PlayerTtl = -1; // -1 sec for infinite : Duration for player to reconnect before kicked / timeout <- Punca player kluar room n amount still melekat
             roomOptions.MaxPlayers = maxPlayersPerRoom;
+            roomOptions.CustomRoomProperties = new Hashtable();
+            roomOptions.CustomRoomProperties.Add("RoomPrivate", 0);
             
             roomOptions.EmptyRoomTtl = 0;
 
@@ -509,12 +523,17 @@ public class PhotonNetworkManager : MonoBehaviourPunCallbacks
     }
 
     public void CheckForInternet(){
+        /* if(cacheP_mainMenu == null){
+            cacheP_mainMenu = GameObject.FindGameObjectWithTag("P_MainMenu").GetComponent<P_MainMenu>();
+        } */
+
         if(Application.internetReachability == NetworkReachability.NotReachable){
             hasInternet = false;
             //PhotonNetwork.OfflineMode = true;
 
             if(UIManager.instance.p_MainMenu != null){
                 UIManager.instance.p_MainMenu.playButton.interactable = false;
+                UIManager.instance.p_MainMenu.privateButton.interactable = false;
                 UIManager.instance.p_MainMenu.playText.text = "No Network";
             }
         }else{
@@ -522,6 +541,7 @@ public class PhotonNetworkManager : MonoBehaviourPunCallbacks
             //PhotonNetwork.OfflineMode = false;
             if(UIManager.instance.p_MainMenu != null && joinedLobby){
                 UIManager.instance.p_MainMenu.playButton.interactable = true;
+                UIManager.instance.p_MainMenu.privateButton.interactable = true;
                 UIManager.instance.p_MainMenu.playText.text = "Play";
             }
         }
@@ -529,29 +549,45 @@ public class PhotonNetworkManager : MonoBehaviourPunCallbacks
 
     public void SetOffline(){
         //Application.internetReachability = NetworkReachability.NotReachable;
-        //PhotonNetwork.Disconnect();
-        playOfflineGame = true;
-        PhotonNetwork.NetworkingClient.State = ClientState.PeerCreated;
-        dontConnectInternet = true;
+        //PhotonNetwork.NetworkingClient.State = ClientState.PeerCreated;
         //PhotonNetwork.NetworkingClient.Disconnect();
         
         StartCoroutine(CanJoinGame());
     }
 
     IEnumerator CanJoinGame(){
-        while(PhotonNetwork.IsConnected){
+        dontConnectInternet = true;
+        if(PhotonNetwork.IsConnected){
+            while(PhotonNetwork.IsConnected){
             yield return new WaitForSeconds(1f);
             PhotonNetwork.Disconnect();
-        }
-        
-        if(!PhotonNetwork.IsConnected){
+
+            if(!PhotonNetwork.IsConnected){
+                    hasInternet = false;
+                    PhotonNetwork.OfflineMode = true;
+
+                    findGameAutoStart = 0f;
+                    playOfflineGame = true;
+
+                    //yield return new WaitForSeconds(1f);
+                    //JoinTheGame(0);
+
+                    JoinOfflineGame();
+                }
+            } // end while
+        }else{
             hasInternet = false;
             PhotonNetwork.OfflineMode = true;
-            yield return new WaitForSeconds(1f);
-            JoinTheGame(0);
+
+            findGameAutoStart = 0f;
+            playOfflineGame = true;
+
+            //yield return new WaitForSeconds(1f);
+            //JoinTheGame(0);
+
+            JoinOfflineGame();
         }
-        
-    }
+    } // end CanJoinGame
 
     // ----------------------- CONNECTION RELATED END -------------------
 
@@ -585,25 +621,32 @@ public class PhotonNetworkManager : MonoBehaviourPunCallbacks
             isInTheRoom = true;
             print("Total enter room :" + _enteredPlayer);
 
-            if(PhotonNetwork.CurrentRoom.PlayerCount > 1){
-                UIManager.instance.p_MainMenu.waitingForPlayersText.text = "Waiting for player..." + PhotonNetwork.CurrentRoom.PlayerCount + "/" + (int)maxPlayersPerRoom;
-                
+            if(playOfflineGame){
+                if(PhotonNetwork.IsMasterClient){
+                    PhotonNetwork.CurrentRoom.IsVisible = false; // Set Room IsVisible = false
+                    StartCoroutine(ChangeScene(_roomMapName));// Host load level
+                }
             }else{
-                UIManager.instance.p_MainMenu.waitingForPlayersText.text = "Waiting for player...";
+                if(PhotonNetwork.CurrentRoom.PlayerCount > 1){
+                    UIManager.instance.p_MainMenu.waitingForPlayersText.text = "Waiting for player..." + PhotonNetwork.CurrentRoom.PlayerCount + "/" + (int)maxPlayersPerRoom;
+                    
+                }else{
+                    UIManager.instance.p_MainMenu.waitingForPlayersText.text = "Waiting for player...";
+                }
+        
+                // If a room match all requirement, Host responsible to change the scene
+                    if(_enteredPlayer == _roomTotalPlayer && isFindingGame){ // Only do this when we are finding game
+                        print("Matched!");
+                        //UIManager.instance.PopupLoadingScene(); // Popup Loading Scene UI
+
+                        if(PhotonNetwork.IsMasterClient){
+                            PhotonNetwork.CurrentRoom.IsVisible = false; // Set Room IsVisible = false
+                            StartCoroutine(ChangeScene(_roomMapName));// Host load level
+                        }
+
+                        isFindingGame = false; // Set status to isFindingGame
+                    } // end _totalHuman == roomTotalMaxHuman
             }
-    
-            // If a room match all requirement, Host responsible to change the scene
-                if(_enteredPlayer == _roomTotalPlayer && isFindingGame){ // Only do this when we are finding game
-                    print("Matched!");
-                    //UIManager.instance.PopupLoadingScene(); // Popup Loading Scene UI
-
-                    if(PhotonNetwork.IsMasterClient){
-                        PhotonNetwork.CurrentRoom.IsVisible = false; // Set Room IsVisible = false
-                        StartCoroutine(ChangeScene(_roomMapName));// Host load level
-                    }
-
-                    isFindingGame = false; // Set status to isFindingGame
-                } // end _totalHuman == roomTotalMaxHuman
         } // end PhotonNetwork.InRoom
 
     } // end UpdateTotalFindGame
@@ -617,6 +660,21 @@ public class PhotonNetworkManager : MonoBehaviourPunCallbacks
         PhotonNetwork.OfflineMode = false;
         JoinTheGame(0);
     }
+
+    public void JoinOfflineGame(){
+        isInGame = false;
+        isCreatingRoom = false;
+        isInTheRoom = false;
+        isFindingGame = true; // Set status to isFindingGame
+
+        if(!hasInternet){
+            print("No Internet, so we add bot, load offline level");
+            //UIManager.instance.PopupLoadingScene(); // Popup Loading Scene UI
+            HostTheRoom();
+        }else{
+            print("Cannot Join. Because maybe you are in a room....maybe.");
+        }
+    }
     
     public void JoinTheGame(int modeIndex){ // Used by buttons in ChooseRole Screen
         isInGame = false;
@@ -624,13 +682,13 @@ public class PhotonNetworkManager : MonoBehaviourPunCallbacks
         isInTheRoom = false;
         isFindingGame = true; // Set status to isFindingGame
 
-        if(PlayerPrefs.HasKey("PlayAgain") && PlayerPrefs.GetInt("PlayAgain") == 1){
+        /* if(PlayerPrefs.HasKey("PlayAgain") && PlayerPrefs.GetInt("PlayAgain") == 1){
             PlayerPrefs.SetInt("PlayAgain", 0);
             PlayerPrefs.DeleteKey("PlayAgain");
             PlayerPrefs.Save();
 
             playAgainExecuted = false;
-        }
+        } */
 
         UIManager.instance.timeoutTimer = 0; // Reset timer
 
@@ -682,6 +740,9 @@ public class PhotonNetworkManager : MonoBehaviourPunCallbacks
         isInGame = false;
         isCreatingRoom = false;
         autoStartCreateGame = false;
+        playOfflineGame = false;
+        dontConnectInternet = false;
+        print("InitLeaveRoom");
 
         if(isQueing){
             isQueing = false;
@@ -699,12 +760,15 @@ public class PhotonNetworkManager : MonoBehaviourPunCallbacks
         
         yield return new WaitForSeconds(.5f);
 
-       isFindingGame = false; // Set status to isFindingGame
+        isFindingGame = false; // Set status to isFindingGame
         isInTheRoom = false;
         doneQueing = false;
         isInGame = false;
         isCreatingRoom = false;
         autoStartCreateGame = false;
+        playOfflineGame = false;
+        dontConnectInternet = false;
+        print("InGameLeaveRoom");
 
         if(isQueing){
             isQueing = false;
@@ -734,6 +798,10 @@ public class PhotonNetworkManager : MonoBehaviourPunCallbacks
 
     public IEnumerator ChangeScene(string sceneName){ // Load level instantly without loading screen
         //if(PhotonNetwork.IsMasterClient){
+            playOfflineGame = false;
+            dontConnectInternet = false;
+            print("ChangeScene");
+
             yield return new WaitForSeconds(1.3f);
             PhotonNetwork.IsMessageQueueRunning = false;
             //if(PhotonNetwork.IsConnectedAndReady){

@@ -30,6 +30,7 @@ public class KeyboardButtonController : MonoBehaviour
     public void AddLetter() {
         if(KeyboardManager.instance != null) {
             KeyboardManager.instance.AddLetter(containerText.text);
+            Debug.Log(containerText.text + " is pressed");
         } else {
             Debug.Log(containerText.text + " is pressed");
         }

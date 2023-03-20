@@ -13035,6 +13035,7 @@ GameObject:
   - component: {fileID: 407786497}
   - component: {fileID: 1944702109894327942}
   - component: {fileID: 1277218354451065343}
+  - component: {fileID: 7566912328486823219}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -13108,7 +13109,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2.56, y: 2.56}
+  m_Size: {x: 3.6, y: 3.6}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -13135,7 +13136,7 @@ Animator:
   m_GameObject: {fileID: 7955344203932985293}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 22100000, guid: a9041b9c84641764e9d95c1d9152213c, type: 2}
+  m_Controller: {fileID: 9100000, guid: 7666d4ad6153b64438273f3885f0a6cc, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -13213,6 +13214,27 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &7566912328486823219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7955344203932985293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13c6d895b0c745941b3a48383cc5807c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  footstepsLists:
+  - PS_UI_Footstep
+  soundLists: []
+  playOnAwake: 0
+  soundIndex: 0
+  playAll: 0
+  enableRandom: 0
+  startIndex: 0
+  endIndex: 0
 --- !u!1 &8139221167767283483
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapsList:
   - name: Map01
-    displayName: Basic Map
+    displayName: Playground
     description: This is just a description for map
   - name: Map02
-    displayName: Basic Map
+    displayName: Warehouse
     description: This is just a description for map
   - name: Map_KualaLumpur_02
-    displayName: Basic Map
+    displayName: Kuala Lumpur
     description: This is just a description for map
   - name: Map_Langkawi_03
-    displayName: Basic Map
+    displayName: Langkawi
     description: This is just a description for map
