@@ -6441,6 +6441,7 @@ GameObject:
   - component: {fileID: 3297899693586578346}
   - component: {fileID: 995072590878122508}
   - component: {fileID: 3722870533940350077}
+  - component: {fileID: 2587406343502602997}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -6619,6 +6620,27 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &2587406343502602997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4873863652185589862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13c6d895b0c745941b3a48383cc5807c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  footstepsLists:
+  - PS_UI_Footstep
+  soundLists: []
+  playOnAwake: 0
+  soundIndex: 0
+  playAll: 0
+  enableRandom: 0
+  startIndex: 0
+  endIndex: 0
 --- !u!1 &4873863652774326898
 GameObject:
   m_ObjectHideFlags: 0

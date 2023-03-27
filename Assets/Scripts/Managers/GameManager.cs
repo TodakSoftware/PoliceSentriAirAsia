@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public List<Transform> robberSpawnpoints = new List<Transform>();
     public List<Transform> moneybagSpawnpoints = new List<Transform>();
     public GameObject botEscapeGO;
-    [HideInInspector] public List<Transform> botEscapeSpawnpoints = new List<Transform>();
+    public List<Transform> botEscapeSpawnpoints = new List<Transform>();
 
     [Header("Moneybag Related")]
     [SerializeField] int timerStart; // <-- Will link to Game Mode settings (Clock Start)
@@ -74,7 +74,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     void Start(){
         Invoke("DelayMusic", 2f);
 
-        if(PhotonNetwork.CurrentRoom.IsVisible){ // only if public
+        //if(PhotonNetwork.CurrentRoom.IsVisible){ // only if public
             // Bot add escape points
             if(botEscapeGO != null){
                 foreach(var child in botEscapeGO.GetComponentsInChildren<Transform>()){
@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviourPunCallbacks
                     }
                 }
             }
-        }
+        //}
         
 
         UIManager.instance.RefreshMainCanvas(); // Make sure we have main canvas

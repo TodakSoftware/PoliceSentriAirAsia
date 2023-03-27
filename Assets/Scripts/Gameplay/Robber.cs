@@ -181,6 +181,9 @@ public class Robber : MonoBehaviourPunCallbacks
                 StartCoroutine(GetComponent<AIRobber>().BotFalling(1.5f)); // Fall
                 photonView.RPC("DisableCollider", RpcTarget.All, true); // Disable Collider
                 // Popup Caugh Image
+                Hashtable updateData = new Hashtable();
+                updateData.Add("PlayerCaught", true); // Set PlayerCaught -> TRUE
+                PhotonNetwork.LocalPlayer.SetCustomProperties(updateData);
             }
 
 
@@ -242,6 +245,25 @@ public class Robber : MonoBehaviourPunCallbacks
                 UIManager.instance.NotificationPoliceCapture(policeName, GetComponent<AIRobber>().playerNameText.text.ToString()); // Popup Notification that police caught ourself
             }
 
+             if (isBot)
+            {
+                //GetComponent<AIRobber>().GoInsidePrison();
+
+                if (isHoldMoneybag || moneybagDisplay.activeSelf)
+                { // if we are holding moneybag
+                    GameManager.instance.photonView.RPC("SpawnAllMoneybag", RpcTarget.MasterClient);
+                    GameManager.instance.photonView.RPC("SetMoneybagOccupied", RpcTarget.AllBuffered, false);
+                    
+                    print("Moneybag has Respawn!!!");
+                }
+
+                photonView.RPC("DisplayMoneybag", RpcTarget.AllBuffered, false); // Hide moneybag
+                photonView.RPC("DisableCollider", RpcTarget.All, false); // Enable Collider
+                photonView.RPC("EnableJailCollider", RpcTarget.All, true); // Enable Jail COllider for released
+
+                GameManager.instance.photonView.RPC("UpdateAvatarsUI", RpcTarget.AllBuffered);
+            }
+
         }
         else
         {
@@ -263,6 +285,14 @@ public class Robber : MonoBehaviourPunCallbacks
         }
     }
 
+    IEnumerator DelayGoToSideJail()
+    {
+        yield return new WaitForSeconds(.5f);
+
+        GetComponent<AIRobber>().GoInsidePrison();
+        print("Nyah kau ke sana!!!");
+    }
+
     IEnumerator RedirectToJailed(float delay)
     {
         yield return new WaitForSeconds(delay);
@@ -274,10 +304,12 @@ public class Robber : MonoBehaviourPunCallbacks
         {
             GetComponent<AIRobber>().GoInsidePrison();
 
-            if (isHoldMoneybag)
+            if (isHoldMoneybag || moneybagDisplay.activeSelf)
             { // if we are holding moneybag
                 GameManager.instance.photonView.RPC("SpawnAllMoneybag", RpcTarget.MasterClient);
                 GameManager.instance.photonView.RPC("SetMoneybagOccupied", RpcTarget.AllBuffered, false);
+                
+                print("Moneybag has Respawn!!!");
             }
 
             photonView.RPC("DisplayMoneybag", RpcTarget.AllBuffered, false); // Hide moneybag
@@ -286,21 +318,23 @@ public class Robber : MonoBehaviourPunCallbacks
 
             GameManager.instance.photonView.RPC("UpdateAvatarsUI", RpcTarget.AllBuffered);
             GameManager.instance.photonView.RPC("CheckWinningCondition", RpcTarget.AllBuffered);
+            
+            //GetComponent<AIRobber>().GoInsidePrison();
         }
 
         if (photonView.IsMine && !isBot)
         {
-
-            Hashtable updateData = new Hashtable();
             if (isHoldMoneybag)
             { // if we are holding moneybag
+                Hashtable updateData = new Hashtable();
                 updateData.Add("PlayerHoldMoneybag", false); // Set PlayerHoldMoneybag -> FALSE *will auto respawn new moneybag
 
                 GameManager.instance.photonView.RPC("SpawnAllMoneybag", RpcTarget.MasterClient);
                 GameManager.instance.photonView.RPC("SetMoneybagOccupied", RpcTarget.AllBuffered, false);
-            }
-            PhotonNetwork.LocalPlayer.SetCustomProperties(updateData);
 
+                PhotonNetwork.LocalPlayer.SetCustomProperties(updateData);
+            }
+            
             photonView.RPC("DisplayMoneybag", RpcTarget.AllBuffered, false); // Hide moneybag
             photonView.RPC("DisableCollider", RpcTarget.All, false); // Enable Collider
             photonView.RPC("EnableJailCollider", RpcTarget.All, true); // Enable Jail COllider for released
@@ -449,6 +483,11 @@ public class Robber : MonoBehaviourPunCallbacks
         if (isEnable)
         {
             jailCollider.SetActive(true);
+
+            // if (isBot)
+            // {
+            //     GetComponent<AIRobber>().GoInsidePrison();
+            // }
         }
         else
         {

@@ -520,6 +520,7 @@ public class PhotonNetworkManager : MonoBehaviourPunCallbacks
         //DisconnectCause.DisconnectByClientLogic // <--- Player close the game suddenly
         // if disconnect suddenly -> Popup Reconnect UI Prefab
         // if internet not reachable -> loading screen will popup & reconnect
+        AudioManager.instance.StopMusic();
     }
 
     public void CheckForInternet(){

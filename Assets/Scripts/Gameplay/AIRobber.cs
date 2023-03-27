@@ -141,7 +141,7 @@ public class AIRobber : MonoBehaviourPunCallbacks
         }
     }
 
-    void HandleTarget(){
+    public void HandleTarget(){
         if(target != null){
             if(target.CompareTag("MoneyBag")){
                 if(!GameManager.instance.moneyBagOccupied){
@@ -173,7 +173,7 @@ public class AIRobber : MonoBehaviourPunCallbacks
         target = null;
     }
 
-    void ClearRoamTarget(){
+    public void ClearRoamTarget(){
         roamTarget = null;
     }
 
@@ -194,6 +194,7 @@ public class AIRobber : MonoBehaviourPunCallbacks
             target = GetNearInsideJailPosition();
             HandleTarget();
             ClearRoamTarget();
+            
         }
     }
 
@@ -264,7 +265,7 @@ public class AIRobber : MonoBehaviourPunCallbacks
         return GameManager.instance.botEscapeSpawnpoints[randomIndex].GetChild(0);
     }
 
-    Transform GetNearInsideJailPosition(){ // inside prison
+    public Transform GetNearInsideJailPosition(){ // inside prison
         var randomIndex = Random.Range(0, GameManager.instance.botEscapeSpawnpoints.Count);
         return GameManager.instance.botEscapeSpawnpoints[randomIndex];
     }

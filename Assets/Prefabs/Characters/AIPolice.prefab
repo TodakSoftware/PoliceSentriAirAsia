@@ -12857,6 +12857,7 @@ GameObject:
   - component: {fileID: 1944702109894327942}
   - component: {fileID: 1277218354451065343}
   - component: {fileID: 1136904038562914191}
+  - component: {fileID: 3409468728327805066}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -13035,6 +13036,27 @@ MonoBehaviour:
   animator: {fileID: 0}
   animatorController: {fileID: 0}
   originalAnimatorController: {fileID: 0}
+--- !u!114 &3409468728327805066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7955344203932985293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13c6d895b0c745941b3a48383cc5807c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  footstepsLists:
+  - PS_UI_Footstep
+  soundLists: []
+  playOnAwake: 0
+  soundIndex: 0
+  playAll: 0
+  enableRandom: 0
+  startIndex: 0
+  endIndex: 0
 --- !u!1 &8139221167767283483
 GameObject:
   m_ObjectHideFlags: 0
