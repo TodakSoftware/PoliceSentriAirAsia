@@ -74,3 +74,9 @@ MonoBehaviour:
     idlePose: {fileID: 21300000, guid: 65a1805c37f85d247ac97f65ed6382ae, type: 3}
     runTimeAnimController: {fileID: 22100000, guid: 59972de8ba5216646ab29aec87dc8166, type: 2}
     temporaryDisable: 0
+  - name: Airi
+    code: R90
+    iconHead: {fileID: 21300000, guid: 29a5524b831d91f4780f676d013031c9, type: 3}
+    idlePose: {fileID: 21300000, guid: 65a1805c37f85d247ac97f65ed6382ae, type: 3}
+    runTimeAnimController: {fileID: 22100000, guid: 59972de8ba5216646ab29aec87dc8166, type: 2}
+    temporaryDisable: 0

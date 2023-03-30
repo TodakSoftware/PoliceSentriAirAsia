@@ -231,7 +231,10 @@ public class Robber : MonoBehaviourPunCallbacks
             }
             else
             {
-                GetComponent<AIRobber>().playerNameText.color = Color.red;
+                if(photonView.IsMine){
+                    GetComponent<AIRobber>().playerNameText.color = Color.red;
+                }
+                
             }
 
             StartCoroutine(PopupGotchaBustedUI(false)); // popup busted UI
@@ -245,7 +248,7 @@ public class Robber : MonoBehaviourPunCallbacks
                 UIManager.instance.NotificationPoliceCapture(policeName, GetComponent<AIRobber>().playerNameText.text.ToString()); // Popup Notification that police caught ourself
             }
 
-             if (isBot)
+          /*    if (isBot)
             {
                 //GetComponent<AIRobber>().GoInsidePrison();
 
@@ -262,7 +265,7 @@ public class Robber : MonoBehaviourPunCallbacks
                 photonView.RPC("EnableJailCollider", RpcTarget.All, true); // Enable Jail COllider for released
 
                 GameManager.instance.photonView.RPC("UpdateAvatarsUI", RpcTarget.AllBuffered);
-            }
+            } */
 
         }
         else
@@ -283,14 +286,6 @@ public class Robber : MonoBehaviourPunCallbacks
                     UIManager.instance.NotificationReleasedBy(GetComponent<AIRobber>().playerNameText.text.ToString(), teammateName); // Popup Notification that police caught ourself
             }
         }
-    }
-
-    IEnumerator DelayGoToSideJail()
-    {
-        yield return new WaitForSeconds(.5f);
-
-        GetComponent<AIRobber>().GoInsidePrison();
-        print("Nyah kau ke sana!!!");
     }
 
     IEnumerator RedirectToJailed(float delay)

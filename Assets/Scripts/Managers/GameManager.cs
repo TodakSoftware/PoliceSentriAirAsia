@@ -74,7 +74,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     void Start(){
         Invoke("DelayMusic", 2f);
 
-        //if(PhotonNetwork.CurrentRoom.IsVisible){ // only if public
+        if(PhotonNetwork.CurrentRoom.IsVisible || PhotonNetwork.OfflineMode){ // only if public || offline
             // Bot add escape points
             if(botEscapeGO != null){
                 foreach(var child in botEscapeGO.GetComponentsInChildren<Transform>()){
@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviourPunCallbacks
                     }
                 }
             }
-        //}
+        }
         
 
         UIManager.instance.RefreshMainCanvas(); // Make sure we have main canvas

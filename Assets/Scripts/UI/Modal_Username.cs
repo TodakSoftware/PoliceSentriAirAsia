@@ -29,10 +29,12 @@ public class Modal_Username : MonoBehaviour
     }
 
     public void ConfirmUsername(){
-        PlayerPrefs.SetString("Username", usernameInput.text);
-        UIManager.instance.p_MainMenu.usernameValue = usernameInput.text;
-        UIManager.instance.p_MainMenu.usernameText.text = usernameInput.text;
-        profileAirasiaText.text = usernameInput.text;
+        string userText = usernameInput.text.ToLower();
+        userText = userText.Replace(" ", "_");
+        PlayerPrefs.SetString("Username", userText);
+        UIManager.instance.p_MainMenu.usernameValue = userText;
+        UIManager.instance.p_MainMenu.usernameText.text = userText;
+        profileAirasiaText.text = userText;
         aaProfile.FetchAirasiaData();
         PlayerPrefs.Save();
         gameObject.SetActive(false);

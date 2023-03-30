@@ -12,15 +12,21 @@ public class AirAsiaProfile : MonoBehaviour
 
     void Start()
     {
-        FetchAirasiaData();
+        if(PhotonNetworkManager.instance.hasInternet){
+            FetchAirasiaData();
+        }
     }
 
     public void FetchAirasiaData(){
-        string imageURL = "<game URL>?nickname=" + usernameInput.text.ToLower() + "&avatar=<imageURL>";
-        //string imageURL = "https://freesvg.org/img/1538346433.png";
+        if(PhotonNetworkManager.instance.hasInternet){
+            string userText = usernameInput.text.ToLower();
+            userText = userText.Replace(" ", "_");
+            string imageURL = "https://storage.googleapis.com/life-stgairasia-com-tfstg-bini/games/police-sentri/index.html?nickname=" + userText + "&avatar=";
+            //string imageURL = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/AirAsia_X_Logo.svg/800px-AirAsia_X_Logo.svg.png";
 
-        // Start a coroutine to download the image from the URL
-        StartCoroutine(DownloadImage(imageURL));
+            // Start a coroutine to download the image from the URL
+            StartCoroutine(DownloadImage(imageURL));
+        }
     }
 
     IEnumerator DownloadImage(string url)
