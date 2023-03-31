@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.Networking;
 using TMPro;
 using UnityEngine.UI;
+using System.Web;
+using System;
+using System.Web.Mvc;
 
 public class AirAsiaProfile : MonoBehaviour
 {
@@ -21,10 +24,12 @@ public class AirAsiaProfile : MonoBehaviour
         if(PhotonNetworkManager.instance.hasInternet){
             string userText = usernameInput.text.ToLower();
             userText = userText.Replace(" ", "_");
-            string imageURL = "https://storage.googleapis.com/life-stgairasia-com-tfstg-bini/games/police-sentri/index.html?nickname=" + userText + "&avatar=";
-            //string imageURL = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/AirAsia_X_Logo.svg/800px-AirAsia_X_Logo.svg.png";
+            Uri myUri = new Uri("https://storage.googleapis.com/life-stgairasia-com-tfstg-bini/games/police-sentri/index.html?nickname=" + userText + "&avatar=");
+            string param1 = HttpUtility.ParseQueryString(myUri.Query).Get("nickname");
+            string param2 = HttpUtility.ParseQueryString(myUri.Query).Get("avatar");
 
-            // Start a coroutine to download the image from the URL
+            string imageURL = param2;
+
             StartCoroutine(DownloadImage(imageURL));
         }
     }

@@ -100,7 +100,7 @@ MonoBehaviour:
     temporaryDisable: 0
   - name: Mai
     code: P46
-    iconHead: {fileID: 21300000, guid: c14402f3add0f5f44ada81a6f635a79f, type: 3}
+    iconHead: {fileID: 21300000, guid: 8a59ebd3da45cda4692b9c3dcca49c9d, type: 3}
     idlePose: {fileID: 21300000, guid: 4709ced98aa1ce7419d4b50b7fbe0e60, type: 3}
     runTimeAnimController: {fileID: 22100000, guid: a9968385cb753db4f8083e37080784ef, type: 2}
     temporaryDisable: 0
