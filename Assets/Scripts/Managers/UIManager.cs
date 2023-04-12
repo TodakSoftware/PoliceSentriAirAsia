@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
@@ -15,6 +16,10 @@ public class UIManager : MonoBehaviour
     public Modal_ReconnectGame modalReconnectGame;
     public GameUI gameUI;
     public float timeoutTimer = 0;
+    public TextMeshProUGUI testHTMLtext;
+
+    private string nickname;
+    private string avatar;
     
     void Awake()
     {

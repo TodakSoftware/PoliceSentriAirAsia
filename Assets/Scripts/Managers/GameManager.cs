@@ -74,7 +74,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     void Start(){
         Invoke("DelayMusic", 2f);
 
-        if(PhotonNetwork.CurrentRoom.IsVisible || PhotonNetwork.OfflineMode){ // only if public || offline
+        //if(PhotonNetwork.CurrentRoom.IsVisible || PhotonNetwork.OfflineMode){ // only if public || offline
             // Bot add escape points
             if(botEscapeGO != null){
                 foreach(var child in botEscapeGO.GetComponentsInChildren<Transform>()){
@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviourPunCallbacks
                     }
                 }
             }
-        }
+        //}
         
 
         UIManager.instance.RefreshMainCanvas(); // Make sure we have main canvas
@@ -297,7 +297,7 @@ public class GameManager : MonoBehaviourPunCallbacks
                 for(int i = 0; i < spawnBotPoliceCount; i++){
                     yield return new WaitForSeconds(Random.Range(0f, 1f));
                     GameObject player = PhotonNetwork.InstantiateRoomObject(PhotonNetworkManager.GetPhotonPrefab("Characters", "AIPolice"), waitingSpawnpoint.position + new Vector3(Random.Range(0,3f), Random.Range(0,3f), 0f), Quaternion.identity);
-                    
+                    player.GetComponent<PhotonView>().TransferOwnership(0);
                     if(policeNames.Count > 0){
                         var ran = Random.Range(0, policeNames.Count);
                         player.GetPhotonView().Owner.NickName = policeNames[ran];
@@ -352,7 +352,7 @@ public class GameManager : MonoBehaviourPunCallbacks
                 for(int i = 0; i < spawnBotRobberCount; i++){
                     yield return new WaitForSeconds(Random.Range(0f, 1f));
                     GameObject player = PhotonNetwork.InstantiateRoomObject(PhotonNetworkManager.GetPhotonPrefab("Characters", "AIRobber"), waitingSpawnpoint.position + new Vector3(Random.Range(0,3f), Random.Range(0,3f), 0f), Quaternion.identity);
-                    
+                    player.GetComponent<PhotonView>().TransferOwnership(0);
                     if(robberNames.Count > 0){
                         var ran = Random.Range(0, robberNames.Count);
                         player.GetPhotonView().Owner.NickName = robberNames[ran];
@@ -557,9 +557,9 @@ public class GameManager : MonoBehaviourPunCallbacks
 
             foreach(GameObject player in GameManager.GetAllPlayers()){
                 if(btn.ownerOfThisAvatarGO == player){
-                    if(btn.ownerOfThisAvatarGO.CompareTag("Robber") && btn.ownerOfThisAvatarGO.GetComponent<Robber>().isBot){
-                        btn.UpdateButton(btn.ownerOfThisAvatarGO.tag, "R01", btn.ownerOfThisAvatarGO.GetComponent<Robber>().isCaught, btn.ownerOfThisAvatarGO.GetComponent<Robber>().isHoldMoneybag);
-                    }else if(btn.ownerOfThisAvatarGO.CompareTag("Police") && btn.ownerOfThisAvatarGO.GetComponent<Police>().isBot){ // else police
+                    if(btn.ownerOfThisAvatarGO.CompareTag("Robber") && btn.isBot){
+                        btn.UpdateButton(btn.ownerOfThisAvatarGO.tag, "R01", (bool)btn.ownerOfThisAvatarGO.GetComponent<Robber>().isCaught, (bool)btn.ownerOfThisAvatarGO.GetComponent<Robber>().isHoldMoneybag);
+                    }else if(btn.ownerOfThisAvatarGO.CompareTag("Police") && btn.isBot){ // else police
                         btn.UpdateButton(btn.ownerOfThisAvatarGO.tag, "P01", false, false);
                     }else{
                         if(btn.ownerOfThisAvatarGO.CompareTag("Robber") || btn.ownerOfThisAvatarGO.CompareTag("Police")){

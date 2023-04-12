@@ -14,7 +14,17 @@ public class Modal_Username : MonoBehaviour
 
     void OnEnable(){
         if(PlayerPrefs.HasKey("Username")){
-            usernameInput.text = PlayerPrefs.GetString("Username");
+            if(PlayerPrefs.GetString("Username") != ConfigReceiver.instance.configData.name && ConfigReceiver.instance.configData.name != ""){
+                usernameInput.text = ConfigReceiver.instance.configData.name;
+                PlayerPrefs.SetString("Username", ConfigReceiver.instance.configData.name);
+                PlayerPrefs.Save();
+            }else{
+                usernameInput.text = PlayerPrefs.GetString("Username");
+            }
+        }
+
+        if(ConfigReceiver.instance.configData.name != ""){
+            usernameInput.text = ConfigReceiver.instance.configData.name;
         }
     }
 
@@ -35,7 +45,7 @@ public class Modal_Username : MonoBehaviour
         UIManager.instance.p_MainMenu.usernameValue = userText;
         UIManager.instance.p_MainMenu.usernameText.text = userText;
         profileAirasiaText.text = userText;
-        aaProfile.FetchAirasiaData();
+        //aaProfile.FetchAirasiaData();
         PlayerPrefs.Save();
         gameObject.SetActive(false);
     }

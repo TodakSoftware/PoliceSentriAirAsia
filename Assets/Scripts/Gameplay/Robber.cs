@@ -231,9 +231,7 @@ public class Robber : MonoBehaviourPunCallbacks
             }
             else
             {
-                if(photonView.IsMine){
-                    GetComponent<AIRobber>().playerNameText.color = Color.red;
-                }
+                GetComponent<AIRobber>().playerNameText.color = Color.red;
                 
             }
 
@@ -298,6 +296,7 @@ public class Robber : MonoBehaviourPunCallbacks
         if (isBot)
         {
             GetComponent<AIRobber>().GoInsidePrison();
+        }
 
             if (isHoldMoneybag || moneybagDisplay.activeSelf)
             { // if we are holding moneybag
@@ -311,31 +310,9 @@ public class Robber : MonoBehaviourPunCallbacks
             photonView.RPC("DisableCollider", RpcTarget.All, false); // Enable Collider
             photonView.RPC("EnableJailCollider", RpcTarget.All, true); // Enable Jail COllider for released
 
+            
             GameManager.instance.photonView.RPC("UpdateAvatarsUI", RpcTarget.AllBuffered);
             GameManager.instance.photonView.RPC("CheckWinningCondition", RpcTarget.AllBuffered);
-            
-            //GetComponent<AIRobber>().GoInsidePrison();
-        }
-
-        if (photonView.IsMine && !isBot)
-        {
-            if (isHoldMoneybag)
-            { // if we are holding moneybag
-                Hashtable updateData = new Hashtable();
-                updateData.Add("PlayerHoldMoneybag", false); // Set PlayerHoldMoneybag -> FALSE *will auto respawn new moneybag
-
-                GameManager.instance.photonView.RPC("SpawnAllMoneybag", RpcTarget.MasterClient);
-                GameManager.instance.photonView.RPC("SetMoneybagOccupied", RpcTarget.AllBuffered, false);
-
-                PhotonNetwork.LocalPlayer.SetCustomProperties(updateData);
-            }
-            
-            photonView.RPC("DisplayMoneybag", RpcTarget.AllBuffered, false); // Hide moneybag
-            photonView.RPC("DisableCollider", RpcTarget.All, false); // Enable Collider
-            photonView.RPC("EnableJailCollider", RpcTarget.All, true); // Enable Jail COllider for released
-
-            GameManager.instance.photonView.RPC("UpdateAvatarsUI", RpcTarget.All); // Force Update AvatarsUI
-        }
     } // end RedirectToJailed()
     #endregion // end region CAUGHT RELATED
 

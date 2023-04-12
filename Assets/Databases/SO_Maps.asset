@@ -25,3 +25,6 @@ MonoBehaviour:
   - name: Map_Langkawi_03
     displayName: Langkawi
     description: This is just a description for map
+  - name: Map_Bali
+    displayName: Bali
+    description: This is just a description for map

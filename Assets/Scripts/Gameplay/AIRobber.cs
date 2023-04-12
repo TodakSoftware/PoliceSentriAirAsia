@@ -6,7 +6,7 @@ using Photon.Pun;
 using Photon.Realtime;
 
 [RequireComponent(typeof(PolyNavAgent))]
-public class AIRobber : MonoBehaviourPunCallbacks
+public class AIRobber : MonoBehaviourPunCallbacks, IPunOwnershipCallbacks
 {
     PolyNavAgent agent;
     public Transform target;
@@ -58,7 +58,7 @@ public class AIRobber : MonoBehaviourPunCallbacks
 
         playerNameText.text = photonView.Owner.NickName;
         var robberAvatar = Instantiate(UIManager.instance.gameUI.avatarBtnPrefab);
-        robberAvatar.GetComponent<Btn_Avatar>().SetupButton("Robber", givenName, "R01", this.gameObject);
+        robberAvatar.GetComponent<Btn_Avatar>().SetupButton("Robber", givenName, "R01", this.gameObject, true);
         robberAvatar.transform.SetParent(UIManager.instance.gameUI.avatarRobberContent,false);
         UIManager.instance.gameUI.avatarBtnList.Add(robberAvatar.GetComponent<Btn_Avatar>());
     }
@@ -417,4 +417,19 @@ public class AIRobber : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(1.5f);
         isSlow = false;
     } // end SlowMovement
+
+    public void OnOwnershipRequest(PhotonView targetView, Player requestingPlayer)
+    {
+         targetView.TransferOwnership(requestingPlayer);
+    }
+
+    public void OnOwnershipTransfered(PhotonView targetView, Player previousOwner)
+    {
+        Debug.Log("Ownership of AI transferred to " + targetView.Owner.NickName);
+    }
+
+    public void OnOwnershipTransferFailed(PhotonView targetView, Player senderOfFailedRequest)
+    {
+        Debug.Log("Ownership of Failed " + senderOfFailedRequest);
+    }
 }

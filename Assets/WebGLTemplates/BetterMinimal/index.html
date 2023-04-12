@@ -91,6 +91,15 @@
 		<script>
 			window.onload = function() { window.focus(); }
 			
+			var unityGame; // Mine
+			
+			const params = new Proxy(new URLSearchParams(window.location.search), {
+				get: (searchParams, prop) => searchParams.get(prop),
+			});
+			
+			let nickname = params.nickname;
+			let avatar = params.avatar;
+			
 			var canvas = document.querySelector("#unity-canvas");
 			
 			var config = {
@@ -107,7 +116,11 @@
 				companyName: "{{{ COMPANY_NAME }}}",
 				productName: "{{{ PRODUCT_NAME }}}",
 				productVersion: "{{{ PRODUCT_VERSION }}}",
+				name: nickname ? nickname : '',
+				avatar: avatar ? avatar: ''
 			};
+			
+			
 			var scaleToFit;
 			try {
 				scaleToFit = !!JSON.parse("{{{ SCALE_TO_FIT }}}");
@@ -158,8 +171,11 @@
 			}
 			createUnityInstance(canvas, config, progressHandler).then(function (instance) {
 				canvas = instance.Module.canvas;
+				unityGame = instance;
+				unityGame.SendMessage("ConfigReceiver", "SetConfig", JSON.stringify(config));
 				onResize();
 			});
+			
 			window.addEventListener('resize', onResize);
 			onResize();
 
@@ -170,7 +186,17 @@
 				meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
 				document.getElementsByTagName('head')[0].appendChild(meta);
 			}
+			
 		</script>
+		 <script>
+			function resumeAudioContext() {
+			  var AudioContext = window.AudioContext || window.webkitAudioContext;
+			  var context = new AudioContext();
+			  context.resume();
+			  document.removeEventListener("click", resumeAudioContext);
+			}
+			document.addEventListener("click", resumeAudioContext);
+		  </script>
 	</div>
 </body>
 

@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine.UI;
 using System.Web;
 using System;
-using System.Web.Mvc;
+//using System.Web.Mvc;
 
 public class AirAsiaProfile : MonoBehaviour
 {
@@ -22,13 +22,10 @@ public class AirAsiaProfile : MonoBehaviour
 
     public void FetchAirasiaData(){
         if(PhotonNetworkManager.instance.hasInternet){
-            string userText = usernameInput.text.ToLower();
-            userText = userText.Replace(" ", "_");
-            Uri myUri = new Uri("https://storage.googleapis.com/life-stgairasia-com-tfstg-bini/games/police-sentri/index.html?nickname=" + userText + "&avatar=");
-            string param1 = HttpUtility.ParseQueryString(myUri.Query).Get("nickname");
-            string param2 = HttpUtility.ParseQueryString(myUri.Query).Get("avatar");
-
-            string imageURL = param2;
+            string imageURL = "";
+            if(ConfigReceiver.instance.configData.avatar != ""){
+                imageURL = ConfigReceiver.instance.configData.avatar;
+            }
 
             StartCoroutine(DownloadImage(imageURL));
         }
@@ -44,7 +41,7 @@ public class AirAsiaProfile : MonoBehaviour
         if (request.result != UnityWebRequest.Result.Success)
         {
             Debug.LogError("Error downloading image: " + request.error);
-            NotificationManager.instance.PopupNotification("Error Fetching Data");
+            //NotificationManager.instance.PopupNotification("Error Fetching Data");
             yield break;
         }
 

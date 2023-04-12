@@ -6,7 +6,7 @@ using Photon.Pun;
 using Photon.Realtime;
 
 [RequireComponent(typeof(PolyNavAgent))]
-public class AIPolice : MonoBehaviourPunCallbacks
+public class AIPolice : MonoBehaviourPunCallbacks, IPunOwnershipCallbacks
 {
     PolyNavAgent agent;
     public Transform target;
@@ -75,7 +75,7 @@ public class AIPolice : MonoBehaviourPunCallbacks
 
         playerNameText.text = photonView.Owner.NickName;
         var policeAvatar = Instantiate(UIManager.instance.gameUI.avatarBtnPrefab);
-        policeAvatar.GetComponent<Btn_Avatar>().SetupButton("Police", givenName, "P01", this.gameObject);
+        policeAvatar.GetComponent<Btn_Avatar>().SetupButton("Police", givenName, "P01", this.gameObject, true);
         policeAvatar.transform.SetParent(UIManager.instance.gameUI.avatarPoliceContent,false);
         UIManager.instance.gameUI.avatarBtnList.Add(policeAvatar.GetComponent<Btn_Avatar>());
     }
@@ -331,5 +331,20 @@ public class AIPolice : MonoBehaviourPunCallbacks
         isSlow = false;
     } // end SlowMovement
 
-#endregion // end DASH RELATED
+    public void OnOwnershipRequest(PhotonView targetView, Player requestingPlayer)
+    {
+         targetView.TransferOwnership(requestingPlayer);
+    }
+
+    public void OnOwnershipTransfered(PhotonView targetView, Player previousOwner)
+    {
+        Debug.Log("Ownership of AI transferred to " + targetView.Owner.NickName);
+    }
+
+    public void OnOwnershipTransferFailed(PhotonView targetView, Player senderOfFailedRequest)
+    {
+        Debug.Log("Ownership of Failed " + senderOfFailedRequest);
+    }
+
+    #endregion // end DASH RELATED
 }

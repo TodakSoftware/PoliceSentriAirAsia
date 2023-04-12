@@ -32,10 +32,20 @@ public class P_MainMenu : MonoBehaviour
             PhotonNetworkManager.instance.isInGame = false;
         }
 
-        if(PlayerPrefs.HasKey("Username")){
+        /* if(PlayerPrefs.HasKey("Username")){
             usernameValue = PlayerPrefs.GetString("Username");
             usernameText.text = usernameValue;
             profileAirasiaText.text = usernameValue;
+        }else{
+            modalUsernameGO.SetActive(true);
+        } */
+
+        if(ConfigReceiver.instance.configData.name != ""){
+            usernameValue = ConfigReceiver.instance.configData.name;
+            usernameText.text = usernameValue;
+            profileAirasiaText.text = usernameValue;
+            PlayerPrefs.SetString("Username", usernameValue);
+            PlayerPrefs.Save();
         }else{
             modalUsernameGO.SetActive(true);
         }

@@ -11,6 +11,7 @@ public class Btn_Avatar : MonoBehaviourPunCallbacks
     public TextMeshProUGUI playerName;
     public Image slotBG, playerIcon;
     public GameObject caughtGO, moneybagGO;
+    public bool isBot;
 
     [Header("Team Related")]
     public Sprite policeSlotBG;
@@ -18,7 +19,8 @@ public class Btn_Avatar : MonoBehaviourPunCallbacks
     public int actorNumber;
     public GameObject ownerOfThisAvatarGO;
 
-    public void SetupButton(string team, string playerNickname, string characterCode, GameObject actorGO){ // Called by GameUI (CreateAvatar) 
+    public void SetupButton(string team, string playerNickname, string characterCode, GameObject actorGO, bool _isBot){ // Called by GameUI (CreateAvatar) 
+        isBot = _isBot;
         switch(team){
             case "Police":
                 slotBG.sprite = policeSlotBG;
@@ -50,17 +52,17 @@ public class Btn_Avatar : MonoBehaviourPunCallbacks
                 if(CharCode == ""){
                     CharCode = "P01";
                 }
+                
                 foreach(var c in SOManager.instance.animVariantPolice.animatorLists){
                     if(c.code == CharCode){
                         playerIcon.sprite = c.iconHead; // Setup New Icon
-                        
-                        if(isCaught){ // Setup Jailed Icon
+                        /* if(isCaught){ // Setup Jailed Icon
                             playerName.color = Color.red;
                             caughtGO.SetActive(true);
                         }else{
                             playerName.color = Color.white;
                             caughtGO.SetActive(false);
-                        }
+                        } */
 
                         if(holdMoneybag){ // Setup Moneybag Icon
                             moneybagGO.SetActive(true);
@@ -79,7 +81,7 @@ public class Btn_Avatar : MonoBehaviourPunCallbacks
                     if(c.code == CharCode){
                         playerIcon.sprite = c.iconHead; // Setup New Icon
 
-                        if(isCaught){ // Setup Jailed Icon
+                        if(isCaught && ownerOfThisAvatarGO.GetComponent<Robber>().isCaught){ // Setup Jailed Icon
                             playerName.color = Color.red;
                             caughtGO.SetActive(true);
                         }else{
@@ -87,7 +89,7 @@ public class Btn_Avatar : MonoBehaviourPunCallbacks
                             caughtGO.SetActive(false);
                         }
 
-                        if(holdMoneybag){ // Setup Moneybag Icon
+                        if(holdMoneybag && ownerOfThisAvatarGO.GetComponent<Robber>().isHoldMoneybag){ // Setup Moneybag Icon
                             moneybagGO.SetActive(true);
                         }else{
                             moneybagGO.SetActive(false);
