@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Map_Langkawi_03.unity
     guid: 063ddba6ae7a3c94eac98003ccd0dc82
+  - enabled: 1
+    path: Assets/Scenes/Map_Bali.unity
+    guid: 6e8512ec107c1154f8e5137a8fbf5c74
   m_configObjects: {}
