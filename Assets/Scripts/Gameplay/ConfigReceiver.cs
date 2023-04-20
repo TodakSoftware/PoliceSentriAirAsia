@@ -22,7 +22,13 @@ public class ConfigReceiver : MonoBehaviour
     public Config configData;
 
     void Awake(){
-        instance = this;
+        if(instance == null){
+            instance = this;
+        }else{
+            Destroy(gameObject);
+        }
+        
+        DontDestroyOnLoad(gameObject);
     }
 
     public void SetConfig(string configJson)

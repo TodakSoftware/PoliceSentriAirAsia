@@ -47,7 +47,9 @@ public class P_MainMenu : MonoBehaviour
             PlayerPrefs.SetString("Username", usernameValue);
             PlayerPrefs.Save();
         }else{
-            modalUsernameGO.SetActive(true);
+            if(!PlayerPrefs.HasKey("Username") || PlayerPrefs.GetString("Username") == ""){
+                modalUsernameGO.SetActive(true);
+            }
         }
 
         playButton.onClick.AddListener(delegate{  PhotonNetworkManager.instance.PlayOnlineGame(); }); // JoinTheGame(0)   Link playBtn with network manager join game
