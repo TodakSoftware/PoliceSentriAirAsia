@@ -176,10 +176,12 @@ public class CreateRoom : MonoBehaviourPunCallbacks
 
     public override void OnCreatedRoom()
     {
-        base.OnCreatedRoom();
+        //base.OnCreatedRoom();
 
         // GABAN EDIT START
-            PhotonNetwork.LoadLevel(PhotonNetwork.CurrentRoom.CustomProperties["mapScene"].ToString());
+            if(PhotonNetwork.IsMasterClient){
+                PhotonNetwork.LoadLevel(mapName);
+            }
             print("Successfully Created");
         // GABAN EDIT END
     }

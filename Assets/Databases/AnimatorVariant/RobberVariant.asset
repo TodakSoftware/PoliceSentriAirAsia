@@ -86,3 +86,15 @@ MonoBehaviour:
     idlePose: {fileID: 21300000, guid: 924aff7e3cdfe7944a7a4aa2e7a31c1a, type: 3}
     runTimeAnimController: {fileID: 22100000, guid: d93c3c602e0ce4d4a94b77b09a9678ed, type: 2}
     temporaryDisable: 0
+  - name: Bam
+    code: R92
+    iconHead: {fileID: 21300000, guid: f1f8e9cf335118848b812db07190e9b5, type: 3}
+    idlePose: {fileID: 21300000, guid: 8c76789ecfd262f42b7c9d7ce33d8a9b, type: 3}
+    runTimeAnimController: {fileID: 22100000, guid: a113fdad551e10845ae6120562d219d4, type: 2}
+    temporaryDisable: 0
+  - name: Ogu
+    code: R93
+    iconHead: {fileID: 21300000, guid: e60927ca9a3d18d429609d95ff455b9d, type: 3}
+    idlePose: {fileID: 21300000, guid: 5229edcefc1cfce458acb64368681bfa, type: 3}
+    runTimeAnimController: {fileID: 22100000, guid: 5006b7fa056b1f042b92cbd47b8eb1dd, type: 2}
+    temporaryDisable: 0

@@ -33,11 +33,13 @@ public class ConfigReceiver : MonoBehaviour
 
     public void SetConfig(string configJson)
     {
-        Config config = JsonUtility.FromJson<Config>(configJson);
-        configData = config;
+        if(configData.name == ""){
+            Config config = JsonUtility.FromJson<Config>(configJson);
+            configData = config;
 
-        if(config.name != ""){
-            NotificationManager.instance.PopupNotification("Welcome, " + config.name);
+            if(config.name != ""){
+                NotificationManager.instance.PopupNotification("Welcome, " + config.name);
+            }
         }
     }
 }

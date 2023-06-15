@@ -25,6 +25,9 @@ public class AirAsiaProfile : MonoBehaviour
             string imageURL = "";
             if(ConfigReceiver.instance.configData.avatar != ""){
                 imageURL = ConfigReceiver.instance.configData.avatar;
+            }else{
+                print("Image url is empty");
+                imageURL = "https://storage.googleapis.com/life-stgairasia-com-tfstg-bini/avatars/ab3505fc-c2a9-4298-8294-6662dd2433e0.png";
             }
 
             StartCoroutine(DownloadImage(imageURL));

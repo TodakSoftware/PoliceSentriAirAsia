@@ -90,6 +90,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         UIManager.instance.RefreshControllerGroup(); // Make sure we have reference the CanvasGroup
 
         UIManager.instance.PopupManualSelectRole(); // Popup Role Select UI
+        
         UIManager.instance.PopupCharacterSelect(); // Popup Character Select
         StartCoroutine(UIManager.instance.CloseCharacterSelect(0)); // Close the char selection UI
 
@@ -214,8 +215,8 @@ public class GameManager : MonoBehaviourPunCallbacks
             } */
         } // end gameStarted
 
-        //if(!gameEnded && currentStartGameCountdown <= 8 && !doneSpawnBots && GetAllPlayers().Count == (int)PhotonNetwork.CurrentRoom.CustomProperties["RealTotalPlayer"] && PhotonNetwork.CurrentRoom.CustomProperties["RealTotalPlayer"] != null){
-        if(PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("RoomPrivate") && (int)PhotonNetwork.CurrentRoom.CustomProperties["RoomPrivate"] == 0){ // only if public
+        //if(PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("RoomPrivate") && (int)PhotonNetwork.CurrentRoom.CustomProperties["RoomPrivate"] == 0){ // only if public
+        if((int)PhotonNetwork.CurrentRoom.CustomProperties["RoomPrivate"] == 0){ // only if public
             if(!gameEnded && currentStartGameCountdown <= 8 && !doneSpawnBots){
                 // Fill Bots
                 if(fillWithBots){
