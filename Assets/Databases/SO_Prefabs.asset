@@ -16,12 +16,14 @@ MonoBehaviour:
   modalLoadingScene: {fileID: 686593748731130931, guid: a9ba054d198b18e4c8f497066bb5ff1b, type: 3}
   manualRoleSelect: {fileID: 1355588933705959456, guid: 3584fd762347de44aa19d8be89c9d3db, type: 3}
   p_CharacterSelect: {fileID: 5595314545649092113, guid: 461b755f1957c7d479afbc428198061e, type: 3}
+  p_PetSelect: {fileID: 5595314545649092113, guid: 18d8d74f212d73c4b8fb2bc4b5996665, type: 3}
   p_PoliceWinUI: {fileID: 3115316438267996, guid: 5ed46b54ff9a86b479671de8d5ddeb3b, type: 3}
   p_PoliceLoseUI: {fileID: 1407336711433720633, guid: f8720ed207a7fda4785249d6818fff00, type: 3}
   p_RobberWinUI: {fileID: 406653032331418260, guid: c1f9bd22dcf430744847962893fe8ef0, type: 3}
   p_RobberLoseUI: {fileID: 1782553641273191181, guid: fc68282e438361d409e305edad36a7a9, type: 3}
   ui_GameplayFeeds: {fileID: 4499566258254079363, guid: 68251c6f7c1f334458e6dff675168fec, type: 3}
-  btnCharacterSelectAvatar: {fileID: 5209461420037623589, guid: 513a38328444f444c9f4267d468bc760, type: 3}
+  btnCharacterSelectAvatar: {fileID: 5209461420037623589, guid: cf757bd46dea5d34191bb1d670046716, type: 3}
+  btnPetSelectAvatar: {fileID: 5209461420037623589, guid: 513a38328444f444c9f4267d468bc760, type: 3}
   characterPrefabs:
   - name: CharacterPolice
     prefabs: {fileID: 7955344202334445017, guid: cbca99faf148d9244a49c4f9f37ec9d3, type: 3}

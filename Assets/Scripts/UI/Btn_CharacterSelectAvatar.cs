@@ -8,6 +8,7 @@ public class Btn_CharacterSelectAvatar : MonoBehaviour
     public Image iconHead;
     public string btnCode, charName;
     public Sprite charIdleSprite;
+    public GameObject lockIcon;
 
     public void ButtonPressed(){
         UIManager.instance.p_CharacterSelect.ClearAllButtonColor();
@@ -19,5 +20,10 @@ public class Btn_CharacterSelectAvatar : MonoBehaviour
 
     public void ClearButton(){
         GetComponent<Image>().color = Color.white;
+    }
+
+    public void LockCharacter(){
+        lockIcon.SetActive(true);
+        GetComponent<Button>().interactable = false;
     }
 }

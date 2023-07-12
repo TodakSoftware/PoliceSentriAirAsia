@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: katakdrone02
+  m_Controller: {fileID: 9100000, guid: 40315e3962908e241be07f5a3e8da192, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 92790fc31a3178c459d61e535dcce35f, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: be1547097be9d0b42a16ca5ea2f76efb, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: c34b762741d7fbc4880ea0741e4bee50, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 42ec2e184f7ab75458e3fb2664b7e3ff, type: 2}

@@ -14,7 +14,7 @@ public class GameUI : MonoBehaviourPunCallbacks
     public TextMeshProUGUI fpsText, redirectCountdownText;
     [Header("Lobby Related")]
     public GameObject lobbyButtonGroup;
-    public Button lobbyLeaveGame, changeCharacterBtn, startCountGameBtn, cancelCountGameBtn;
+    public Button lobbyLeaveGame, changeCharacterBtn, startCountGameBtn, cancelCountGameBtn, changeBuddyBtn;
     public bool hideRoomCode;
     string roomCode;
     public GameObject roomInfoGO;
@@ -37,6 +37,7 @@ public class GameUI : MonoBehaviourPunCallbacks
     void Start(){
         lobbyLeaveGame.onClick.AddListener(delegate{PhotonNetwork.LeaveRoom();});
         changeCharacterBtn.onClick.AddListener(delegate{UIManager.instance.PopupCharacterSelect();});
+        changeBuddyBtn.onClick.AddListener(delegate{UIManager.instance.PopupPetSelect(); UIManager.instance.p_PetSelect.InitializePet();});
         //settingButton.onClick.AddListener(delegate{});
         settingLeaveBtn.onClick.AddListener(delegate{PhotonNetwork.LeaveRoom();});
 

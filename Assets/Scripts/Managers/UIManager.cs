@@ -9,9 +9,10 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
     public GameObject mainCanvas; // Ref for mainCanvas
-    [HideInInspector] public GameObject cacheLoadingDuration, cacheLoadingScene, cacheReconnectGame, cacheCharacterSelect, cacheManualRoleSelect;
+    [HideInInspector] public GameObject cacheLoadingDuration, cacheLoadingScene, cacheReconnectGame, cacheCharacterSelect, cachePetSelect, cacheManualRoleSelect;
     public P_MainMenu p_MainMenu;
     public P_CharacterSelect p_CharacterSelect;
+    public P_PetSelect p_PetSelect;
     public ManualRoleSelect manualRoleSelect;
     public Modal_ReconnectGame modalReconnectGame;
     public GameUI gameUI;
@@ -190,6 +191,17 @@ public class UIManager : MonoBehaviour
             p_CharacterSelect = characterSelect.GetComponent<P_CharacterSelect>();
         }else{
             cacheCharacterSelect.SetActive(true); // if we have cache the UI, resuse instead destroy
+        }
+    }
+
+    public void PopupPetSelect(){
+        if(cachePetSelect == null){
+            var petSelect = Instantiate(SOManager.instance.prefabs.p_PetSelect);
+            petSelect.transform.SetParent(mainCanvas.transform, false);
+            cachePetSelect = petSelect;
+            p_PetSelect = petSelect.GetComponent<P_PetSelect>();
+        }else{
+            cachePetSelect.SetActive(true); // if we have cache the UI, resuse instead destroy
         }
     }
 

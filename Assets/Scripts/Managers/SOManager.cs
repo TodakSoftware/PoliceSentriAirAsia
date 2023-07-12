@@ -10,6 +10,7 @@ public class SOManager : MonoBehaviour
     public SO_Prefabs prefabs;
     public SO_AnimatorVariant animVariantPolice;
     public SO_AnimatorVariant animVariantRobber;
+    public SO_PetVariant animVariantPet;
     public SO_AnimatorVariant sharedVariant;
     public SO_ItemInfo itemInfo;
 

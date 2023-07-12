@@ -29,6 +29,10 @@ public class P_CharacterSelect : MonoBehaviourPunCallbacks
                     charAvatar.GetComponent<Btn_CharacterSelectAvatar>().charIdleSprite = policeChar.idlePose;
                     charAvatar.transform.SetParent(listContent, false);
 
+                    if(policeChar.type == E_ValueType.PREMIUM && !UserDataManager.instance.policeList.Contains(policeChar.code)){
+                        charAvatar.GetComponent<Btn_CharacterSelectAvatar>().LockCharacter();
+                    }
+
                     allBtnCharacters.Add(charAvatar.GetComponent<Btn_CharacterSelectAvatar>());
                 }
             break;
@@ -43,6 +47,10 @@ public class P_CharacterSelect : MonoBehaviourPunCallbacks
                     charAvatar.GetComponent<Btn_CharacterSelectAvatar>().charName = robberChar.name;
                     charAvatar.GetComponent<Btn_CharacterSelectAvatar>().charIdleSprite = robberChar.idlePose;
                     charAvatar.transform.SetParent(listContent, false);
+
+                    if(robberChar.type == E_ValueType.PREMIUM && !UserDataManager.instance.robberList.Contains(robberChar.code)){
+                        charAvatar.GetComponent<Btn_CharacterSelectAvatar>().LockCharacter();
+                    }
 
                     allBtnCharacters.Add(charAvatar.GetComponent<Btn_CharacterSelectAvatar>());
                 }

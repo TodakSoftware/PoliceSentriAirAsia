@@ -97,6 +97,14 @@ MonoBehaviour:
   - SpawnBots
   - StartCountdownRPC
   - StopCountdownRPC
+  - AnimationSlideFix
+  - AssignController
+  - ChangeFlyPet
+  - ChangePetAnim
+  - DisablePet
+  - SpawnPet01
+  - SpawnPet02
+  - UpdatePetIndex
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

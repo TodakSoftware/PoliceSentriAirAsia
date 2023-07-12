@@ -195,6 +195,10 @@ public class GameManager : MonoBehaviourPunCallbacks
         AudioManager.instance.PlayMusic2("PS_BGM_MainTheme", true);
     }
 
+    public GameObject GetLocalHero(){
+        return PhotonNetwork.LocalPlayer.TagObject as GameObject;
+    }
+
     void Update(){
         // Moneybag Timer Related
         if(gameStarted && !gameEnded){

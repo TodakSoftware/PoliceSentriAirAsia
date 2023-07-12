@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum E_ValueType{
+    FREE, PREMIUM
+}
+
 [System.Serializable]
 public struct animatorInfo{
     public string name;
@@ -10,6 +14,9 @@ public struct animatorInfo{
     public Sprite idlePose;
     public RuntimeAnimatorController runTimeAnimController;
     public bool temporaryDisable;
+    public E_ValueType type;
+    public float kupang;
+    public float airAsiaPoints;
 }
 
 

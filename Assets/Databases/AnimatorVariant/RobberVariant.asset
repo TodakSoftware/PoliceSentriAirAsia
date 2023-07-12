@@ -15,86 +15,128 @@ MonoBehaviour:
   name: Robber
   animatorLists:
   - name: Mr. Copet
-    code: R01
+    code: R001
     iconHead: {fileID: 21300000, guid: e18d24985c13dfb408411163688f1fe4, type: 3}
     idlePose: {fileID: 21300000, guid: d1d84d6ca61ec8d43a04ca529b3be352, type: 3}
     runTimeAnimController: {fileID: 22100000, guid: 17aaa084d3e3a4f49a728874d151fad6, type: 2}
     temporaryDisable: 0
+    type: 0
+    kupang: 0
+    airAsiaPoints: 0
   - name: Ms. Copet
-    code: R02
+    code: R002
     iconHead: {fileID: 21300000, guid: d04b67dc04c977b4ebe15f88c8613b9a, type: 3}
     idlePose: {fileID: 21300000, guid: 66c6648c5846d69499625873ee43c3fd, type: 3}
     runTimeAnimController: {fileID: 22100000, guid: 5561bd12567792d4b9fe4328339c6827, type: 2}
     temporaryDisable: 0
+    type: 0
+    kupang: 0
+    airAsiaPoints: 0
   - name: The Prisoner
-    code: R03
+    code: R003
     iconHead: {fileID: 21300000, guid: 2e6c19897236da84599940404e8ac045, type: 3}
     idlePose: {fileID: 21300000, guid: f63fe173c9e6e774a9d35a61fab7214e, type: 3}
     runTimeAnimController: {fileID: 22100000, guid: b3c9d7db311e4a9438d9e5d9498b499d, type: 2}
     temporaryDisable: 0
+    type: 0
+    kupang: 0
+    airAsiaPoints: 0
   - name: Semuasapu
-    code: R04
+    code: R004
     iconHead: {fileID: 21300000, guid: 781870bbec05dee44a412fe57d1530cb, type: 3}
     idlePose: {fileID: 21300000, guid: b5f359419a463ea4bb461800889fe8cf, type: 3}
     runTimeAnimController: {fileID: 22100000, guid: 2a9798fc42d32894189a28f3800dc2fe, type: 2}
     temporaryDisable: 0
+    type: 0
+    kupang: 0
+    airAsiaPoints: 0
   - name: Badut
-    code: R05
+    code: R005
     iconHead: {fileID: 21300000, guid: d9e6fec4f49c84b408051db8fe321a61, type: 3}
     idlePose: {fileID: 21300000, guid: db9f113e530a8ed469e755f4daf155eb, type: 3}
     runTimeAnimController: {fileID: 22100000, guid: e30b29e64a067d9438693b7c4685bb6c, type: 2}
     temporaryDisable: 0
+    type: 1
+    kupang: 3000
+    airAsiaPoints: 0
   - name: Binaan
-    code: R06
+    code: R006
     iconHead: {fileID: 21300000, guid: a037ccae8c27cae428af671da0923b8a, type: 3}
     idlePose: {fileID: 21300000, guid: 8ee5802c9add49846a8968353caa8335, type: 3}
     runTimeAnimController: {fileID: 22100000, guid: 3b2d6f553f083a24bbe833ffeaa8689b, type: 2}
     temporaryDisable: 0
+    type: 1
+    kupang: 3000
+    airAsiaPoints: 0
   - name: Gerok
-    code: R10
+    code: R007
     iconHead: {fileID: 21300000, guid: 564260a2c0adc9c44aae65624d020397, type: 3}
     idlePose: {fileID: 21300000, guid: 4a1f0d13aac7dbe4c8404ea0d532d0fa, type: 3}
     runTimeAnimController: {fileID: 22100000, guid: 856ba3ba2a542ec4a9978ee593f09d7f, type: 2}
     temporaryDisable: 0
+    type: 1
+    kupang: 3000
+    airAsiaPoints: 0
   - name: Hacker
-    code: R13
+    code: R008
     iconHead: {fileID: 21300000, guid: 8cb4e79b2da50d743934e4e61f940ea1, type: 3}
     idlePose: {fileID: 21300000, guid: 18777cd4a8d41ef4f8f45f5f312a18c1, type: 3}
     runTimeAnimController: {fileID: 22100000, guid: 8436a6d2ed02c6742a50af52dee5262f, type: 2}
     temporaryDisable: 0
+    type: 0
+    kupang: 0
+    airAsiaPoints: 0
   - name: Pemburu Silam
-    code: R15
+    code: R009
     iconHead: {fileID: 21300000, guid: 22331ce5a429bcc4f939be7885d59f95, type: 3}
     idlePose: {fileID: 21300000, guid: 47656d9ec59db4c41acb39e480595972, type: 3}
     runTimeAnimController: {fileID: 22100000, guid: 609f6f1629efaac46b36d2c1df1895c8, type: 2}
     temporaryDisable: 0
+    type: 1
+    kupang: 3000
+    airAsiaPoints: 0
   - name: Musang Girl
-    code: R17
+    code: R010
     iconHead: {fileID: 21300000, guid: 29a5524b831d91f4780f676d013031c9, type: 3}
     idlePose: {fileID: 21300000, guid: 65a1805c37f85d247ac97f65ed6382ae, type: 3}
     runTimeAnimController: {fileID: 22100000, guid: 59972de8ba5216646ab29aec87dc8166, type: 2}
     temporaryDisable: 0
+    type: 0
+    kupang: 0
+    airAsiaPoints: 0
   - name: Airi
-    code: R90
+    code: R011
     iconHead: {fileID: 21300000, guid: ebe4a99f36d1763478eaa933d47ddad8, type: 3}
     idlePose: {fileID: 21300000, guid: c8ba631d225f36a469c5a245755a7223, type: 3}
     runTimeAnimController: {fileID: 22100000, guid: ffa2e004b37d681469044df0606b3070, type: 2}
     temporaryDisable: 0
+    type: 0
+    kupang: 0
+    airAsiaPoints: 0
   - name: Tappy
-    code: R91
+    code: R012
     iconHead: {fileID: 21300000, guid: ad7efb405ff31784aa1c293196b09eac, type: 3}
     idlePose: {fileID: 21300000, guid: 924aff7e3cdfe7944a7a4aa2e7a31c1a, type: 3}
     runTimeAnimController: {fileID: 22100000, guid: d93c3c602e0ce4d4a94b77b09a9678ed, type: 2}
     temporaryDisable: 0
-  - name: Bam
-    code: R92
-    iconHead: {fileID: 21300000, guid: f1f8e9cf335118848b812db07190e9b5, type: 3}
-    idlePose: {fileID: 21300000, guid: 8c76789ecfd262f42b7c9d7ce33d8a9b, type: 3}
-    runTimeAnimController: {fileID: 22100000, guid: a113fdad551e10845ae6120562d219d4, type: 2}
-    temporaryDisable: 0
+    type: 0
+    kupang: 0
+    airAsiaPoints: 0
   - name: Ogu
-    code: R93
+    code: R013
     iconHead: {fileID: 21300000, guid: e60927ca9a3d18d429609d95ff455b9d, type: 3}
     idlePose: {fileID: 21300000, guid: 5229edcefc1cfce458acb64368681bfa, type: 3}
     runTimeAnimController: {fileID: 22100000, guid: 5006b7fa056b1f042b92cbd47b8eb1dd, type: 2}
     temporaryDisable: 0
+    type: 0
+    kupang: 0
+    airAsiaPoints: 0
+  - name: Bam
+    code: R014
+    iconHead: {fileID: 21300000, guid: f1f8e9cf335118848b812db07190e9b5, type: 3}
+    idlePose: {fileID: 21300000, guid: 8c76789ecfd262f42b7c9d7ce33d8a9b, type: 3}
+    runTimeAnimController: {fileID: 22100000, guid: a113fdad551e10845ae6120562d219d4, type: 2}
+    temporaryDisable: 0
+    type: 0
+    kupang: 0
+    airAsiaPoints: 0

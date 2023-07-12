@@ -59,6 +59,15 @@ public class PlayerController : MonoBehaviourPunCallbacks
     public PlayerAnimator playerAnim;
     public string characterCode;
 
+    [Header("Pet Related")]
+    public SO_PetVariant petVariantSO;
+    public bool doneSpawnPet;
+    public GameObject petGO;
+    public GameObject btnPet;
+    public int petIndex;
+    public GameObject pet01;
+    public GameObject pet02;
+
     void Awake(){
         rb = GetComponent<Rigidbody2D>();
         cam2D = GameObject.Find("2DCam").GetComponent<CinemachineVirtualCamera>();
@@ -66,6 +75,10 @@ public class PlayerController : MonoBehaviourPunCallbacks
         gameUI = UIManager.instance.gameUI;
         moveJoystick = gameUI.movementJoystick.GetComponent<Joystick>();
         btnDash = gameUI.dashButton.gameObject;
+        if(gameUI.togglePet != null){
+            //btnPet.SetActive(true);
+            gameUI.togglePet.onValueChanged.AddListener((bool value) => EnablePet());
+        }
 
         // Link Dash
         if(photonView.IsMine)
@@ -497,4 +510,103 @@ public class PlayerController : MonoBehaviourPunCallbacks
     }
 
 #endregion // End particles related
+
+#region PETS RELATED
+    [PunRPC]
+    public void UpdatePetIndex(int petIndexUpdate){
+        petIndex = petIndexUpdate;
+    }
+
+    public void EnablePet(){
+        if(photonView.IsMine){
+            if(!doneSpawnPet){
+                doneSpawnPet = true;
+                    if(petVariantSO.animatorLists[petIndex].flyPet){ // if air type
+                        // spawn Pet02
+                        photonView.RPC("SpawnPet02", RpcTarget.AllBuffered);
+                    }else{ // if ground type
+                        // spawn Pet01
+                        photonView.RPC("SpawnPet01", RpcTarget.AllBuffered);
+                    }
+            }else{
+                doneSpawnPet = false;
+                photonView.RPC("DisablePet", RpcTarget.AllBuffered);
+            }
+        }
+    }
+
+    public void ForceEnablePet(){
+        if(photonView.IsMine){
+            if(petVariantSO.animatorLists[petIndex].flyPet){ // if air type
+                // spawn Pet02
+                photonView.RPC("SpawnPet02", RpcTarget.AllBuffered);
+            }else{ // if ground type
+                // spawn Pet01
+                photonView.RPC("SpawnPet01", RpcTarget.AllBuffered);
+            }
+        }
+    }
+
+    [PunRPC]
+    public void DisablePet(){
+        pet01.SetActive(false);
+        pet02.SetActive(false);
+        petGO = null;
+    }
+
+    [PunRPC]
+    public void SpawnPet02(){
+        pet01.SetActive(false);
+        pet02.SetActive(true);
+        //pet02.GetComponent<Pets>().animatorController = petVariantSO.animatorLists[petIndex].runTimeAnimController;
+        if(photonView.IsMine){
+            pet02.GetComponent<Pets>().photonView.RPC("AssignController", RpcTarget.AllBuffered, petIndex);
+        }
+        if(isFacingRight){
+            pet02.GetComponent<Pets>().lookRight = true;
+        }
+        petGO = pet02;
+    }
+
+    [PunRPC]
+    public void SpawnPet01(){
+        pet01.SetActive(true);
+        pet02.SetActive(false);
+        if(photonView.IsMine){
+            pet01.GetComponent<Pets>().photonView.RPC("AssignController", RpcTarget.AllBuffered, petIndex);
+        }
+        if(isFacingRight){
+            pet01.GetComponent<Pets>().lookRight = true;
+        }
+        petGO = pet01;
+    }
+
+    [PunRPC]
+    public void ChangePetAnim(int toChangeIndex, bool isFlyType){
+        if(photonView.IsMine){
+            if(petGO != null && doneSpawnPet){
+                
+                petGO.GetComponent<Pets>().photonView.RPC("SwitchAnimController", RpcTarget.AllBuffered, toChangeIndex);
+                petIndex = toChangeIndex;
+
+                //photonView.RPC("ChangeFlyPet", RpcTarget.AllBuffered, isFlyType);
+                photonView.RPC("ChangeFlyPet", RpcTarget.All, isFlyType);
+            }
+        }
+    }
+
+    [PunRPC]
+    public void ChangeFlyPet(bool isFly){
+        if(isFly){
+            pet01.SetActive(false);
+            pet02.SetActive(true);
+            petGO = pet02;
+        }else{
+            pet01.SetActive(true);
+            pet02.SetActive(false);
+            petGO = pet01;
+        }
+    }
+#endregion
+
 }
