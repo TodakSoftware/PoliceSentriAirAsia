@@ -72,8 +72,6 @@ public class AIRobber : MonoBehaviourPunCallbacks, IPunOwnershipCallbacks
     }
 
     void Update(){
-        
-
         if(isRescuing && agent.botDestinationReach && !GetComponent<Robber>().isCaught){ // if we in rescue mode && arrived, 
             // wait 5s then isRescuing = false
             if(!rescueExecuted){
@@ -83,7 +81,28 @@ public class AIRobber : MonoBehaviourPunCallbacks, IPunOwnershipCallbacks
         }
 
         if(isSlow && agent.maxSpeed == 8){
-            agent.maxSpeed = 4;
+            switch(gameObject.tag){
+                case "Police":
+                    if(GetComponent<Police>().isOnWater){
+                        agent.maxSpeed = 6;
+                    }else{
+                        agent.maxSpeed = 4;
+                    }
+                break;
+
+                case "Robber":
+                    if(GetComponent<Robber>().isOnWater){
+                        agent.maxSpeed = 6;
+                    }else{
+                        agent.maxSpeed = 4;
+                    }
+                break;
+
+                default:
+                    agent.maxSpeed = 4;
+                break;
+            }
+            
         }else if(!isSlow && agent.maxSpeed == 4){
             agent.maxSpeed = 8;
         }

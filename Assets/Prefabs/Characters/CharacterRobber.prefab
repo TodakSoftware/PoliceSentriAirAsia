@@ -6589,6 +6589,7 @@ GameObject:
   - component: {fileID: 995072590878122508}
   - component: {fileID: 3722870533940350077}
   - component: {fileID: 5055426675773418012}
+  - component: {fileID: 7555026204416525187}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -6662,7 +6663,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2.56, y: 2.56}
+  m_Size: {x: 3.6, y: 3.6}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -6788,6 +6789,18 @@ MonoBehaviour:
   enableRandom: 0
   startIndex: 0
   endIndex: 0
+--- !u!114 &7555026204416525187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4873863652185589862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb94ee07cbee3cd45bffc318a0e679e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4873863652774326898
 GameObject:
   m_ObjectHideFlags: 0
@@ -6935,6 +6948,7 @@ MonoBehaviour:
   isDashingButtonDown: 0
   isFalling: 0
   isSlow: 0
+  isSlowWater: 0
   slowTimer: 0
   isSlide: 0
   aimPoint: {fileID: 9185264782647292919}
@@ -6979,6 +6993,7 @@ MonoBehaviour:
   bustedUI: {fileID: 5379399102363120631}
   isBot: 0
   doneDeactive: 0
+  isOnWater: 0
   isInvulnerable: 0
 --- !u!114 &6236526815953773368
 MonoBehaviour:

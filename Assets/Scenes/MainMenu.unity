@@ -5148,12 +5148,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5c42dad35867cb4f8f060f3612c998d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentKupang: 1000
-  policeList:
-  - P005
+  currentKupang: 0
+  policeList: []
   robberList: []
   petList: []
-  dailyRewardDayClaimed: []
+  startDailyRewardDate: 
+  latestRewardClaimedDay: 0
 --- !u!4 &386660196
 Transform:
   m_ObjectHideFlags: 0

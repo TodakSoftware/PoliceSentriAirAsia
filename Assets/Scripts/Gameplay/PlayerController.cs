@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [Header("Slow")]
     public bool isSlow;
     float MOVE_SPEED_MODIFIED;
+    public bool isSlowWater;
     // Slow movement fixed
     public float slowTimer;
     [Header("Slide")]
@@ -284,9 +285,26 @@ public class PlayerController : MonoBehaviourPunCallbacks
         }
     }
 
+    public void EnableWaterSlowMovement(){
+        if(photonView.IsMine && !isSlowWater){
+            isSlowWater = true;
+            if(isDashing){
+                MOVE_SPEED_MODIFIED = moveSpeed;
+                moveSpeed = moveSpeed / 1.3f;
+            }else{
+                MOVE_SPEED_MODIFIED = moveSpeed;
+                moveSpeed = moveSpeed / 1.3f;
+            }
+        }
+    }
+
     public void DisableSlowMovement(){
         if(photonView.IsMine){
             moveSpeed = MOVE_SPEED_MODIFIED;
+
+            if(isSlowWater){
+                isSlowWater = false;
+            }
         }
     }
 

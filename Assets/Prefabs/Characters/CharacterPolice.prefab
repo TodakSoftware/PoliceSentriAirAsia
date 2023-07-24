@@ -12654,6 +12654,7 @@ MonoBehaviour:
   isDashingButtonDown: 0
   isFalling: 0
   isSlow: 0
+  isSlowWater: 0
   slowTimer: 0
   isSlide: 0
   aimPoint: {fileID: 5961890606208670812}
@@ -12777,6 +12778,7 @@ MonoBehaviour:
   bustedUI: {fileID: 5611402075128784072}
   isBot: 0
   doneDeactive: 0
+  isOnWater: 0
 --- !u!114 &6630326361857483945
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13044,6 +13046,7 @@ GameObject:
   - component: {fileID: 1944702109894327942}
   - component: {fileID: 1277218354451065343}
   - component: {fileID: 7566912328486823219}
+  - component: {fileID: 4804309404777382106}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -13243,6 +13246,18 @@ MonoBehaviour:
   enableRandom: 0
   startIndex: 0
   endIndex: 0
+--- !u!114 &4804309404777382106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7955344203932985293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb94ee07cbee3cd45bffc318a0e679e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8139221167767283483
 GameObject:
   m_ObjectHideFlags: 0

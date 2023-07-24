@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Map_Bali.unity
     guid: 6e8512ec107c1154f8e5137a8fbf5c74
+  - enabled: 1
+    path: Assets/Scenes/Map_Boracay01.unity
+    guid: b61d50b3153d14a71ad2483ce883b67b
   m_configObjects: {}

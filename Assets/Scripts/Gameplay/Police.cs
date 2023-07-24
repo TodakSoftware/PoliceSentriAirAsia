@@ -9,13 +9,13 @@ public class Police : MonoBehaviourPunCallbacks
     [Header("Caught Related")]
     public GameObject gotchaUI;
     public GameObject bustedUI;
-    public bool isBot, doneDeactive;
+    public bool isBot, doneDeactive, isOnWater;
 
     void Update(){
         if(isBot && GameManager.instance.gameEnded && !doneDeactive){
             Invoke("DisableWhenEndgame", 8f);
             doneDeactive = true;
-        }  
+        }
     }
 
     void DisableWhenEndgame(){
@@ -55,6 +55,20 @@ public class Police : MonoBehaviourPunCallbacks
             }
         } // end !isBot
     } // end OnTriggerEnter2D()
+
+    void OnTriggerStay2D(Collider2D other)
+    {
+        if(other.CompareTag("Water")){
+            isOnWater = true;
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if(other.CompareTag("Water")){
+            isOnWater = false;
+        }
+    }
 
     [PunRPC] // only police needed for PopupBustedUI
     public IEnumerator PopupGotchaBustedUI(bool gotcha){

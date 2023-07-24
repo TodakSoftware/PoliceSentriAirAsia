@@ -12484,6 +12484,7 @@ GameObject:
   - component: {fileID: 2398935656547781103}
   - component: {fileID: 2790729015766193781}
   - component: {fileID: 1374259928250143861}
+  - component: {fileID: 4255254603287296992}
   m_Layer: 0
   m_Name: BotPolice
   m_TagString: Police
@@ -12575,6 +12576,13 @@ MonoBehaviour:
   cam2D: {fileID: 0}
   playerAnim: {fileID: 407786497}
   characterCode: P01
+  petVariantSO: {fileID: 0}
+  doneSpawnPet: 0
+  petGO: {fileID: 0}
+  btnPet: {fileID: 0}
+  petIndex: 0
+  pet01: {fileID: 0}
+  pet02: {fileID: 0}
 --- !u!114 &1090073656761589282
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12656,6 +12664,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gotchaUI: {fileID: 2880043797953944703}
   bustedUI: {fileID: 5611402075128784072}
+  isBot: 0
+  doneDeactive: 0
 --- !u!114 &6630326361857483945
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12742,6 +12752,13 @@ MonoBehaviour:
   cam2D: {fileID: 0}
   playerAnim: {fileID: 407786497}
   characterCode: P04
+  petVariantSO: {fileID: 0}
+  doneSpawnPet: 0
+  petGO: {fileID: 0}
+  btnPet: {fileID: 0}
+  petIndex: 0
+  pet01: {fileID: 0}
+  pet02: {fileID: 0}
   botAgent: {fileID: 6986744180735014056}
   currentTarget: {fileID: 0}
   isGoingToTarget: 0
@@ -12825,6 +12842,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.6, y: 0.65}
   m_EdgeRadius: 0
+--- !u!114 &4255254603287296992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7955344202334445017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb94ee07cbee3cd45bffc318a0e679e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7955344202809199671
 GameObject:
   m_ObjectHideFlags: 0
@@ -12977,6 +13006,7 @@ GameObject:
   - component: {fileID: 407786497}
   - component: {fileID: 1944702109894327942}
   - component: {fileID: 1277218354451065343}
+  - component: {fileID: 8994558963088439086}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -13155,6 +13185,18 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &8994558963088439086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7955344203932985293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb94ee07cbee3cd45bffc318a0e679e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8139221167767283483
 GameObject:
   m_ObjectHideFlags: 0

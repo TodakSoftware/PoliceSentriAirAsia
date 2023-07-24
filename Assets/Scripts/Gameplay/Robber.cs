@@ -26,7 +26,7 @@ public class Robber : MonoBehaviourPunCallbacks
     public GameObject bustedUI;
 
     public Player savior;
-    public bool isBot, doneDeactive;
+    public bool isBot, doneDeactive, isOnWater;
     public bool isInvulnerable;
 
     void OnTriggerEnter2D(Collider2D other)
@@ -56,6 +56,13 @@ public class Robber : MonoBehaviourPunCallbacks
         }
     } // end OnTriggerEnter2D()
 
+    void OnTriggerStay2D(Collider2D other)
+    {
+        if(other.CompareTag("Water")){
+            isOnWater = true;
+        }
+    }
+
     [PunRPC]
     public void SetTeammateName(string memberName)
     {
@@ -73,6 +80,10 @@ public class Robber : MonoBehaviourPunCallbacks
                 photonView.RPC("SetIsReleasing", RpcTarget.All, false);
                 teammateGO = null;
             }
+        }
+
+        if(other.CompareTag("Water")){
+            isOnWater = false;
         }
         //}
     } // end OnTriggerExit2D()

@@ -10,7 +10,8 @@ public class UserDataManager : MonoBehaviour
     public List<string> petList = new List<string>();
 
     [Header("---- Daily Rewards -----")]
-    public List<string> dailyRewardDayClaimed = new List<string>();
+    public string startDailyRewardDate;
+    public int latestRewardClaimedDay; // button index day claimed
 
     public void Awake()
     {

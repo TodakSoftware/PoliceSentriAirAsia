@@ -33,6 +33,7 @@ TagManager:
   - g
   - d
   - P_MainMenu
+  - Water
   layers:
   - Default
   - TransparentFX

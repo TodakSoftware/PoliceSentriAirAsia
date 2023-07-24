@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class DailyButton : MonoBehaviour
 {
@@ -48,7 +49,7 @@ public class DailyButton : MonoBehaviour
         // API Airasia to give point
 
         PlayerPrefs.SetInt("DayRewardClaimed", dayIndex);
-        print("Save " + dayIndex);
+        UserDataManager.instance.latestRewardClaimedDay = dayIndex;
         PlayerPrefs.Save();
     } // end Claimed
 }

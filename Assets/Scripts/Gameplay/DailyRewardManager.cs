@@ -21,21 +21,27 @@ public struct S_DailyRewards{
 
 public class DailyRewardManager : MonoBehaviour
 {
+    public static DailyRewardManager instance;
     public List<S_DailyRewards> dailyRewardData = new List<S_DailyRewards>(); // Data only
     public List<DailyButton> dailyRewardBtnLists = new List<DailyButton>(); // Data only
 
-    DateTime startDateTime; // set by firebase
-    DateTime todayDateTime; // set by system
+    public DateTime startDateTime; // set by firebase
+    public DateTime todayDateTime; // set by system
     Coroutine cacheDateTime;
 
     void Start()
     {
+        instance = this;
         cacheDateTime = StartCoroutine(GetRealtimeDate());
     }
 
     public void SetDailyRewardStartDate(DateTime _date){ // Set to firebase 1 time. Will reset after 
         startDateTime = _date;
         // FIREBASE SAVE START DATE
+
+        UserDataManager.instance.startDailyRewardDate = startDateTime.ToString();
+        UserDataManager.instance.latestRewardClaimedDay = 0;
+        //DateTime oDate = DateTime.Parse(DailyRewardManager.instance.todayDateTime.ToString());
     } // end SetDailyRewardStartDate
 
     public void CheckPlayerStartDailyLogin(){ // Check player start date
@@ -58,12 +64,12 @@ public class DailyRewardManager : MonoBehaviour
             SetDailyRewardStartDate(todayDateTime); // of use fire
         }
 
-        if((CalculateDaysPassed(startDateTime, todayDateTime) - PlayerPrefs.GetInt("DayRewardClaimed")) > 1){ // IF SKIP 1 day, reset
+        if((CalculateDaysPassed(startDateTime, todayDateTime) - UserDataManager.instance.latestRewardClaimedDay) > 1){ // IF SKIP 1 day, reset
             print("Skip daily reward > 1 day, RESET");
             SetDailyRewardStartDate(todayDateTime);
         }
 
-        if(PlayerPrefs.GetInt("DayRewardClaimed") >= 0 && (PlayerPrefs.GetInt("DayRewardClaimed") - 1) == CalculateDaysPassed(startDateTime, todayDateTime)){
+        if(UserDataManager.instance.latestRewardClaimedDay >= 0 && (UserDataManager.instance.latestRewardClaimedDay - 1) == CalculateDaysPassed(startDateTime, todayDateTime)){
             dailyRewardBtnLists[CalculateDaysPassed(startDateTime, todayDateTime)].Claimed();
             print("Claimed Day");
         }else{
