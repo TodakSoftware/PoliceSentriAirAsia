@@ -22,12 +22,20 @@ public struct S_DailyRewards{
 public class DailyRewardManager : MonoBehaviour
 {
     public static DailyRewardManager instance;
+    public GameObject dailyRewardPanel;
     public List<S_DailyRewards> dailyRewardData = new List<S_DailyRewards>(); // Data only
     public List<DailyButton> dailyRewardBtnLists = new List<DailyButton>(); // Data only
 
     public DateTime startDateTime; // set by firebase
     public DateTime todayDateTime; // set by system
     Coroutine cacheDateTime;
+
+    /* void OnEnable()
+    {
+        if(UserDataManager.instance.latestRewardClaimedDay == PlayerPrefs.GetInt("DayRewardClaimed")){
+            dailyRewardPanel.SetActive(false);
+        }
+    } */
 
     void Start()
     {

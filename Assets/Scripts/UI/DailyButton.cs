@@ -12,7 +12,7 @@ public class DailyButton : MonoBehaviour
     public TextMeshProUGUI kupangText;
     public TextMeshProUGUI airAsiaPointText;
     public TextMeshProUGUI btnText;
-    public GameObject tickGO;
+    public GameObject tickGO, shinyGO;
     public Button claimBtn;
 
     void Start()
@@ -24,7 +24,9 @@ public class DailyButton : MonoBehaviour
 
     public void EnableButton(){
         tickGO.SetActive(false);
+        shinyGO.SetActive(true);
         claimBtn.interactable = true;
+        claimBtn.GetComponent<Image>().color = Color.white;
         btnText.SetText("Claim");
         btnText.color = Color.black;
     } // end EnableButton
@@ -32,6 +34,7 @@ public class DailyButton : MonoBehaviour
     public void DisableButton(){
         tickGO.SetActive(false);
         claimBtn.interactable = false;
+        claimBtn.GetComponent<Image>().color = Color.gray;
         btnText.SetText("Not Yet");
         //btnText.color = Color.red;
     } // end DisableButton
@@ -39,6 +42,7 @@ public class DailyButton : MonoBehaviour
     public void Claimed(){
         // Save playerprefs to date today without time
         tickGO.SetActive(true);
+        shinyGO.SetActive(false);
         claimBtn.interactable = false;
         btnText.SetText("Claimed");
         claimBtn.GetComponent<Image>().color = Color.green;
