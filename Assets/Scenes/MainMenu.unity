@@ -5409,7 +5409,7 @@ MonoBehaviour:
   robberList: []
   petList: []
   startDailyRewardDate: 
-  latestRewardClaimedDay: 1
+  latestRewardClaimedDay: 0
   firebasBaseURL: https://police-sentri-airasia-default-rtdb.asia-southeast1.firebasedatabase.app/
 --- !u!4 &386660196
 Transform:
@@ -14834,6 +14834,7 @@ MonoBehaviour:
   tickGO: {fileID: 1757955743}
   shinyGO: {fileID: 2023917529}
   claimBtn: {fileID: 1930804273}
+  claimedColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &1054705958
 GameObject:
   m_ObjectHideFlags: 0
@@ -17258,6 +17259,7 @@ MonoBehaviour:
   tickGO: {fileID: 900247069}
   shinyGO: {fileID: 440937262}
   claimBtn: {fileID: 1686493746}
+  claimedColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &1239292634
 GameObject:
   m_ObjectHideFlags: 0
@@ -19385,6 +19387,7 @@ MonoBehaviour:
   tickGO: {fileID: 408996808}
   shinyGO: {fileID: 275273193}
   claimBtn: {fileID: 1886588081}
+  claimedColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &1406510745
 GameObject:
   m_ObjectHideFlags: 0
@@ -21941,6 +21944,7 @@ MonoBehaviour:
   tickGO: {fileID: 1589991351}
   shinyGO: {fileID: 2012194260}
   claimBtn: {fileID: 83856427}
+  claimedColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &1665483928
 GameObject:
   m_ObjectHideFlags: 0
@@ -26450,6 +26454,7 @@ MonoBehaviour:
   tickGO: {fileID: 1085607106}
   shinyGO: {fileID: 0}
   claimBtn: {fileID: 417477484}
+  claimedColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &1970119078
 GameObject:
   m_ObjectHideFlags: 0
@@ -26739,6 +26744,7 @@ MonoBehaviour:
   tickGO: {fileID: 661795460}
   shinyGO: {fileID: 1440166875}
   claimBtn: {fileID: 85848419}
+  claimedColor: {r: 0.28235295, g: 0.75294125, b: 0.13725491, a: 1}
 --- !u!1 &1978964314
 GameObject:
   m_ObjectHideFlags: 0
@@ -27391,6 +27397,7 @@ MonoBehaviour:
   tickGO: {fileID: 1175343650}
   shinyGO: {fileID: 22763177}
   claimBtn: {fileID: 396683666}
+  claimedColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &2012194260
 GameObject:
   m_ObjectHideFlags: 0

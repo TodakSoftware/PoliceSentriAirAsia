@@ -14,6 +14,8 @@ public class DailyButton : MonoBehaviour
     public TextMeshProUGUI btnText;
     public GameObject tickGO, shinyGO;
     public Button claimBtn;
+    public Color claimedColor;
+
 
     void Start()
     {
@@ -36,7 +38,7 @@ public class DailyButton : MonoBehaviour
         claimBtn.interactable = false;
         claimBtn.GetComponent<Image>().color = Color.gray;
         btnText.SetText("Not Yet");
-        //btnText.color = Color.red;
+        btnText.color = Color.black;
     } // end DisableButton
 
     public void Claimed(){
@@ -45,8 +47,11 @@ public class DailyButton : MonoBehaviour
         shinyGO.SetActive(false);
         claimBtn.interactable = false;
         btnText.SetText("Claimed");
-        claimBtn.GetComponent<Image>().color = Color.green;
-        btnText.color = Color.white;
+
+        var color = claimBtn.GetComponent<Image>().color;
+        color.a = 0;
+        claimBtn.GetComponent<Image>().color = color;
+        btnText.color = claimedColor;
 
         // Save to userdata
         UserDataManager.instance.currentKupang += int.Parse(kupangText.text);
