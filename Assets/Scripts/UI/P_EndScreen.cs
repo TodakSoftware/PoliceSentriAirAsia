@@ -49,7 +49,7 @@ public class P_EndScreen : MonoBehaviourPunCallbacks
                 if(GameManager.GetCharacterIconHead("Police", _totalPolice[i].GetPhotonView().Controller.CustomProperties["CharacterCode"].ToString()) != null){
                     ScoreTemp.GetComponent<PlayerscoreList>().playerIcon.GetComponent<Image>().sprite = GameManager.GetCharacterIconHead("Police", _totalPolice[i].GetPhotonView().Controller.CustomProperties["CharacterCode"].ToString());
                 }else{
-                    ScoreTemp.GetComponent<PlayerscoreList>().playerIcon.GetComponent<Image>().sprite = GameManager.GetCharacterIconHead("Police", "P01");
+                    ScoreTemp.GetComponent<PlayerscoreList>().playerIcon.GetComponent<Image>().sprite = GameManager.GetCharacterIconHead("Police", "P001");
                 }
                 
                 ScoreTemp.GetComponent<PlayerscoreList>().playerName.GetComponent<TextMeshProUGUI>().text = _totalPolice[i].GetComponent<PlayerController>().playerNameText.text;
@@ -61,7 +61,7 @@ public class P_EndScreen : MonoBehaviourPunCallbacks
                 }
 
             }else{
-                ScoreTemp.GetComponent<PlayerscoreList>().playerIcon.GetComponent<Image>().sprite = GameManager.GetCharacterIconHead("Police", "P01");
+                ScoreTemp.GetComponent<PlayerscoreList>().playerIcon.GetComponent<Image>().sprite = GameManager.GetCharacterIconHead("Police", "P001");
                 ScoreTemp.GetComponent<PlayerscoreList>().playerName.GetComponent<TextMeshProUGUI>().text = _totalPolice[i].GetComponent<AIPolice>().playerNameText.text;
                 ScoreTemp.GetComponent<PlayerscoreList>().scoreText.text = _totalPolice[i].GetComponent<AIPolice>().caughtCount.ToString();
             }
@@ -83,7 +83,7 @@ public class P_EndScreen : MonoBehaviourPunCallbacks
                 if(GameManager.GetCharacterIconHead("Robber", _totalRobber[i].GetPhotonView().Controller.CustomProperties["CharacterCode"].ToString()) != null){
                     ScoreTemp.GetComponent<PlayerscoreList>().playerIcon.GetComponent<Image>().sprite = GameManager.GetCharacterIconHead("Robber", _totalRobber[i].GetPhotonView().Controller.CustomProperties["CharacterCode"].ToString());
                 }else{
-                    ScoreTemp.GetComponent<PlayerscoreList>().playerIcon.GetComponent<Image>().sprite = GameManager.GetCharacterIconHead("Robber", "R01");
+                    ScoreTemp.GetComponent<PlayerscoreList>().playerIcon.GetComponent<Image>().sprite = GameManager.GetCharacterIconHead("Robber", "R001");
                 }
                 
                 ScoreTemp.GetComponent<PlayerscoreList>().playerName.GetComponent<TextMeshProUGUI>().text = _totalRobber[i].GetComponent<PlayerController>().playerNameText.text;
@@ -95,7 +95,7 @@ public class P_EndScreen : MonoBehaviourPunCallbacks
                 }
 
             }else{
-                ScoreTemp.GetComponent<PlayerscoreList>().playerIcon.GetComponent<Image>().sprite = GameManager.GetCharacterIconHead("Robber", "R01");
+                ScoreTemp.GetComponent<PlayerscoreList>().playerIcon.GetComponent<Image>().sprite = GameManager.GetCharacterIconHead("Robber", "R001");
                 ScoreTemp.GetComponent<PlayerscoreList>().playerName.GetComponent<TextMeshProUGUI>().text = _totalRobber[i].GetComponent<AIRobber>().playerNameText.text;
                 ScoreTemp.GetComponent<PlayerscoreList>().scoreText.text = _totalRobber[i].GetComponent<AIRobber>().releaseCount.ToString();
             }

@@ -220,7 +220,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         } // end gameStarted
 
         //if(PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("RoomPrivate") && (int)PhotonNetwork.CurrentRoom.CustomProperties["RoomPrivate"] == 0){ // only if public
-        if((int)PhotonNetwork.CurrentRoom.CustomProperties["RoomPrivate"] == 0){ // only if public
+        if((int)PhotonNetwork.CurrentRoom.CustomProperties["RoomPrivate"] == 0 || !PhotonNetworkManager.instance.offlineMode){ // only if public
             if(!gameEnded && currentStartGameCountdown <= 8 && !doneSpawnBots){
                 // Fill Bots
                 if(fillWithBots){
@@ -242,14 +242,14 @@ public class GameManager : MonoBehaviourPunCallbacks
             case "Police":
                 player = PhotonNetwork.Instantiate(PhotonNetworkManager.GetPhotonPrefab("Characters", "CharacterPolice"), waitingSpawnpoint.position + new Vector3(Random.Range(0,3f), Random.Range(0,3f), 0f), Quaternion.identity);
                 player.GetPhotonView().Owner.NickName = PlayerPrefs.GetString("Username");
-                player.GetComponent<PlayerController>().characterCode = "P01"; // Spawn default police
+                player.GetComponent<PlayerController>().characterCode = "P001"; // Spawn default police
                 player.GetComponent<PlayerController>().photonView.RPC("CreateAvatar", RpcTarget.AllBuffered);
             break;
 
             case "Robber":
                 player = PhotonNetwork.Instantiate(PhotonNetworkManager.GetPhotonPrefab("Characters", "CharacterRobber"), waitingSpawnpoint.position + new Vector3(Random.Range(0,3f), Random.Range(0,3f), 0f), Quaternion.identity);
                 player.GetPhotonView().Owner.NickName = PlayerPrefs.GetString("Username");
-                player.GetComponent<PlayerController>().characterCode = "R01"; // Spawn default robber
+                player.GetComponent<PlayerController>().characterCode = "R001"; // Spawn default robber
                 player.GetComponent<PlayerController>().photonView.RPC("CreateAvatar", RpcTarget.AllBuffered);
             break;
 
@@ -563,9 +563,9 @@ public class GameManager : MonoBehaviourPunCallbacks
             foreach(GameObject player in GameManager.GetAllPlayers()){
                 if(btn.ownerOfThisAvatarGO == player){
                     if(btn.ownerOfThisAvatarGO.CompareTag("Robber") && btn.isBot){
-                        btn.UpdateButton(btn.ownerOfThisAvatarGO.tag, "R01", (bool)btn.ownerOfThisAvatarGO.GetComponent<Robber>().isCaught, (bool)btn.ownerOfThisAvatarGO.GetComponent<Robber>().isHoldMoneybag);
+                        btn.UpdateButton(btn.ownerOfThisAvatarGO.tag, "R001", (bool)btn.ownerOfThisAvatarGO.GetComponent<Robber>().isCaught, (bool)btn.ownerOfThisAvatarGO.GetComponent<Robber>().isHoldMoneybag);
                     }else if(btn.ownerOfThisAvatarGO.CompareTag("Police") && btn.isBot){ // else police
-                        btn.UpdateButton(btn.ownerOfThisAvatarGO.tag, "P01", false, false);
+                        btn.UpdateButton(btn.ownerOfThisAvatarGO.tag, "P001", false, false);
                     }else{
                         if(btn.ownerOfThisAvatarGO.CompareTag("Robber") || btn.ownerOfThisAvatarGO.CompareTag("Police")){
                             if(btn.ownerOfThisAvatarGO.GetPhotonView().Owner.CustomProperties["CharacterCode"] != null && btn.ownerOfThisAvatarGO.GetPhotonView().Owner.CustomProperties["PlayerCaught"] != null && btn.ownerOfThisAvatarGO.GetPhotonView().Owner.CustomProperties["PlayerHoldMoneybag"] != null){

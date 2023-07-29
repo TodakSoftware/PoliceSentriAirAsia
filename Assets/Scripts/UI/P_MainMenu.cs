@@ -40,7 +40,7 @@ public class P_MainMenu : MonoBehaviour
             modalUsernameGO.SetActive(true);
         } */
 
-        if(ConfigReceiver.instance.configData.name != ""){
+        if(ConfigReceiver.instance.configData.name != "" && !PhotonNetworkManager.instance.offlineMode){
             usernameValue = ConfigReceiver.instance.configData.name;
             usernameText.text = usernameValue;
             profileAirasiaText.text = usernameValue;
@@ -49,6 +49,10 @@ public class P_MainMenu : MonoBehaviour
         }else{
             if(!PlayerPrefs.HasKey("Username") || PlayerPrefs.GetString("Username") == ""){
                 modalUsernameGO.SetActive(true);
+            }else{
+                usernameValue = PlayerPrefs.GetString("Username");
+                usernameText.text = usernameValue;
+                profileAirasiaText.text = usernameValue;
             }
         }
 
