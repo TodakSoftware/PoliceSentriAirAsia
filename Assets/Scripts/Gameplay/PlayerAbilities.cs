@@ -435,10 +435,10 @@ public class PlayerAbilities : MonoBehaviourPunCallbacks
         }
 
         if(gameObject.tag == "Robber"){
-            playerController.playerAnim.SwitchAnimController("Police", "P01"); //SOManager.instance.animVariantPolice.animatorLists[0].runTimeAnimController
+            playerController.playerAnim.SwitchAnimController("Police", "P001"); //SOManager.instance.animVariantPolice.animatorLists[0].runTimeAnimController
             //playerController.playerNameText.color = new Color32(81,151,255,255); // Change to police blue
         }else{
-            playerController.playerAnim.SwitchAnimController("Robber", "R01");
+            playerController.playerAnim.SwitchAnimController("Robber", "R001");
             //playerController.playerNameText.color = new Color32(255,140,16,255); // Change to robber orange
         }
     } // end EnableUndercover

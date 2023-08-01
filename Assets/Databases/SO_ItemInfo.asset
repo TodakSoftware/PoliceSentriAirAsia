@@ -44,7 +44,7 @@ MonoBehaviour:
     itemIcon: {fileID: 21300000, guid: 7e3f0bb1c4f64b84f8520681c05d46d2, type: 3}
     effectDuration: 10
   - name: Cat Stun
-    itemIcon: {fileID: 21300000, guid: 5a1564b9a58e39b43a53de110dfc45dd, type: 3}
+    itemIcon: {fileID: 21300000, guid: b1bcabd61a3ce82429f1201c90f48236, type: 3}
     effectDuration: 3
   - name: Sticky Trail
     itemIcon: {fileID: 21300000, guid: f3a529aff4ddbb842a379c8eb08fdc7c, type: 3}

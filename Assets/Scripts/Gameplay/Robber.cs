@@ -388,8 +388,11 @@ public class Robber : MonoBehaviourPunCallbacks
     public void GetOutOfJailed(Vector3 teammatePosition)
     {
         transform.position = teammatePosition;
-        if (photonView.IsMine)
+        if (photonView.IsMine && !isBot)
         {
+            photonView.RPC("EnableJailCollider", RpcTarget.All, false); // Enable Jail COllider for released
+            photonView.RPC("InvulnerableEffect", RpcTarget.All, 3f);
+        }else if(isBot){
             photonView.RPC("EnableJailCollider", RpcTarget.All, false); // Enable Jail COllider for released
             photonView.RPC("InvulnerableEffect", RpcTarget.All, 3f);
         }

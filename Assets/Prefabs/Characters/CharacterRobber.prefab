@@ -6956,7 +6956,7 @@ MonoBehaviour:
   throwDistance: 20
   cam2D: {fileID: 0}
   playerAnim: {fileID: 3297899693586578346}
-  characterCode: R01
+  characterCode: R001
   petVariantSO: {fileID: 11400000, guid: 8248ac86cb38a8c4bb744fb741756cf0, type: 2}
   doneSpawnPet: 0
   petGO: {fileID: 0}

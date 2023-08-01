@@ -56,7 +56,7 @@ MonoBehaviour:
     idlePose: {fileID: 21300000, guid: db9f113e530a8ed469e755f4daf155eb, type: 3}
     runTimeAnimController: {fileID: 22100000, guid: e30b29e64a067d9438693b7c4685bb6c, type: 2}
     temporaryDisable: 0
-    type: 1
+    type: 0
     kupang: 3000
     airAsiaPoints: 0
   - name: Binaan
@@ -65,7 +65,7 @@ MonoBehaviour:
     idlePose: {fileID: 21300000, guid: 8ee5802c9add49846a8968353caa8335, type: 3}
     runTimeAnimController: {fileID: 22100000, guid: 3b2d6f553f083a24bbe833ffeaa8689b, type: 2}
     temporaryDisable: 0
-    type: 1
+    type: 0
     kupang: 3000
     airAsiaPoints: 0
   - name: Gerok
@@ -74,7 +74,7 @@ MonoBehaviour:
     idlePose: {fileID: 21300000, guid: 4a1f0d13aac7dbe4c8404ea0d532d0fa, type: 3}
     runTimeAnimController: {fileID: 22100000, guid: 856ba3ba2a542ec4a9978ee593f09d7f, type: 2}
     temporaryDisable: 0
-    type: 1
+    type: 0
     kupang: 3000
     airAsiaPoints: 0
   - name: Hacker
@@ -92,7 +92,7 @@ MonoBehaviour:
     idlePose: {fileID: 21300000, guid: 47656d9ec59db4c41acb39e480595972, type: 3}
     runTimeAnimController: {fileID: 22100000, guid: 609f6f1629efaac46b36d2c1df1895c8, type: 2}
     temporaryDisable: 0
-    type: 1
+    type: 0
     kupang: 3000
     airAsiaPoints: 0
   - name: Musang Girl

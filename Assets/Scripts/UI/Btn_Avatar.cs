@@ -19,8 +19,8 @@ public class Btn_Avatar : MonoBehaviourPunCallbacks
     public int actorNumber;
     public GameObject ownerOfThisAvatarGO;
 
-    public void SetupButton(string team, string playerNickname, string characterCode, GameObject actorGO, bool _isBot){ // Called by GameUI (CreateAvatar) 
-        isBot = _isBot;
+    public void SetupButton(string team, string playerNickname, string characterCode, GameObject actorGO){ // Called by GameUI (CreateAvatar) 
+        //isBot = _isBot;
         switch(team){
             case "Police":
                 slotBG.sprite = policeSlotBG;
@@ -49,8 +49,8 @@ public class Btn_Avatar : MonoBehaviourPunCallbacks
     public void UpdateButton(string team, string CharCode, bool isCaught, bool holdMoneybag){ // Called everytime by GameManager(UpdateAvatarsUI) when player custom properties changed
         switch(team){
             case "Police":
-                if(CharCode == ""){
-                    CharCode = "P01";
+                if(CharCode == "" || ownerOfThisAvatarGO.GetComponent<Police>().isBot){
+                    CharCode = "P001";
                 }
                 
                 foreach(var c in SOManager.instance.animVariantPolice.animatorLists){
@@ -64,24 +64,24 @@ public class Btn_Avatar : MonoBehaviourPunCallbacks
                             caughtGO.SetActive(false);
                         } */
 
-                        if(holdMoneybag){ // Setup Moneybag Icon
+                        /* if(holdMoneybag){ // Setup Moneybag Icon
                             moneybagGO.SetActive(true);
                         }else{
                             moneybagGO.SetActive(false);
-                        }
+                        } */
                     }
                 }
             break;
 
             case "Robber":
-                if(CharCode == ""){
-                    CharCode = "R01";
+                if(CharCode == "" || ownerOfThisAvatarGO.GetComponent<Robber>().isBot){
+                    CharCode = "R001";
                 }
                 foreach(var c in SOManager.instance.animVariantRobber.animatorLists){
                     if(c.code == CharCode){
                         playerIcon.sprite = c.iconHead; // Setup New Icon
 
-                        if(isCaught && ownerOfThisAvatarGO.GetComponent<Robber>().isCaught){ // Setup Jailed Icon
+                        if(ownerOfThisAvatarGO.GetComponent<Robber>().isCaught){ // Setup Jailed Icon
                             playerName.color = Color.red;
                             caughtGO.SetActive(true);
                         }else{
@@ -89,7 +89,7 @@ public class Btn_Avatar : MonoBehaviourPunCallbacks
                             caughtGO.SetActive(false);
                         }
 
-                        if(holdMoneybag && ownerOfThisAvatarGO.GetComponent<Robber>().isHoldMoneybag){ // Setup Moneybag Icon
+                        if(ownerOfThisAvatarGO.GetComponent<Robber>().isHoldMoneybag){ // Setup Moneybag Icon
                             moneybagGO.SetActive(true);
                         }else{
                             moneybagGO.SetActive(false);

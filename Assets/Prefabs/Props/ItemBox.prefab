@@ -187,7 +187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1b67f988c84ef747adf45c1fb60c407, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemBoxIcon: {fileID: 968339241695834070}
+  itemBoxIcon: {fileID: 968339241695834070, guid: 45f90f3bd44adfa40a14ff81a833c044, type: 3}
   doneAdd: 0
   robberItems:
   - Radar

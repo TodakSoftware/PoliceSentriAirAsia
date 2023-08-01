@@ -56,7 +56,7 @@ MonoBehaviour:
     idlePose: {fileID: 21300000, guid: b5f27850214d308459155a1eeb64e1fb, type: 3}
     runTimeAnimController: {fileID: 22100000, guid: 6fd25f296b3d928449a28009b21ec13e, type: 2}
     temporaryDisable: 0
-    type: 1
+    type: 0
     kupang: 3000
     airAsiaPoints: 0
   - name: Kuasa Ranger
@@ -65,7 +65,7 @@ MonoBehaviour:
     idlePose: {fileID: 21300000, guid: 9b4f3107597f6ae4f9e9803f198c452f, type: 3}
     runTimeAnimController: {fileID: 22100000, guid: 2424d7186c7b8f74ab04f749f374aca2, type: 2}
     temporaryDisable: 0
-    type: 1
+    type: 0
     kupang: 3000
     airAsiaPoints: 0
   - name: Super Lady
@@ -74,7 +74,7 @@ MonoBehaviour:
     idlePose: {fileID: 21300000, guid: fa455a3de7b48b842926244768813e6f, type: 3}
     runTimeAnimController: {fileID: 22100000, guid: 9e3081c73c3fc2b4eaf1f68d5aac29ee, type: 2}
     temporaryDisable: 0
-    type: 1
+    type: 0
     kupang: 3000
     airAsiaPoints: 0
   - name: Mentadak Man
@@ -83,7 +83,7 @@ MonoBehaviour:
     idlePose: {fileID: 21300000, guid: 5ff2d19687c0fa748b07ada3c5fa7552, type: 3}
     runTimeAnimController: {fileID: 22100000, guid: b8ccbdc937a756b4b884955a9ee84b52, type: 2}
     temporaryDisable: 0
-    type: 1
+    type: 0
     kupang: 3000
     airAsiaPoints: 0
   - name: Musang Cop
