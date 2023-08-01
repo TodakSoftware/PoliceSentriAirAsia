@@ -75,7 +75,7 @@ public class AIPolice : MonoBehaviourPunCallbacks, IPunOwnershipCallbacks
 
         playerNameText.text = photonView.Owner.NickName;
         var policeAvatar = Instantiate(UIManager.instance.gameUI.avatarBtnPrefab);
-        policeAvatar.GetComponent<Btn_Avatar>().SetupButton("Police", givenName, "P001", this.gameObject, true);
+        policeAvatar.GetComponent<Btn_Avatar>().SetupButton("Police", givenName, "P01", this.gameObject, true);
         policeAvatar.transform.SetParent(UIManager.instance.gameUI.avatarPoliceContent,false);
         UIManager.instance.gameUI.avatarBtnList.Add(policeAvatar.GetComponent<Btn_Avatar>());
     }

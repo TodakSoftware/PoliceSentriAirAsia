@@ -31,3 +31,6 @@ MonoBehaviour:
   - name: Map_Bali
     displayName: Bali
     description: This is just a description for map
+  - name: Map_Boracay01
+    displayName: Boracay
+    description: This is just a description for map

@@ -14,7 +14,7 @@ public class Modal_Username : MonoBehaviour
 
     void OnEnable(){
         if(PlayerPrefs.HasKey("Username")){
-            if(PlayerPrefs.GetString("Username") != ConfigReceiver.instance.configData.name && ConfigReceiver.instance.configData.name != "" && !PhotonNetworkManager.instance.offlineMode){
+            if(PlayerPrefs.GetString("Username") != ConfigReceiver.instance.configData.name && ConfigReceiver.instance.configData.name != ""){
                 usernameInput.text = ConfigReceiver.instance.configData.name;
                 PlayerPrefs.SetString("Username", ConfigReceiver.instance.configData.name);
                 PlayerPrefs.Save();

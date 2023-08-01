@@ -36,7 +36,6 @@ public class PhotonNetworkManager : MonoBehaviourPunCallbacks
     public bool playAgainExecuted, instantCreateFindGame;
     private LoadBalancingClient loadBalancingClient;
     public P_MainMenu cacheP_mainMenu;
-    public bool offlineMode;
 
     void Awake(){
         cacheP_mainMenu = GameObject.FindGameObjectWithTag("P_MainMenu").GetComponent<P_MainMenu>();
@@ -60,13 +59,6 @@ public class PhotonNetworkManager : MonoBehaviourPunCallbacks
         DontDestroyOnLoad(gameObject);
         Application.targetFrameRate = -1;
         QualitySettings.vSyncCount = 0;
-
-        if(offlineMode){
-            autoConnect = false;
-            hasInternet = false;
-            dontConnectInternet = true;
-            playOfflineGame = true;
-        }
     }
 
     public bool GetRandomBool(){
@@ -128,7 +120,7 @@ public class PhotonNetworkManager : MonoBehaviourPunCallbacks
         }
 
         // Auto start if 1 minit passed
-        if(!offlineMode && hasInternet && isInTheRoom && PhotonNetwork.CurrentRoom.PlayerCount >= 1 && PhotonNetwork.CurrentRoom.PlayerCount < (int)maxPlayersPerRoom && UIManager.instance.timeoutTimer >= findGameAutoStart && !autoStartCreateGame){ // if we in room & timer find game >= autostart
+        if(hasInternet && isInTheRoom && PhotonNetwork.CurrentRoom.PlayerCount >= 1 && PhotonNetwork.CurrentRoom.PlayerCount < (int)maxPlayersPerRoom && UIManager.instance.timeoutTimer >= findGameAutoStart && !autoStartCreateGame){ // if we in room & timer find game >= autostart
             
             if(PhotonNetwork.IsMasterClient){
                 //print("Auto Start Game With Current Players = " + PhotonNetwork.CurrentRoom.PlayerCount);

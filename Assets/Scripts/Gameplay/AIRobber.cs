@@ -58,7 +58,7 @@ public class AIRobber : MonoBehaviourPunCallbacks, IPunOwnershipCallbacks
 
         playerNameText.text = photonView.Owner.NickName;
         var robberAvatar = Instantiate(UIManager.instance.gameUI.avatarBtnPrefab);
-        robberAvatar.GetComponent<Btn_Avatar>().SetupButton("Robber", givenName, "R001", this.gameObject, true);
+        robberAvatar.GetComponent<Btn_Avatar>().SetupButton("Robber", givenName, "R01", this.gameObject, true);
         robberAvatar.transform.SetParent(UIManager.instance.gameUI.avatarRobberContent,false);
         UIManager.instance.gameUI.avatarBtnList.Add(robberAvatar.GetComponent<Btn_Avatar>());
     }
