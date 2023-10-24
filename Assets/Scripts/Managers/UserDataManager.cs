@@ -19,7 +19,8 @@ public class UserDataManager : MonoBehaviour
 
     [Header("---- Firebase -----")]
     public string firebasBaseURL = "https://police-sentri-airasia-default-rtdb.asia-southeast1.firebasedatabase.app/";
-
+    public GameObject dailyRewardGO;
+    
     public void Awake()
     {
         if(instance == null){
@@ -31,6 +32,28 @@ public class UserDataManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     } // end Awake
 
+    [System.Obsolete]
+    void Start()
+    {
+        if(!PhotonNetworkManager.instance.offlineMode){
+            if(memberID != ""){
+                LoadFromFirebase();
+            }else{
+                memberID = "0000000000";
+                SaveToFirebase();
+            }
+        }
+    }
+
+    [System.Obsolete]
+    public void StartLoadReward(){
+        // Load 1st
+            print("Rewarding");
+            dailyRewardGO.SetActive(true);
+            DailyRewardManager.instance.Start2();
+    }
+
+    [System.Obsolete]
     public void SaveToFirebase(){
         C_UserData userDat = new C_UserData();
         userDat.currentKupang = currentKupang;
@@ -42,6 +65,7 @@ public class UserDataManager : MonoBehaviour
 
         RestClient.Put(firebasBaseURL + memberID + "/.json", userDat);
         print("SAVED");
+        Invoke("StartLoadReward", 1f);
     } // end SaveToFirebase
 
     public void UpdateFirebaseData(string fieldName, object fieldValue)
@@ -104,6 +128,7 @@ public class UserDataManager : MonoBehaviour
         }
     }
 
+    [System.Obsolete]
     public void LoadFromFirebase(){
         RestClient.Get<C_UserData>(firebasBaseURL + memberID + "/.json").Then(response =>
             {
@@ -115,6 +140,7 @@ public class UserDataManager : MonoBehaviour
                 latestRewardClaimedDay = response.latestRewardClaimedDay;
 
                 print("Loaded");
+                Invoke("StartLoadReward", 1f);
             }
         );
     } // end LoadFromFirebase

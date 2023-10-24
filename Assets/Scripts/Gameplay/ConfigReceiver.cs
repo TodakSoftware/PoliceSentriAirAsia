@@ -15,11 +15,14 @@ public class ConfigReceiver : MonoBehaviour
         public string productName;
         public string productVersion;
         public string name;
+        public string memberid;
         public string avatar;
     }
 
     public static ConfigReceiver instance;
     public Config configData;
+
+    
 
     void Awake(){
         if(instance == null){
@@ -31,6 +34,7 @@ public class ConfigReceiver : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    [System.Obsolete]
     public void SetConfig(string configJson)
     {
         if(configData.name == ""){
@@ -40,6 +44,8 @@ public class ConfigReceiver : MonoBehaviour
             if(config.name != ""){
                 NotificationManager.instance.PopupNotification("Welcome, " + config.name);
             }
+
+            UserDataManager.instance.memberID = config.memberid;
         }
     }
 }

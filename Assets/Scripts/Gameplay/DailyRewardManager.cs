@@ -29,6 +29,8 @@ public class DailyRewardManager : MonoBehaviour
     public DateTime startDateTime; // set by firebase
     public DateTime todayDateTime; // set by system
     Coroutine cacheDateTime;
+    [HideInInspector]public WebRequest webRequestScript;
+    [HideInInspector]public AwsRequest awsRequest;
 
     /* void OnEnable()
     {
@@ -36,11 +38,19 @@ public class DailyRewardManager : MonoBehaviour
             dailyRewardPanel.SetActive(false);
         }
     } */
-
-    void Start()
+    
+    void Awake()
     {
+        webRequestScript = GetComponent<WebRequest>();
+        awsRequest = GetComponent<AwsRequest>();
         instance = this;
+    }
+
+    [Obsolete]
+    public void Start2()
+    {
         cacheDateTime = StartCoroutine(GetRealtimeDate());
+        dailyRewardPanel.SetActive(true);
     }
 
     public void SetDailyRewardStartDate(DateTime _date){ // Set to firebase 1 time. Will reset after 
@@ -48,10 +58,12 @@ public class DailyRewardManager : MonoBehaviour
         // FIREBASE SAVE START DATE
 
         UserDataManager.instance.startDailyRewardDate = startDateTime.ToString();
-        UserDataManager.instance.latestRewardClaimedDay = 0;
+        UserDataManager.instance.UpdateFirebaseData("startDailyRewardDate", UserDataManager.instance.startDailyRewardDate);
+        //UserDataManager.instance.latestRewardClaimedDay = 0;
         //DateTime oDate = DateTime.Parse(DailyRewardManager.instance.todayDateTime.ToString());
     } // end SetDailyRewardStartDate
 
+    [Obsolete]
     public void CheckPlayerStartDailyLogin(){ // Check player start date
         // Get from firebase
         // If null
@@ -62,7 +74,7 @@ public class DailyRewardManager : MonoBehaviour
             dailyRewardBtnLists[i].airAsiaPointText.text = dailyRewardData[i].airAsiaPointValue.ToString();
         }
         // Set to current
-        if(startDateTime.Year == 0001){
+        if(UserDataManager.instance.startDailyRewardDate == ""){ // startDateTime.Year == 0001 || 
             SetDailyRewardStartDate(todayDateTime);
             print("NULL DATE, so we set new " + startDateTime);
         }
@@ -86,6 +98,7 @@ public class DailyRewardManager : MonoBehaviour
         
     } // end CheckPlayerStartDailyLogin
 
+    [Obsolete]
     private IEnumerator GetRealtimeDate()
     {
         string url = "https://worldtimeapi.org/api/ip";

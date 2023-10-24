@@ -135,7 +135,12 @@ public class PhotonNetworkManager : MonoBehaviourPunCallbacks
                 HostWithCustomPlayer(PhotonNetwork.CurrentRoom.PlayerCount);
 
                 PhotonNetwork.CurrentRoom.IsVisible = false; // Set Room IsVisible = false
-                StartCoroutine(ChangeScene(GetRandomMapBias("Map_Bali", 70)));// Host load level
+                //StartCoroutine(ChangeScene(GetRandomMapBias("Map_Bali", 70)));// Host load level
+                List<string> mapsLists = new List<string>();
+                mapsLists.Add("Map_Bali");
+                mapsLists.Add("Map_Bangkok01");
+                mapsLists.Add("Map_Boracay01");
+                StartCoroutine(ChangeScene(GetRandomMapBiasLists(mapsLists, 70)));// Host load level
 
                 isFindingGame = false; // Set status to isFindingGame
 
@@ -379,7 +384,12 @@ public class PhotonNetworkManager : MonoBehaviourPunCallbacks
                 roomProperties.Add("RealTotalPlayer", (int)maxPlayersPerRoom);
             }
             
-            roomProperties.Add("RoomMapName", GetRandomMapBias("Map_Bali", 70)); // Random map
+            //roomProperties.Add("RoomMapName", GetRandomMapBias("Map_Bali", 70)); // Random map
+            List<string> mapsLists = new List<string>();
+            mapsLists.Add("Map_Bali");
+            mapsLists.Add("Map_Bangkok01");
+            mapsLists.Add("Map_Boracay01");
+            roomProperties.Add("RoomMapName", GetRandomMapBiasLists(mapsLists, 70)); // Random map
             PhotonNetwork.CurrentRoom.SetCustomProperties(roomProperties);
 
             string[] exposedPropertiesInLobby = { "RoomGamemodeIndex", "RoomMaxTotalPlayer", "RoomMapName" }; 
@@ -460,7 +470,12 @@ public class PhotonNetworkManager : MonoBehaviourPunCallbacks
                 break;
             } */
 
-            roomProperties.Add("RoomMapName", GetRandomMapBias("Map_Bali", 70)); // Random map
+            List<string> mapsLists = new List<string>();
+            mapsLists.Add("Map_Bali");
+            mapsLists.Add("Map_Bangkok01");
+            mapsLists.Add("Map_Boracay01");
+
+            roomProperties.Add("RoomMapName", GetRandomMapBiasLists(mapsLists, 70)); // Random map
             PhotonNetwork.CurrentRoom.SetCustomProperties(roomProperties);
 
             string[] exposedPropertiesInLobby = { "RoomGamemodeIndex", "RoomMaxTotalPlayer", "RoomMapName" }; 
@@ -618,7 +633,12 @@ public class PhotonNetworkManager : MonoBehaviourPunCallbacks
             if(PhotonNetwork.CurrentRoom.CustomProperties["RoomMapName"] != null){
                 _roomMapName = PhotonNetwork.CurrentRoom.CustomProperties["RoomMapName"].ToString();
             }else{
-                _roomMapName = GetRandomMapBias("Map_Bali", 70);
+                //_roomMapName = GetRandomMapBias("Map_Bali", 70);
+                List<string> mapsLists = new List<string>();
+                mapsLists.Add("Map_Bali");
+                mapsLists.Add("Map_Bangkok01");
+                mapsLists.Add("Map_Boracay01");
+                _roomMapName = GetRandomMapBiasLists(mapsLists, 70);
             }
 
             foreach(var player in PhotonNetwork.CurrentRoom.Players){
@@ -795,6 +815,16 @@ public class PhotonNetworkManager : MonoBehaviourPunCallbacks
         int randomNumber = Random.Range(0, 100);
         if (randomNumber < _chance) {
             return _mapName;
+        } else {
+            int randomIndex = Random.Range(0, SOManager.instance.maps.mapsList.Count);
+            return SOManager.instance.maps.mapsList[randomIndex].name;
+        }
+    }
+
+    public string GetRandomMapBiasLists(List<string> _mapNameLists, float _chance) {
+        int randomNumber = Random.Range(0, 100);
+        if (randomNumber < _chance) {
+            return _mapNameLists[Random.Range(0, _mapNameLists.Count)];
         } else {
             int randomIndex = Random.Range(0, SOManager.instance.maps.mapsList.Count);
             return SOManager.instance.maps.mapsList[randomIndex].name;

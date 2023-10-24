@@ -16,10 +16,10 @@ public class DailyButton : MonoBehaviour
     public Button claimBtn;
     public Color claimedColor;
 
-
+    [Obsolete]
     void Start()
     {
-        claimBtn.onClick.AddListener( delegate{ Claimed(); } );
+        claimBtn.onClick.AddListener( delegate{ Claimed(); ClaimedDataSave(); } );
         DisableButton();
         PlayerPrefs.DeleteKey("DayRewardClaimed");
     }
@@ -41,6 +41,7 @@ public class DailyButton : MonoBehaviour
         btnText.color = Color.black;
     } // end DisableButton
 
+    [Obsolete]
     public void Claimed(){
         // Save playerprefs to date today without time
         tickGO.SetActive(true);
@@ -54,11 +55,22 @@ public class DailyButton : MonoBehaviour
         btnText.color = claimedColor;
 
         // Save to userdata
-        UserDataManager.instance.currentKupang += int.Parse(kupangText.text);
+        
         // API Airasia to give point
-
+        /* if(int.Parse(airAsiaPointText.text) > 0){
+            //DailyRewardManager.instance.awsRequest.SendDataToAirAsia(UserDataManager.instance.memberID, int.Parse(airAsiaPointText.text), "Reward " + airAsiaPointText.text + " Big Points to member from daily login rewards");
+            // TEST
+            print("Sent Data");
+            //DailyRewardManager.instance.webRequestScript.SendDataToAirAsia("9999990005183161", int.Parse(airAsiaPointText.text), "Reward " + airAsiaPointText.text + " Airasia Points to member from daily login rewards");
+        } */
         PlayerPrefs.SetInt("DayRewardClaimed", dayIndex);
         UserDataManager.instance.latestRewardClaimedDay = dayIndex;
         PlayerPrefs.Save();
     } // end Claimed
+
+    public void ClaimedDataSave(){
+        UserDataManager.instance.currentKupang += int.Parse(kupangText.text);
+        UserDataManager.instance.UpdateFirebaseData("currentKupang", UserDataManager.instance.currentKupang);
+        UserDataManager.instance.UpdateFirebaseData("latestRewardClaimedDay", UserDataManager.instance.latestRewardClaimedDay);
+    }
 }

@@ -98,6 +98,7 @@
 			});
 			
 			let nickname = params.nickname;
+			let memberid = params.memberid;
 			let avatar = params.avatar;
 			
 			var canvas = document.querySelector("#unity-canvas");
@@ -117,6 +118,7 @@
 				productName: "{{{ PRODUCT_NAME }}}",
 				productVersion: "{{{ PRODUCT_VERSION }}}",
 				name: nickname ? nickname : '',
+				memberid: memberid ? memberid : '',
 				avatar: avatar ? avatar: ''
 			};
 			
