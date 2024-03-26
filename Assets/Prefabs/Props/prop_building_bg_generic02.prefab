@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6202314017291527316
+--- !u!1 &6849684078972388192
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,9 +8,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4224155221400372074}
-  - component: {fileID: 6426325268639844797}
-  - component: {fileID: 8516379051914144240}
+  - component: {fileID: 7431770277538564262}
+  - component: {fileID: 2045562968384002817}
+  - component: {fileID: 7933413532086537199}
   m_Layer: 0
   m_Name: prop_building_bg_generic02
   m_TagString: Untagged
@@ -18,28 +18,28 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4224155221400372074
+--- !u!4 &7431770277538564262
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6202314017291527316}
+  m_GameObject: {fileID: 6849684078972388192}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -22.683842, y: 36.311558, z: 0}
+  m_LocalPosition: {x: -0.63, y: 34.11, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &6426325268639844797
+--- !u!212 &2045562968384002817
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6202314017291527316}
+  m_GameObject: {fileID: 6849684078972388192}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -74,24 +74,24 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: b809de6933e8d4154acbe77dd5b55f13, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 50637e34b0f9d4952843fc82e81080a3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 7.2, y: 16.2}
+  m_Size: {x: 7.2, y: 7.2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!210 &8516379051914144240
+--- !u!210 &7933413532086537199
 SortingGroup:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6202314017291527316}
+  m_GameObject: {fileID: 6849684078972388192}
   m_Enabled: 1
   m_SortingLayerID: 0
   m_SortingLayer: 0
