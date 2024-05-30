@@ -34,3 +34,6 @@ MonoBehaviour:
   - name: Map_Boracay01
     displayName: Boracay
     description: This is just a description for map
+  - name: Map_Singapore
+    displayName: Singapore
+    description: This is just a description for map

@@ -19,6 +19,7 @@ public class P_MainMenu : MonoBehaviour
     public Button playButton, privateButton, playWithBotButton;
     public TextMeshProUGUI playText;
     public TextMeshProUGUI statusText, waitingForPlayersText;
+    public TextMeshProUGUI memberIDText;
     public GameObject offlineLoadingUI;
 
 
@@ -44,6 +45,7 @@ public class P_MainMenu : MonoBehaviour
             usernameValue = ConfigReceiver.instance.configData.name;
             usernameText.text = usernameValue;
             profileAirasiaText.text = usernameValue;
+            memberIDText.text = ConfigReceiver.instance.configData.memberid;
             PlayerPrefs.SetString("Username", usernameValue);
             PlayerPrefs.Save();
         }else{
@@ -59,5 +61,8 @@ public class P_MainMenu : MonoBehaviour
         playButton.onClick.AddListener(delegate{  PhotonNetworkManager.instance.PlayOnlineGame(); }); // JoinTheGame(0)   Link playBtn with network manager join game
         cancelFindGameBtn.onClick.AddListener(delegate{  PhotonNetworkManager.instance.CancelFindGameOrLeaveRoom(); }); // JoinTheGame(0)   Link playBtn with network manager join game
         playWithBotButton.onClick.AddListener(delegate{ PhotonNetworkManager.instance.SetOffline();offlineLoadingUI.SetActive(true); AudioManager.instance.StopMusic(); }); // Link playWithBotBtn with network manager join game
+    }
+    public void CloseGame(){
+        Application.Quit();
     }
 }

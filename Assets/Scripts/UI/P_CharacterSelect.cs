@@ -29,7 +29,7 @@ public class P_CharacterSelect : MonoBehaviourPunCallbacks
                     charAvatar.GetComponent<Btn_CharacterSelectAvatar>().charIdleSprite = policeChar.idlePose;
                     charAvatar.transform.SetParent(listContent, false);
 
-                    if(policeChar.type == E_ValueType.PREMIUM && !UserDataManager.instance.policeList.Contains(policeChar.code)){
+                    if(policeChar.type == E_ValueType.PREMIUM && !UserDataManager.instance.policeList.Contains(policeChar.code) && !PhotonNetworkManager.instance.offlineMode){
                         charAvatar.GetComponent<Btn_CharacterSelectAvatar>().LockCharacter();
                     }
 
@@ -48,7 +48,7 @@ public class P_CharacterSelect : MonoBehaviourPunCallbacks
                     charAvatar.GetComponent<Btn_CharacterSelectAvatar>().charIdleSprite = robberChar.idlePose;
                     charAvatar.transform.SetParent(listContent, false);
 
-                    if(robberChar.type == E_ValueType.PREMIUM && !UserDataManager.instance.robberList.Contains(robberChar.code)){
+                    if(robberChar.type == E_ValueType.PREMIUM && !UserDataManager.instance.robberList.Contains(robberChar.code) && !PhotonNetworkManager.instance.offlineMode){
                         charAvatar.GetComponent<Btn_CharacterSelectAvatar>().LockCharacter();
                     }
 

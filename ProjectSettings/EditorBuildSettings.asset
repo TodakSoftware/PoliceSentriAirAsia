@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Map_Boracay01.unity
     guid: b61d50b3153d14a71ad2483ce883b67b
+  - enabled: 1
+    path: Assets/Scenes/Map_Singapore.unity
+    guid: 54ce8b01bd3f44be39a8308ad3e7fb1e
   m_configObjects: {}

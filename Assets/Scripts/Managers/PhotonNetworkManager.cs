@@ -140,6 +140,7 @@ public class PhotonNetworkManager : MonoBehaviourPunCallbacks
                 mapsLists.Add("Map_Bali");
                 mapsLists.Add("Map_Bangkok01");
                 mapsLists.Add("Map_Boracay01");
+                mapsLists.Add("Map_Singapore");
                 StartCoroutine(ChangeScene(GetRandomMapBiasLists(mapsLists, 70)));// Host load level
 
                 isFindingGame = false; // Set status to isFindingGame
@@ -638,6 +639,7 @@ public class PhotonNetworkManager : MonoBehaviourPunCallbacks
                 mapsLists.Add("Map_Bali");
                 mapsLists.Add("Map_Bangkok01");
                 mapsLists.Add("Map_Boracay01");
+                mapsLists.Add("Map_Singapore");
                 _roomMapName = GetRandomMapBiasLists(mapsLists, 70);
             }
 

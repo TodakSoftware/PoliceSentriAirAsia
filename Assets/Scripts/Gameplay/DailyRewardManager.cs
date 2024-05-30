@@ -30,7 +30,6 @@ public class DailyRewardManager : MonoBehaviour
     public DateTime todayDateTime; // set by system
     Coroutine cacheDateTime;
     [HideInInspector]public WebRequest webRequestScript;
-    [HideInInspector]public AwsRequest awsRequest;
 
     /* void OnEnable()
     {
@@ -42,7 +41,6 @@ public class DailyRewardManager : MonoBehaviour
     void Awake()
     {
         webRequestScript = GetComponent<WebRequest>();
-        awsRequest = GetComponent<AwsRequest>();
         instance = this;
     }
 

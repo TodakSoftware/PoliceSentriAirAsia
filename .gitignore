@@ -74,3 +74,6 @@ UserSettings/EditorUserSettings.asset
 UserSettings/Layouts/default-2021.dwlt
 *.dwlt
 *.asset
+*.dwlt
+UserSettings/EditorUserSettings.asset
+ProjectSettings/ProjectVersion.txt

@@ -78,13 +78,54 @@
 			image-rendering: pixelated;
 			-ms-interpolation-mode: nearest-neighbor;
 		}
+
+		div#AdOverlay{
+			z-index: 9999;
+			position: relative;
+			margin: 0 auto;
+			width: fit-content;
+		}
+		
+		div#Game-Police-Sentri{
+			z-index: 10000;
+			position: absolute;
+			margin-left: -160px; 
+		}
+
 	</style>
+	<script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
+	<script>
+		window.googletag = window.googletag || {cmd: []};
+		googletag.cmd.push(function() {
+			googletag.defineSlot('/10025506/aa_app/games/Game-Police-Sentri', [[320, 50]], 'Game-Police-Sentri').addService(googletag.pubads());
+			googletag.pubads().enableSingleRequest();
+			googletag.enableServices();
+		});
+	</script>
+
+	<script type="text/javascript">
+		function hideDiv() {
+			document.getElementById('Game-Police-Sentri').style.display = 'none';
+		}
+
+		function showDiv() {
+			document.getElementById('Game-Police-Sentri').style.display = 'block';
+		}
+	</script>
+
 </head>
 
 <body>
 	<div id="gameContainer">
 		<!--<div id="gameLogo"><img src="logo.png"></div>-->
 		<div id="label-progress"></div>
+		<div id="AdOverlay">
+			<div id='Game-Police-Sentri' style='min-width: 320px; min-height: 50px;'>
+				<script>
+					googletag.cmd.push(function() { googletag.display('Game-Police-Sentri'); });
+				</script>
+			</div>
+		</div>
 		<!--<div class="bg"></div>-->
 		<canvas id="unity-canvas" data-pixel-art="{{{ OPTIMIZE_FOR_PIXEL_ART }}}"></canvas>
 		<script src="Build/{{{ LOADER_FILENAME }}}"></script>
@@ -146,10 +187,6 @@
 			function onMouseDown(event){
 				window.focus();
 			}
-			
-			function adsTrigger(){
-				window.alert("Check function UnityToHTML inside index.html, implement the real ads function there");
-			}
 
 			function onResize() {
 				var container = canvas.parentElement;
@@ -192,7 +229,6 @@
 				meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
 				document.getElementsByTagName('head')[0].appendChild(meta);
 			}
-			
 		</script>
 		
 		<script type="module">
@@ -218,33 +254,8 @@
 		  // Initialize Firebase
 		  const app = initializeApp(firebaseConfig);
 		  const analytics = getAnalytics(app);
-		  
-		  console.log('Firebase successfully!);
 		</script>
-
-
-		<!--<script async
-			  data-adbreak-test="on"
-			  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2075031354721535"
-			  crossorigin="anonymous" 
-			  data-ad-frequency-hint="30s">
-		</script>
-		<script>
-		   window.adsbygoogle = window.adsbygoogle || [];
-		   var adBreak = adConfig = function(o) {adsbygoogle.push(o);}
-		   window.addEventListener('load', function() {
-			  console.log('Google AdSense script loaded successfully!');
-		   });
-		</script>
-		<script>
-			function resumeAudioContext() {
-			  var AudioContext = window.AudioContext || window.webkitAudioContext;
-			  var context = new AudioContext();
-			  context.resume();
-			  document.removeEventListener("click", resumeAudioContext);
-			}
-			document.addEventListener("click", resumeAudioContext);
-		  </script> -->
+		
 	</div>
 </body>
 
