@@ -51,5 +51,6 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "PoliceSentriAirAsia.sln"
+    "dotnet.defaultSolution": "PoliceSentriAirAsia.sln",
+    "dotnet.preferCSharpExtension": true
 }

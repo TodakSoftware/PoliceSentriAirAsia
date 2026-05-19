@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class ConfigReceiver : MonoBehaviour
@@ -15,14 +16,12 @@ public class ConfigReceiver : MonoBehaviour
         public string productName;
         public string productVersion;
         public string name;
-        public string memberid;
+        public string memberId;
         public string avatar;
     }
 
     public static ConfigReceiver instance;
     public Config configData;
-
-    
 
     void Awake(){
         if(instance == null){
@@ -45,7 +44,13 @@ public class ConfigReceiver : MonoBehaviour
                 NotificationManager.instance.PopupNotification("Welcome, " + config.name);
             }
 
-            UserDataManager.instance.memberID = config.memberid;
+            if(config.memberId != ""){
+                UserDataManager.instance.memberID = config.memberId;
+            }else{
+                NotificationManager.instance.PopupNotification("Member ID not defined");
+                //UserDataManager.instance.memberID = "9999990005545751"; // Test if NUll
+                UserDataManager.instance.memberID = ""; // Test if NUll
+            }
         }
     }
 }

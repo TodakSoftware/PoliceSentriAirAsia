@@ -57,14 +57,14 @@ public class CatStun : MonoBehaviourPunCallbacks, IPunObservable
     {
         if(photonView.IsMine){
         if(!alreadyIdle){
-            if(GetComponent<Rigidbody2D>().velocity.x != 0){
-                if(facingRight && GetComponent<Rigidbody2D>().velocity.x < 4f){
+            if(GetComponent<Rigidbody2D>().linearVelocity.x != 0){
+                if(facingRight && GetComponent<Rigidbody2D>().linearVelocity.x < 4f){
                     if(photonView.IsMine){
                         photonView.RPC("ChangeToIdle", RpcTarget.All);
                     }
                     alreadyIdle = true;
                     //efx.SetActive(true);
-                }else if(!facingRight && GetComponent<Rigidbody2D>().velocity.x > -4f){
+                }else if(!facingRight && GetComponent<Rigidbody2D>().linearVelocity.x > -4f){
                     if(photonView.IsMine){
                         photonView.RPC("ChangeToIdle", RpcTarget.All);
                     }
@@ -72,7 +72,7 @@ public class CatStun : MonoBehaviourPunCallbacks, IPunObservable
                     //efx.SetActive(true);
                 }
             }else{
-                if(GetComponent<Rigidbody2D>().velocity.y < 4f && GetComponent<Rigidbody2D>().velocity.y > -4f){
+                if(GetComponent<Rigidbody2D>().linearVelocity.y < 4f && GetComponent<Rigidbody2D>().linearVelocity.y > -4f){
                     if(photonView.IsMine){
                         photonView.RPC("ChangeToIdle", RpcTarget.All);
                     }
@@ -199,11 +199,11 @@ public class CatStun : MonoBehaviourPunCallbacks, IPunObservable
         if(stream != null && photonView != null){
             if(stream.IsWriting){
                 stream.SendNext(transform.position);
-                stream.SendNext(GetComponent<Rigidbody2D>().velocity);
+                stream.SendNext(GetComponent<Rigidbody2D>().linearVelocity);
                 stream.SendNext(GetComponent<Rigidbody2D>().angularVelocity);
             }else{
                 latestPos = (Vector3)stream.ReceiveNext();
-                GetComponent<Rigidbody2D>().velocity = (Vector2)stream.ReceiveNext();
+                GetComponent<Rigidbody2D>().linearVelocity = (Vector2)stream.ReceiveNext();
                 GetComponent<Rigidbody2D>().angularVelocity = (float)stream.ReceiveNext();
 
                 currentTime = 0.0f;

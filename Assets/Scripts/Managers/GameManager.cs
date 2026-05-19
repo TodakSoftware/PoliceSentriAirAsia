@@ -121,8 +121,6 @@ public class GameManager : MonoBehaviourPunCallbacks
             UIManager.instance.gameUI.cancelCountGameBtn.gameObject.SetActive(false);
             UIManager.instance.gameUI.roomInfoGO.gameObject.SetActive(false);
         }else{
-            GPTIntegration.instance.RemoveAd(); // Remove Ads GPT, if private
-
             if(PhotonNetwork.IsMasterClient){
                 UIManager.instance.gameUI.startCountGameBtn.gameObject.SetActive(true);
                 UIManager.instance.gameUI.startCountGameBtn.onClick.AddListener(() => {
@@ -476,8 +474,6 @@ public class GameManager : MonoBehaviourPunCallbacks
 
                 //print("Redirect Everybody To Their Position");
                 yield return new WaitForSeconds(1f); // delay gameStart = true
-
-                GPTIntegration.instance.RemoveAd(); // Remove Ads GPT
 
                 gameStarted = true;
                 

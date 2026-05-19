@@ -156,7 +156,7 @@ public class BotController : PlayerController
 
             yield return new WaitForSeconds(duration); // Waiting duration
 
-            rb.velocity = Vector2.zero; // Force velocity = 0
+            rb.linearVelocity = Vector2.zero; // Force velocity = 0
             botAgent.maxSpeed = _oldSpeed; // Revert back to old speed
             isDashing = false; // Set isDashing = false
         }

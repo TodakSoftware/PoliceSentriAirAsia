@@ -45,7 +45,7 @@ public class P_MainMenu : MonoBehaviour
             usernameValue = ConfigReceiver.instance.configData.name;
             usernameText.text = usernameValue;
             profileAirasiaText.text = usernameValue;
-            memberIDText.text = ConfigReceiver.instance.configData.memberid;
+            memberIDText.text = ConfigReceiver.instance.configData.memberId;
             PlayerPrefs.SetString("Username", usernameValue);
             PlayerPrefs.Save();
         }else{

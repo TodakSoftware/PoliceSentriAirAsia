@@ -211,7 +211,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         }
 
         if(canMove){
-            rb.velocity = moveDir * moveSpeed;
+            rb.linearVelocity = moveDir * moveSpeed;
 
             
         } // end canMove
@@ -251,10 +251,10 @@ public class PlayerController : MonoBehaviourPunCallbacks
             if(isDashing){ // if we are !moving but dash, push into direction
                 if(isFacingRight){
                     moveDir = new Vector3(1, 0).normalized;
-                    rb.velocity = (moveDir * dashSpeedMultiplier) * moveSpeed;
+                    rb.linearVelocity = (moveDir * dashSpeedMultiplier) * moveSpeed;
                 }else{
                     moveDir = new Vector3(-1, 0).normalized;
-                    rb.velocity = (moveDir * dashSpeedMultiplier) * moveSpeed;
+                    rb.linearVelocity = (moveDir * dashSpeedMultiplier) * moveSpeed;
                 }
             }
         }
@@ -354,7 +354,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
             yield return new WaitForSeconds(duration); // Waiting duration
 
-            rb.velocity = Vector2.zero; // Force velocity = 0
+            rb.linearVelocity = Vector2.zero; // Force velocity = 0
             moveSpeed = _oldSpeed; // Revert back to old speed
             isDashing = false; // Set isDashing = false
         }
@@ -378,7 +378,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
             isFalling = true;
             canMove = false;
             moveDir = Vector3.zero;
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
             yield return new WaitForSeconds(fallDuration);
             // If we prop undercover
             if(GetComponent<PlayerAbilities>().propUndercover){

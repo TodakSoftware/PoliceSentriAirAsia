@@ -46,11 +46,11 @@ public class Cauliflower : MonoBehaviourPunCallbacks, IPunObservable
         if(stream != null && photonView != null){
             if(stream.IsWriting){
                 stream.SendNext(transform.position);
-                stream.SendNext(GetComponent<Rigidbody2D>().velocity);
+                stream.SendNext(GetComponent<Rigidbody2D>().linearVelocity);
                 stream.SendNext(GetComponent<Rigidbody2D>().angularVelocity);
             }else{
                 latestPos = (Vector3)stream.ReceiveNext();
-                GetComponent<Rigidbody2D>().velocity = (Vector2)stream.ReceiveNext();
+                GetComponent<Rigidbody2D>().linearVelocity = (Vector2)stream.ReceiveNext();
                 GetComponent<Rigidbody2D>().angularVelocity = (float)stream.ReceiveNext();
 
                 currentTime = 0.0f;

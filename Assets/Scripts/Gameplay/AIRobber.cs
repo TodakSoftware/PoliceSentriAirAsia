@@ -409,7 +409,7 @@ public class AIRobber : MonoBehaviourPunCallbacks, IPunOwnershipCallbacks
 
             yield return new WaitForSeconds(duration); // Waiting duration
 
-            GetComponent<Rigidbody2D>().velocity = Vector2.zero; // Force velocity = 0
+            GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero; // Force velocity = 0
             agent.maxSpeed = _oldSpeed; // Revert back to old speed
             isDashing = false; // Set isDashing = false
         }

@@ -109,9 +109,9 @@ public class PlayerAbilities : MonoBehaviourPunCallbacks
                 // If no direction pointing, refer left or right direction
                 if(playerController.moveDir == Vector3.zero){
                     if(playerController.isFacingRight){
-                        playerController.rb.velocity = new Vector3(1f, 0, 0) * playerController.moveSpeed;
+                        playerController.rb.linearVelocity = new Vector3(1f, 0, 0) * playerController.moveSpeed;
                     }else{
-                        playerController.rb.velocity = new Vector3(-1f, 0, 0) * playerController.moveSpeed;
+                        playerController.rb.linearVelocity = new Vector3(-1f, 0, 0) * playerController.moveSpeed;
                     }
                 }
             }
@@ -120,9 +120,9 @@ public class PlayerAbilities : MonoBehaviourPunCallbacks
                     // If no direction pointing, refer left or right direction
                     if(playerController.moveDir == Vector3.zero){
                         if(playerController.isFacingRight){
-                            playerController.rb.velocity = new Vector3(1f, 0, 0) * playerController.moveSpeed;
+                            playerController.rb.linearVelocity = new Vector3(1f, 0, 0) * playerController.moveSpeed;
                         }else{
-                            playerController.rb.velocity = new Vector3(-1f, 0, 0) * playerController.moveSpeed;
+                            playerController.rb.linearVelocity = new Vector3(-1f, 0, 0) * playerController.moveSpeed;
                         }
                     }
                 }
@@ -365,7 +365,7 @@ public class PlayerAbilities : MonoBehaviourPunCallbacks
             //playerState = E_State.DASH;
             
             yield return new WaitForSeconds(playerController.dashDuration);
-            playerController.rb.velocity = Vector2.zero;
+            playerController.rb.linearVelocity = Vector2.zero;
             //playerState = E_State.NORMAL;
             // Reset back to ori speed
             if(!playerController.isDashingButtonDown){
@@ -596,12 +596,12 @@ public class PlayerAbilities : MonoBehaviourPunCallbacks
             cau.GetComponent<Cauliflower>().dur = duration;
             if(playerController.moveDir == Vector3.zero){
                 if(playerController.isFacingRight){
-                    cau.GetComponent<Rigidbody2D>().velocity = new Vector3(1f, 0, 0) * cauliSpeed;
+                    cau.GetComponent<Rigidbody2D>().linearVelocity = new Vector3(1f, 0, 0) * cauliSpeed;
                 }else{
-                    cau.GetComponent<Rigidbody2D>().velocity = new Vector3(-1f, 0, 0) * cauliSpeed;
+                    cau.GetComponent<Rigidbody2D>().linearVelocity = new Vector3(-1f, 0, 0) * cauliSpeed;
                 }
             }else{
-                cau.GetComponent<Rigidbody2D>().velocity = playerController.moveDir * cauliSpeed;
+                cau.GetComponent<Rigidbody2D>().linearVelocity = playerController.moveDir * cauliSpeed;
             }
 
             hasItem = false;
@@ -622,12 +622,12 @@ public class PlayerAbilities : MonoBehaviourPunCallbacks
             cau.GetComponent<Flashbang>().explodeCountdown = duration;
             if(playerController.moveDir == Vector3.zero){
                 if(playerController.isFacingRight){
-                    cau.GetComponent<Rigidbody2D>().velocity = new Vector3(1f, 0, 0) * throwSpeed;
+                    cau.GetComponent<Rigidbody2D>().linearVelocity = new Vector3(1f, 0, 0) * throwSpeed;
                 }else{
-                    cau.GetComponent<Rigidbody2D>().velocity = new Vector3(-1f, 0, 0) * throwSpeed;
+                    cau.GetComponent<Rigidbody2D>().linearVelocity = new Vector3(-1f, 0, 0) * throwSpeed;
                 }
             }else{
-                cau.GetComponent<Rigidbody2D>().velocity = playerController.moveDir * throwSpeed;
+                cau.GetComponent<Rigidbody2D>().linearVelocity = playerController.moveDir * throwSpeed;
             }
 
             hasItem = false;
@@ -660,12 +660,12 @@ public class PlayerAbilities : MonoBehaviourPunCallbacks
             }
             if(playerController.moveDir == Vector3.zero){
                 if(playerController.isFacingRight){
-                    cau.GetComponent<Rigidbody2D>().velocity = new Vector3(1f, 0, 0) * throwSpeed;
+                    cau.GetComponent<Rigidbody2D>().linearVelocity = new Vector3(1f, 0, 0) * throwSpeed;
                 }else{
-                    cau.GetComponent<Rigidbody2D>().velocity = new Vector3(-1f, 0, 0) * throwSpeed;
+                    cau.GetComponent<Rigidbody2D>().linearVelocity = new Vector3(-1f, 0, 0) * throwSpeed;
                 }
             }else{
-                cau.GetComponent<Rigidbody2D>().velocity = playerController.moveDir * throwSpeed;
+                cau.GetComponent<Rigidbody2D>().linearVelocity = playerController.moveDir * throwSpeed;
             }
 
             hasItem = false;

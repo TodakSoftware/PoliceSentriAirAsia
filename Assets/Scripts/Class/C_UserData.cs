@@ -10,5 +10,6 @@ public class C_UserData{
 
     [Header("---- Daily Rewards -----")]
     public string startDailyRewardDate;
+    public string claimedDailyRewardTime;
     public int latestRewardClaimedDay; // button index day claimed
 }
